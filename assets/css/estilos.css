@@ -1,0 +1,104 @@
+.footer{
+    color: grey;
+    text-align: center;
+}
+
+.imagen{
+    position:absolute;
+    top:0px;
+}
+
+.levantarImagen{
+    margin-top: -20px;
+}
+
+.navbar-inverse
+.navbar-brand, .navbar-inverse .navbar-nav > li > a{
+
+}
+
+.pie{
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+
+.usuarioLogueado{
+    margin-top: 13px;
+    color: #9d9d9d;
+}
+
+body{
+    padding-top: 0%;
+    font-family: 'Questrial', sans-serif;
+}
+
+.misEval_padding{
+    margin-top: 5%;
+}
+
+/* ESTILOS DE TABLA - MIS EVALUACIONES */
+
+.css_centrarTabla{
+    text-align: center;
+}
+
+.css_tabla_numProd{
+    width: 5%;
+}
+
+.css_tabla_estadoVer{
+    width: 10%;
+}
+
+.css_tabla_producto{
+    text-align: left;
+}
+
+.texto_justificado{
+    text-align: justify;
+}
+
+.text_area{
+    resize: none;
+}
+
+.color_panel1{
+    background-color: #e9a5a3;
+}
+
+.color_panel2{
+    background-color: #e7bd82;
+}
+
+.color_panel3{
+    background-color: #9dd49d;
+}
+
+.color_panel4{
+    background-color: #e7e7e7;
+}
+
+.tamaño_rigor_nivel{
+    width: 25%; 
+}
+
+.tamaño_rigor_aspecto{
+    width: 20%;
+}
+
+.tamaño_rigor_select{
+    width: 40%;
+}
+
+.tamaño_tabla_subatributos{
+    width: 40%;
+}
+
+.color_menu{
+    background-color: whitesmoke;
+}
+
+.pagination > .active > a, .pagination > .active > a:focus, .pagination > .active > a:hover, .pagination > .active > span, .pagination > .active > span:focus, .pagination > .active > span:hover{
+    background-color: #999;
+    border-color: #dddddd;
+}
