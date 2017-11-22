@@ -6,64 +6,32 @@ class Model_evaluacion extends CI_Model {
         parent::__construct();
     }
     
-    function getAtributos(){
+    function getCaracteristicas(){
         $this->db->select('*');
-        $this->db->from('atributo');
+        $this->db->from('caracteristica');
         $consulta = $this->db->get();
         return $consulta;
     }
     
-    function getFuncionalidades($idEvaluacion){
-        $this->db->select('*');
-        $this->db->from('funcionalidad');
-        $this->db->where('idEvaluacion', $idEvaluacion);
-        $consulta = $this->db->get();
-        return $consulta;
-    }
-    
-    function agregarFuncionalidad($name, $description, $idEvaluacion){
-        $this->db->trans_start();
-        
-        $data = array(
-               'nombre' => $name,
-               'descripcion' => $description,
-               'idEvaluacion' => $idEvaluacion,
-        );
-        
-        $this->db->insert('funcionalidad', $data); 
-        $idFuncionalidad = $this->db->insert_id();
-        $this->db->trans_complete();
-        return $idFuncionalidad;
-    }
-    
-    function getAtributosEvaluacion($idEvaluacion){
+    function getCaracteristicasEvaluacion($idEvaluacion){
         $this->db->select('DISTINCT(a.nombre)');
-        $this->db->from('evaluacion_atributo as ea, atributo as a');
+        $this->db->from('evaluacion_caracteristica as ea, caracteristica as a');
         $this->db->where('ea.idEvaluacion', $idEvaluacion);
-        $this->db->where('ea.idAtributo = a.idAtributo');
+        $this->db->where('ea.idCaracteristica = a.idCaracteristica');
         $consulta = $this->db->get();
         return $consulta;
     }
     
-    function getSubAtributos_Atributo($idAtributo){
+    function getSubCaracteristicas_Caracteristica($idCaracteristica){
         $this->db->select('*');
-        $this->db->from('subatributo');
-        $this->db->where('idAtributo', $idAtributo);
-        $consulta = $this->db->get();
-        return $consulta;
-    }
-    
-    function getMetricas_SubAtributo($idSubatributo){
-        $this->db->select('*');
-        $this->db->from('metrica');
-        $this->db->where('idSubatributo', $idSubatributo);
+        $this->db->from('subcaracteristica');
+        $this->db->where('idCaracteristica', $idCaracteristica);
         $consulta = $this->db->get();
         return $consulta;
     }
     
     function guardarDefinicion($nombre, $descripcion){
         $this->db->trans_start();
-        
         $data1 = array(
                'nombre' => $nombre,
                'descripcion' => $descripcion,
@@ -74,14 +42,12 @@ class Model_evaluacion extends CI_Model {
         $this->db->trans_complete();
         
         $this->db->trans_start();
-        
         $data2 = array(
             'idProducto' => $idProducto,
             'idUsuario' => $this->session->userdata('id'),
-            'idEstado' => 1,
+            'idEstadoEvaluacion' => 1,
             'idParte' => 1,
         );
-        
         $this->db->insert('evaluacion', $data2); 
         $idEvaluacion = $this->db->insert_id();
         $this->db->trans_complete();
@@ -109,7 +75,6 @@ class Model_evaluacion extends CI_Model {
                'nombre' => $nombre,
                'descripcion' => $descripcion,
         );
-        
         foreach ($query->result_array() as $q){
             $this->db->where('idProducto', $q['idProducto']);
         }
@@ -127,9 +92,9 @@ class Model_evaluacion extends CI_Model {
     
     function getEvaluacionesPaginadas($limite, $start){
         $this->db->select('*');
-        $this->db->from('producto as p, evaluacion as e, estado as es');
+        $this->db->from('producto as p, evaluacion as e, estado_evaluacion as es');
         $this->db->where('e.idProducto = p.idProducto');
-        $this->db->where('e.idEstado = es.idEstado');
+        $this->db->where('e.idEstadoEvaluacion = es.idEstadoEvaluacion');
         $this->db->limit($limite, $start);
         $this->db->order_by("idEvaluacion", "desc");
         $query = $this->db->get();
@@ -151,7 +116,6 @@ class Model_evaluacion extends CI_Model {
     
     function guardarProposito($proposito, $idEvaluacion){
        $this->db->trans_start();
-
        $data1 = array(
               'proposito' => $proposito,
        );
@@ -164,7 +128,6 @@ class Model_evaluacion extends CI_Model {
     }
     
     function editarProposito($proposito, $idEvaluacion){
-        
         $this->db->trans_start();
         $data = array(
                'proposito' => $proposito,
@@ -179,7 +142,6 @@ class Model_evaluacion extends CI_Model {
     }
     
     function existeProposito($idEvaluacion){
-        
         $this->db->select('*');
         $this->db->from('evaluacion as e');
         $this->db->where('e.idEvaluacion', $idEvaluacion);
@@ -196,18 +158,16 @@ class Model_evaluacion extends CI_Model {
     
     function cargar_1_2($idEvaluacion){
         $this->db->select('*');
-        $this->db->from('evaluacion_textos as et, evaluacion_atributo as at');
-        $this->db->where('et.idEvaluacion', $idEvaluacion);
-        $this->db->where('at.idEvaluacion', $idEvaluacion);
+        $this->db->from('evaluacion_caracteristica as ec');
+        $this->db->where('ec.idEvaluacion', $idEvaluacion);
         $consulta = $this->db->get();
         return $consulta;
     }
     
     function existe_1_2($idEvaluacion){
-        
         $this->db->select('*');
-        $this->db->from('evaluacion_atributo as at');
-        $this->db->where('at.idEvaluacion', $idEvaluacion);
+        $this->db->from('evaluacion_caracteristica as ec');
+        $this->db->where('ec.idEvaluacion', $idEvaluacion);
         $query = $this->db->get();
         
         if($query->num_rows() == 0 ){
@@ -217,77 +177,41 @@ class Model_evaluacion extends CI_Model {
         }
     }
     
-    function editarTexto($texto, $idEvaluacion){
-        $this->db->trans_start();
-        
-        $data = array(
-               'texto' => $texto,
-        );
-
-        $this->db->where('idEvaluacion', $idEvaluacion);
-        $this->db->update('evaluacion_textos', $data); 
-        $idTexto = $this->db->insert_id();
-        $this->db->trans_complete();
-        
-        return $idTexto;
-    }
-    
-    
-    function guardarTexto($texto, $idEvaluacion){
-        $this->db->trans_start();
-
-        $data1 = array(
-            'idEvaluacion' => $idEvaluacion,
-            'idItem' => 2,
-            'texto' => $texto,
-        );
-
-        $this->db->insert('evaluacion_textos', $data1);  
-        $this->db->trans_complete();
-
-        return $idEvaluacion;
-    }
-    
-    function guardarAtributos($idAtributo, $idEvaluacion){
+    function guardarCaracteristicas($idCaracteristica, $idEvaluacion){
         $this->db->trans_start();
 
        $data1 = array(
             'idEvaluacion' => $idEvaluacion,
-            'idAtributo' => $idAtributo,
+            'idCaracteristica' => $idCaracteristica,
        );
 
-       $this->db->insert('evaluacion_atributo', $data1); 
+       $this->db->insert('evaluacion_caracteristica', $data1); 
        $this->db->trans_complete();
 
        return $idEvaluacion;
     }
     
-    function getAtributosSeleccionados($idEvaluacion){
+    function getCaracteristicasSeleccionados($idEvaluacion){
         $this->db->select('*');
-        $this->db->from('evaluacion_atributo');
+        $this->db->from('evaluacion_caracteristica');
         $this->db->where('idEvaluacion', $idEvaluacion);
         $consulta = $this->db->get();
         return $consulta;
     }
     
-    function eliminarAtributos($idEvaluacion){
+    function eliminarCaracteristicas($idEvaluacion){
         $this->db->where('idEvaluacion', $idEvaluacion);
-        $this->db->delete('evaluacion_atributo'); 
-    }
-    
-    function eliminarTexto($idEvaluacion){
-        $this->db->where('idEvaluacion', $idEvaluacion);
-        $this->db->delete('evaluacion_textos'); 
+        $this->db->delete('evaluacion_caracteristica'); 
     }
     
     function getPartes(){
         $this->db->select('*');
-        $this->db->from('parte_evaluacion');
+        $this->db->from('parte');
         $consulta = $this->db->get();
         return $consulta;
     }
     
-    function getParteSeleccionada($idEvaluacion){
+    function getParteSeleccionada($idEvaluacion){ //POR QUE CARAJO ESTÁ ESTA FUNCION Y POR QUÉ SE LLAMA ASI?
         $this->db->select('*');
         $this->db->from('evaluacion as e');
         $this->db->where('e.idEvaluacion', $idEvaluacion);
