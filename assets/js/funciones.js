@@ -253,38 +253,6 @@ function contenido(){
     $('[data-toggle="popover"]').popover();
 };
 
-function incluirTexto(){
-    if ($("#incluirtxt").prop("checked")){
-        $('#texto').attr({
-            'disabled': false,
-            'placeholder': ''
-        });
-        $('#texto').focus();     
-    }else{
-        $('#texto').attr({
-            'disabled': true,
-            'placeholder': 'Ingrese un texto inicial'
-        });
-    }
-};
-
-function agregarFuncionalidad(){
-    var base_url = document.getElementById('baseurl').value;
-    var nombre = document.getElementById('nombre').value;
-    var descripcion = document.getElementById('descripcion').value;
-    $('div').removeClass('modal-backdrop fade in');
-    
-    $.ajax({
-        type:'POST',
-        url: base_url+'/evaluacion/guardarFuncionalidad',
-        data: {name: nombre, description: descripcion},
-
-        success: function(output_string){
-            $("#contenido").html(output_string);
-            
-        }
-    });
-};
 
 function ocultarTablasRigor(){
     $("#tablas").slideToggle();
@@ -360,9 +328,9 @@ function guardar_1_2(){
     var atributos = [];
     
     
-    $("#atributos:checked").each(function(){
+    $("#caracteristicas:checked").each(function(){
         if (this.checked){
-            atributos.push($(this).val());
+            caracteristicas.push($(this).val());
         }
     }); 
     
