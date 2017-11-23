@@ -9,9 +9,9 @@
     <table class="table table-bordered">
         <thead class="color_panel4">
             <tr align="center">
-              <td class="tamaño_rigor_nivel">Aspecto de seguridad física</td>
-              <td class="tamaño_rigor_nivel">Aspecto económico</td>
-              <td class="tamaño_rigor_nivel">Aspecto de seguridad de acceso</td>
+              <td class="tamaño_rigor_nivel">Aspecto de seguridad física <img src="<?php echo base_url('assets/images/ayuda.jpg')?>" title=" <?php echo ("Consecuencias: \n A: Las personas pueden morir \n B: Amenaza contra vidas humanas \n C: Daños materiales. Amenaza de daño a personas \n D: Pequeños daños materiales. No hay riesgo para las personas"); ?>" width="13px" class="img-rounded" alt="help"></td>
+              <td class="tamaño_rigor_nivel">Aspecto económico <img src="<?php echo base_url('assets/images/ayuda.jpg')?>" title=" <?php echo ("Consecuencias: \n A: Desastre financiero (la compañía no puede seguir funcionando) \n B: Pérdidas económicas importantes \n C: Pérdidas económicas significantes \n D: Pérdidas económicas insignificantes"); ?>" width="13px" class="img-rounded" alt="help"></td>
+              <td class="tamaño_rigor_nivel2">Aspecto de seguridad de acceso <img src="<?php echo base_url('assets/images/ayuda.jpg')?>" title=" <?php echo ("Consecuencias: \n A: Riesgo de protección de datos y servicios estratégicos \n B: Riesgo de protección de datos y servicios críticos \n C: Riesgo de protección de datos \n D: No se identifican riesgos"); ?>" width="13px" class="img-rounded" alt="help"></td>
             </tr>
         </thead>
         <tbody>
