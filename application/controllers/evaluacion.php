@@ -299,29 +299,29 @@ class Evaluacion extends CI_Controller{
                             
                             if($this->input->post()){ //SE RECIBEN DATOS
                                 $textoNuevo = $this->input->post('text');
-                                $atributos = $this->input->post('atr');
+                                $caracteristicas = $this->input->post('atr');
                                 
-                                if ($atributos == ''){ //SI ESTÁ VACÍO EL ARREGLO DE CARACTERISTICAS
+                                if ($caracteristicas == ''){ //SI ESTÁ VACÍO EL ARREGLO DE CARACTERISTICAS
                                     unset($_SESSION['ExitoAtr']);
                                     $this->session->set_flashdata('ErrorAtr', 'Debe seleccionar al menos una característica');
                                 }else{ //SI NO ESTÁ VACÍO EL ARREGLO DE CARACTERISTICAS
                                     $existe12 = $this->model_evaluacion->existe_1_2($idEvaluacion); //SI EXISTE AL MENOS UNA CARACTERISTICA EN LA BASE
                                     if ($existe12){ //SI EXISTE, ES UNA EDICIÓN
                                         $resul = $this->model_evaluacion->cargar_1_2($idEvaluacion); //TRAE TODOS LOS DATOS (ATRIBUTOS+TEXTO)
-                                        foreach ($resul->result_array() as $e){ //GUARDA TODOS LOS ATRIBUTOS DE LA BASE Y EL TEXTO PARA LA VISTA
-                                            $arregloAtributos[$cant] = $e['idAtributo'];
+                                        foreach ($resul->result_array() as $e){ //GUARDA TODAS LAS CARACTERISTICAS DE LA BASE Y EL TEXTO PARA LA VISTA
+                                            $arregloCaracteristicas[$cant] = $e['idCaracteristica'];
                                             $cant++;
                                         }
-                                        $this->model_evaluacion->eliminarAtributos($idEvaluacion);
-                                        foreach ($atributos as $a){ //POR CADA ATRIBUTO SELECCIONADO POR EL USUARIO
-                                            $this->model_evaluacion->guardarAtributos($a, $idEvaluacion); //LOS ACTUALIZA
+                                        $this->model_evaluacion->eliminarCaracteristicas($idEvaluacion);
+                                        foreach ($caracteristicas as $c){ //POR CADA CARACTERISTICA SELECCIONADA POR EL USUARIO
+                                            $this->model_evaluacion->guardarCaracteristicas($c, $idEvaluacion); //LOS ACTUALIZA
                                         }
                                         $this->model_evaluacion->editarTexto($textoNuevo, $idEvaluacion); 
                                         $this->session->set_flashdata('ExitoAtr', '¡Se editaron los datos exitosamente!');
                                     }else{ //SI ES LA PRIMERA VEZ
                                         $this->model_evaluacion->guardarTexto($textoNuevo, $idEvaluacion);
-                                        foreach ($atributos as $a){
-                                            $this->model_evaluacion->guardarAtributos($a, $idEvaluacion);
+                                        foreach ($caracteristicas as $c){
+                                            $this->model_evaluacion->guardarCaracteristicas($c, $idEvaluacion);
                                         }
                                         $this->session->set_flashdata('ExitoAtr', '¡Se cargaron los datos exitosamente!');
                                     }

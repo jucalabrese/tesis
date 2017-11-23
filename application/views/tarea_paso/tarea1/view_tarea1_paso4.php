@@ -93,7 +93,7 @@
     </table>
     </div>
     <hr>
-    <h4>Asignación de rigor</h4>
+    <h4>Asignación de rigor</h4> <!-- TABLA DONDE SE ELIGE EL RIGOR -->
     <br>
     <table class="table table-bordered">
         <thead class="color_panel4">
@@ -105,14 +105,8 @@
             </tr>
         </thead>
         <tbody>
-            <?php if ($funcionalidades->num_rows() == 0){ ?>
             <tr>
-              <td colspan="4" align="center">No hay ninguna funcionalidad cargada</td>
-            </tr>
-            <?php } else {
-            foreach ($funcionalidades->result_array() as $func){ ?>
-            <tr>
-              <td align="center"><?php echo $func['nombre']?></td>
+              <td align="center">Evaluacion</td>
               <td align="center">
                   <select class="form-control tamaño_rigor_select">
                         <option>N/A</option>
@@ -141,7 +135,6 @@
                   </select>
               </td>
             </tr>
-            <?php }} ?>
         </tbody>
     </table>
     <div class="form-group">

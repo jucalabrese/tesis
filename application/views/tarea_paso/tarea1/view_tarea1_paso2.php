@@ -14,45 +14,30 @@
                     </div>
             <?php } 
             }
-    $atributosSeleccionados = array();
+    $caracteristicasSeleccionadas = array();
     $cant = 0;
-    if ($atributos_seleccionados <> null){
-        foreach ($atributos_seleccionados as $atr){
-            $atributosSeleccionados[$cant] = $atr;
+    if ($caracteristicas_seleccionadas <> null){
+        foreach ($caracteristicas_seleccionadas as $atr){
+            $caracteristicasSeleccionadas[$cant] = $atr;
             $cant++;
         }
     }
     ?>  
 <div class="col-lg-12">
       <form class="form-horizontal" role="form">
-        
         <div class="form-group">
             <div class="col-lg-12">
-                    <span>     
-                        Incluir un texto inicial:
-                    </span>
-                </div>
-        </div>
-          
-        <div class="form-group">
-            <div class="col-lg-12">
-                <textarea class="form-control text_area" id="texto" rows="6" placeholder="Ingrese un texto inicial"><?php echo $texto?></textarea>
+                <span class="lead">Seleccione las características a utilizar en la evaluación: </span>
             </div>
         </div>
-          
-        <div class="form-group">
-            <div class="col-lg-12">
-                <span class="lead">Seleccione los atributos a utilizar en la evaluación: </span>
-            </div>
-        </div>
-        <?php foreach ($atributos->result_array() as $atr){
-            if ($atributosSeleccionados <> null){
-                if (in_array($atr['idAtributo'], $atributosSeleccionados)){?>           
+        <?php foreach ($caracteristicas->result_array() as $atr){
+            if ($caracteristicasSeleccionadas <> null){
+                if (in_array($atr['idCaracteristica'], $caracteristicasSeleccionadas)){?>           
                     <div class="form-group">
                         <div class="col-lg-12">
                             <div class="checkbox">
                                 <label>
-                                    <input type="checkbox" checked value="<?php echo $atr['idAtributo']?>" id="atributos" name="atributos">
+                                    <input type="checkbox" checked value="<?php echo $atr['idCaracteristica']?>" id="caracteristicas" name="caracteristicas">
                                     <?php echo $atr['nombre']?>
                                 </label>
                             </div>    
@@ -63,7 +48,7 @@
                     <div class="col-lg-12">
                         <div class="checkbox">
                             <label>
-                                <input type="checkbox" value="<?php echo $atr['idAtributo']?>" id="atributos" name="atributos">
+                                <input type="checkbox" value="<?php echo $atr['idCaracteristica']?>" id="caracteristicas" name="caracteristicas">
                                 <?php echo $atr['nombre']?>
                             </label>
                         </div>    
@@ -74,7 +59,7 @@
                     <div class="col-lg-12">
                         <div class="checkbox">
                             <label>
-                                <input type="checkbox" value="<?php echo $atr['idAtributo']?>" id="atributos" name="atributos">
+                                <input type="checkbox" value="<?php echo $atr['idCaracteristica']?>" id="caracteristicas" name="caracteristicas">
                                 <?php echo $atr['nombre']?>
                             </label>
                         </div>    
