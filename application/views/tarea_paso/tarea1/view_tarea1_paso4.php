@@ -3,6 +3,49 @@
 </div>
 <hr>
 <div class="col-lg-12">
+
+    <h4>Asignación de rigor de la evaluación</h4> <!-- TABLA DONDE SE ELIGE EL RIGOR -->
+    <br>
+    <table class="table table-bordered">
+        <thead class="color_panel4">
+            <tr align="center">
+              <td class="tamaño_rigor_nivel">Aspecto de seguridad física</td>
+              <td class="tamaño_rigor_nivel">Aspecto económico</td>
+              <td class="tamaño_rigor_nivel">Aspecto de seguridad de acceso</td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+              <td align="center">
+                  <select class="form-control tamaño_rigor_select">
+                        <option>N/A</option>
+                        <option>A</option>
+                        <option>B</option>
+                        <option>C</option>
+                        <option>D</option>
+                  </select>
+              </td>
+              <td align="center">
+                  <select class="form-control tamaño_rigor_select">
+                        <option>N/A</option>
+                        <option>A</option>
+                        <option>B</option>
+                        <option>C</option>
+                        <option>D</option>
+                  </select>
+              </td>
+              <td align="center">
+                  <select class="form-control tamaño_rigor_select">
+                        <option>N/A</option>
+                        <option>A</option>
+                        <option>B</option>
+                        <option>C</option>
+                        <option>D</option>
+                  </select>
+              </td>
+            </tr>
+        </tbody>
+    </table>
     <a href="#" onclick="ocultarTablasRigor()">Referencias - Anexo A (ISO 25040)</a>
     <div id="tablas" style="display: none; padding-top: 3%">
     <table class="table table-bordered">
@@ -92,51 +135,6 @@
         </tbody>
     </table>
     </div>
-    <hr>
-    <h4>Asignación de rigor</h4> <!-- TABLA DONDE SE ELIGE EL RIGOR -->
-    <br>
-    <table class="table table-bordered">
-        <thead class="color_panel4">
-            <tr align="center">
-              <td class="tamaño_rigor_nivel">Identificador de funcionalidad</td>
-              <td class="tamaño_rigor_nivel">Aspecto de seguridad física</td>
-              <td class="tamaño_rigor_nivel">Aspecto económico</td>
-              <td class="tamaño_rigor_nivel">Aspecto de seguridad de acceso</td>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-              <td align="center">Evaluacion</td>
-              <td align="center">
-                  <select class="form-control tamaño_rigor_select">
-                        <option>N/A</option>
-                        <option>A</option>
-                        <option>B</option>
-                        <option>C</option>
-                        <option>D</option>
-                  </select>
-              </td>
-              <td align="center">
-                  <select class="form-control tamaño_rigor_select">
-                        <option>N/A</option>
-                        <option>A</option>
-                        <option>B</option>
-                        <option>C</option>
-                        <option>D</option>
-                  </select>
-              </td>
-              <td align="center">
-                  <select class="form-control tamaño_rigor_select">
-                        <option>N/A</option>
-                        <option>A</option>
-                        <option>B</option>
-                        <option>C</option>
-                        <option>D</option>
-                  </select>
-              </td>
-            </tr>
-        </tbody>
-    </table>
     <div class="form-group">
         <div class="col-lg-6 col-lg-offset-4">
             <?php $this->load->view('tarea_paso/buttons', ''); ?>

@@ -51,9 +51,6 @@
     </div>
     
     FIN POP UP -->
-    
-        <div class="col-lg-6 col-lg-offset-3" style="padding-top: 2%">
-            <?php $this->load->view('tarea_paso/buttons', ''); ?>
-        </div>
+
 </div>
 
