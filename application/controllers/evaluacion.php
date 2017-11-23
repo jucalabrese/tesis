@@ -140,16 +140,16 @@ class Evaluacion extends CI_Controller{
                         case 2:
                             $texto = '';
                             $cant = 0;
-                            $arregloAtributos = array(); //ARREGLO CON ATRIBUTOS ELEGIDOS POR EL USUARIO
-                            $atributos = $this->model_evaluacion->getAtributos(); //TODOS LOS ATRIBUTOS
+                            $arregloCaracteristicas = array(); //ARREGLO CON CARACTERISTICAS ELEGIDAS POR EL USUARIO
+                            $caracteristicas = $this->model_evaluacion->getCaracteristicas(); //TODAS LAS CARACTERISTICAS
                             $data = $this->model_evaluacion->cargar_1_2($idEvaluacion);
                             foreach ($data->result_array() as $dato){
-                                $arregloAtributos[$cant] = $dato['idAtributo'];
+                                $arregloCaracteristicas[$cant] = $dato['idCaracteristica'];
                                 $texto = $dato['texto'];
                                 $cant++;
                             };
 
-                            $datos = array('atributos' => $atributos, 'atributos_seleccionados' => $arregloAtributos, 'texto' => $texto); //Guardo el resultado de la consulta en un arreglo para pasar a la vista
+                            $datos = array('caracteristicas' => $caracteristicas, 'caracteristicas_seleccionadas' => $arregloCaracteristicas, 'texto' => $texto); //Guardo el resultado de la consulta en un arreglo para pasar a la vista
                             break;
                         case 3:
                             $partes = $this->model_evaluacion->getPartes();
@@ -157,21 +157,11 @@ class Evaluacion extends CI_Controller{
                             foreach ($parteSeleccionada->result_array() as $p){
                                 $idParte = $p['idParte'];
                             }
-                            //ALTA DE FUNCIONALIDAD
-                             if($this->input->post()){
-                                $name = $this->input->post('name');
-                                $description = $this->input->post('description');
-                                $this->model_evaluacion->agregarFuncionalidad($name, $description, $idEvaluacion);
-                            } 
-
-                            $funcionalidades = $this->model_evaluacion->getFuncionalidades($idEvaluacion);
-                            $datos = array('funcionalidades' => $funcionalidades, 'partes' => $partes, 'parte_seleccionada' => $idParte); //Guardo el resultado de la consulta en un arreglo para pasar a la vista
+ 
+                            $datos = array('partes' => $partes, 'parte_seleccionada' => $idParte); //Guardo el resultado de la consulta en un arreglo para pasar a la vista
                             break;
                         case 4:
-                            
-                        $funcionalidades = $this->model_evaluacion->getFuncionalidades(2);
-                        $datos = array('funcionalidades' => $funcionalidades); //Guardo el resultado de la consulta en un arreglo para pasar a la vista
-                        
+
                         break;
                     };
                 
@@ -184,10 +174,7 @@ class Evaluacion extends CI_Controller{
 
                         break;
                         case 2:
-                            $atributosTotales = $this->model_evaluacion->getAtributosEvaluacion(2);
-                            $subAtributos = $this->model_evaluacion->getSubAtributos_Atributo(1);
-                            $metricas = $this->model_evaluacion->getMetricas_Subatributo(1);
-                            $datos2 = array('atributosTotales' => $atributosTotales, 'subatributos' => $subAtributos, 'metricas' => $metricas);
+                           
                         break;
                         case 3:
                         
@@ -258,11 +245,9 @@ class Evaluacion extends CI_Controller{
                 unset($_SESSION['ErrorAtr']);
             }
 
-            $this->model_evaluacion->agregarFuncionalidad($nombre, $descripcion, $idEvaluacion);
             $partes = $this->model_evaluacion->getPartes();
-            $funcionalidades = $this->model_evaluacion->getFuncionalidades($idEvaluacion);
 
-            $datos = array('funcionalidades' => $funcionalidades, 'partes' => $partes, 'parte_seleccionada' => $parte);
+            $datos = array('partes' => $partes, 'parte_seleccionada' => $parte);
             $this->load->view('tarea_paso/tarea1/view_tarea1_paso3', $datos);
         }
 
@@ -307,7 +292,7 @@ class Evaluacion extends CI_Controller{
                             
                         break;
                         case 2:
-                            $arregloAtributos = array();
+                            $arregloCaracteristicas = array();
                             $cant = 0;
                             $idEvaluacion = $this->session->userdata('idEvaluacion');
                             $texto = '';
@@ -316,11 +301,11 @@ class Evaluacion extends CI_Controller{
                                 $textoNuevo = $this->input->post('text');
                                 $atributos = $this->input->post('atr');
                                 
-                                if ($atributos == ''){ //SI ESTÁ VACÍO EL ARREGLO DE ATRIBUTOS
+                                if ($atributos == ''){ //SI ESTÁ VACÍO EL ARREGLO DE CARACTERISTICAS
                                     unset($_SESSION['ExitoAtr']);
-                                    $this->session->set_flashdata('ErrorAtr', 'Debe seleccionar al menos un atributo');
-                                }else{ //SI NO ESTÁ VACÍO EL ARREGLO DE ATRIBUTOS
-                                    $existe12 = $this->model_evaluacion->existe_1_2($idEvaluacion); //SI EXISTE AL MENOS UN ATRIBUTO EN LA BASE
+                                    $this->session->set_flashdata('ErrorAtr', 'Debe seleccionar al menos una característica');
+                                }else{ //SI NO ESTÁ VACÍO EL ARREGLO DE CARACTERISTICAS
+                                    $existe12 = $this->model_evaluacion->existe_1_2($idEvaluacion); //SI EXISTE AL MENOS UNA CARACTERISTICA EN LA BASE
                                     if ($existe12){ //SI EXISTE, ES UNA EDICIÓN
                                         $resul = $this->model_evaluacion->cargar_1_2($idEvaluacion); //TRAE TODOS LOS DATOS (ATRIBUTOS+TEXTO)
                                         foreach ($resul->result_array() as $e){ //GUARDA TODOS LOS ATRIBUTOS DE LA BASE Y EL TEXTO PARA LA VISTA
@@ -345,19 +330,17 @@ class Evaluacion extends CI_Controller{
                             
                             $resul = $this->model_evaluacion->cargar_1_2($idEvaluacion);
                             foreach ($resul->result_array() as $e){
-                                $arregloAtributos[$cant] = $e['idAtributo'];
+                                $arregloCaracteristicas[$cant] = $e['idCaracteristica'];
                                 $texto = $e['texto'];
                                 $cant++;
                             }
                             
-                            $atributos = $this->model_evaluacion->getAtributos();
-                            $datos = array('atributos' => $atributos, 'atributos_seleccionados' => $arregloAtributos, 'texto' => $texto); //Guardo el resultado de la consulta en un arreglo para pasar a la vista        
+                            $caracteristicas = $this->model_evaluacion->getCaracteristicas();
+                            $datos = array('caracteristicas' => $caracteristicas, 'caracteristicas_seleccionadas' => $arregloCaracteristicas, 'texto' => $texto); //Guardo el resultado de la consulta en un arreglo para pasar a la vista        
                         break;
                         case 3:
                             if($this->input->post()){ //SE RECIBEN DATOS
                                 $parte = $this->input->post('parte');
-//                                $nombre = $this->input->post('name');
-//                                $descripcion = $this->input->post('description');
                                 unset($_SESSION['ExitoAtr']);
                                 if ($parte==1){
                                     unset($_SESSION['ExitoAtr']);
@@ -378,11 +361,8 @@ class Evaluacion extends CI_Controller{
                                 }
                             }
                             
-//                            $this->model_evaluacion->agregarFuncionalidad($nombre, $descripcion, $idEvaluacion);
                             $partes = $this->model_evaluacion->getPartes();
-                            $funcionalidades = $this->model_evaluacion->getFuncionalidades($idEvaluacion);
-                            
-                            $datos = array('funcionalidades' => $funcionalidades, 'partes' => $partes, 'parte_seleccionada' => $parte);
+                            $datos = array('partes' => $partes, 'parte_seleccionada' => $parte);
                             
                         break;
                         case 4:        

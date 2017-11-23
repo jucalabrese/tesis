@@ -25,11 +25,9 @@ class Inicio extends CI_Controller {
         public function principal()
 	{
             redirect(base_url("inicio/index"));
-	}
-        
-        //APARTE
+	}        
                 
-        public function iniciar_sesion() {
+        public function iniciar_sesion() { //CAMBIAR ESTA FUNCION PARA QUE NO DIGA SI ES INVALIDA LA CLAVE O USUARIO, SINO EN GENERAL
             if ($this->input->post()){
                 $email = $this->input->post('email');
                 $clave = $this->input->post('clave');
@@ -37,8 +35,8 @@ class Inicio extends CI_Controller {
                 $this->form_validation->set_rules('clave', 'clave', 'required');
                 $this->form_validation->set_message('required', 'El campo %s es obligatorio');
                 if ($this->form_validation->run() == TRUE){
-                    $this->load->model('model_inicio');
-                    $resul = $this->model_inicio->login($email, $clave);
+                    $this->load->model('model_usuario');
+                    $resul = $this->model_usuario->login($email, $clave);
                     if($resul){
                       $usuario_data = array(
                         'id' => $resul->idUsuario,
