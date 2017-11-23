@@ -22,7 +22,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="description" content="Sistema de Evaluación de Producto">
-        <meta name="author" content="Julieta Calabrese"> 
+        <meta name="author" content="Julieta Calabrese y Rocio Muñoz"> 
     </head>
     <body>
         <input type="hidden" id="baseurl" name="baseurl" value="<?php echo base_url(); ?>" />

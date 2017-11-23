@@ -8,8 +8,9 @@ class Evaluacion extends CI_Controller{
                 'idEvaluacion' => null,
                 'creada' => false,
             );
+            $datos = array('nombre' => '', 'descripcion' => '');
             $this->session->set_userdata($evaluacion_data);
-            $contenido = array('contenido' => $this->load->view('sitio/view_introduccionEvaluacion', '', true));
+            $contenido = array('contenido' => $this->load->view('sitio/view_definicionProducto', $datos, true));
             $datos["cuerpo"] = $this->load->view('sitio/view_iniciarEvaluacion', $contenido, true);
             $this->load->view('sitio/view_index', $datos);
 	}
