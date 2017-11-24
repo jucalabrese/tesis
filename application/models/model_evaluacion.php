@@ -211,7 +211,7 @@ class Model_evaluacion extends CI_Model {
         return $consulta;
     }
     
-    function getParteSeleccionada($idEvaluacion){ //POR QUE CARAJO ESTÁ ESTA FUNCION Y POR QUÉ SE LLAMA ASI?
+    function getParteSeleccionada($idEvaluacion){ 
         $this->db->select('*');
         $this->db->from('evaluacion as e');
         $this->db->where('e.idEvaluacion', $idEvaluacion);
@@ -232,4 +232,50 @@ class Model_evaluacion extends CI_Model {
         
         return $parte;
     }
+	
+	function cargarRigor($idEvaluacion){
+        $this->db->select('*');
+        $this->db->from('evaluacion as e');
+        $this->db->where('e.idEvaluacion', $idEvaluacion);
+        $consulta = $this->db->get();
+        return $consulta;
+    }
+	
+	function getEvaluacionRigor($rigor){
+        $this->db->select('*');
+        $this->db->from('evaluacion_rigor as er');
+        $this->db->where('er.idEvaluacionRigor', $rigor);
+        $consulta = $this->db->get();
+        return $consulta;
+    }
+	
+	function modificarRigor($rigor, $seguridad_fisica, $economico, $seguridad_acceso){
+		$this->db->trans_start();
+        $this->db->where('idEvaluacionRigor', $rigor);
+        $this->db->update('seguridad_fisica', $seguridad_fisica); 
+		$this->db->update('economico', $economico); 
+		$this->db->update('seguridad_acceso', $seguridad_acceso); 
+        $this->db->trans_complete();
+        
+        return $rigor;
+	}
+	
+	function agregarRigor($idEvaluacion, $seguridad_fisica, $economico, $seguridad_acceso){
+		$this->db->trans_start();
+        $data1 = array(
+               'seguridad_fisica' => $seguridad_fisica,
+               'economico' => $economico,
+			   'seguridad_acceso' => $seguridad_acceso,
+        );        
+        $this->db->insert('evaluacion_rigor', $data1); 
+        $idEvaluacionRigor = $this->db->insert_id();
+        $this->db->trans_complete();
+        
+        $this->db->trans_start();
+        $this->db->where('idEvaluacion', $idEvaluacion);
+		$this->db->update('idEvaluacionRigor', $idEvaluacionRigor);
+        $this->db->trans_complete();
+		
+        return $idEvaluacion;
+	}
 }

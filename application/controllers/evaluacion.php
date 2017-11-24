@@ -162,6 +162,23 @@ class Evaluacion extends CI_Controller{
                             $datos = array('partes' => $partes, 'parte_seleccionada' => $idParte); //Guardo el resultado de la consulta en un arreglo para pasar a la vista
                             break;
                         case 4:
+							$seguridad_fisica='N/A';
+							$economico='N/A';
+							$seguridad_acceso='N/A';
+                            $data = $this->model_evaluacion->cargarRigor($idEvaluacion);
+                            foreach ($data->result_array() as $dato){
+                                $rigor = $dato['idEvaluacionRigor'];
+                            }
+							if ($rigor <> 0){
+								$evaluacionRigor=$this->model_evaluacion->getEvaluacionRigor($rigor);
+								foreach ($evaluacionRigor->result_array() as $r){
+									$seguridad_fisica=$r['seguridad_fisica'];
+									$economico=$r['economico'];
+									$seguridad_acceso=$r['seguridad_acceso'];
+								}
+							}
+							
+                            $datos = array('seguridad_fisica' => $seguridad_fisica, 'economico' => $economico, 'seguridad_acceso' => $seguridad_acceso); 
 
                         break;
                     };
@@ -367,7 +384,25 @@ class Evaluacion extends CI_Controller{
                             
                         break;
                         case 4:        
-                        
+							if($this->input->post()){ //SE RECIBEN DATOS
+                                $seguridad_fisica = $this->input->post('seguridad_fisica');
+								$economico = $this->input->post('economico');
+								$seguridad_acceso = $this->input->post('seguridad_acceso');
+                                unset($_SESSION['ExitoRigor']);
+								$data = $this->model_evaluacion->cargarRigor($idEvaluacion);
+								foreach ($data->result_array() as $dato){
+									$rigor = $dato['idEvaluacionRigor'];
+								}
+								if ($rigor <> 0){
+									$evaluacion = $this->model_evaluacion->modificarRigor($rigor, $seguridad_fisica, $economico, $seguridad_acceso);
+									$this->session->set_flashdata('ExitoRigor', '¡Se modificaron los datos exitosamente!');
+								}
+								else{
+									$evaluacion = $this->model_evaluacion->agregarRigor($idEvaluacion, $seguridad_fisica, $economico, $seguridad_acceso);
+									$this->session->set_flashdata('ExitoRigor', '¡Se agregaron los datos exitosamente!');
+								}                     
+                            }
+                            $datos = array('seguridad_fisica' => $seguridad_fisica, 'economico' => $economico, 'seguridad_acceso' => $seguridad_acceso); 
                         break;
                     };
                 
