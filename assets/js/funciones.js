@@ -373,20 +373,20 @@ function guardar_1_3(){
 };
 
 function guardar_1_4(){
-    var base_url = document.getElementById('baseurl').value;
+   var base_url = document.getElementById('baseurl').value;
     var seguridad_fisica = document.getElementById('seguridad_fisica').value;
-	var economico = document.getElementById('economico').value;
-	var seguridad_acceso = document.getElementById('seguridad_acceso').value;
-
+    var economico = document.getElementById('economico').value;
+    var seguridad_acceso = document.getElementById('seguridad_acceso').value;
+	
     $.ajax({
         type:'POST',
         url: base_url+'evaluacion/guardado/1/4',
-        data: {seguridad_fisica:seguridad_fisica, economico:economico, seguridad_acceso:seguridad_acceso},
+        data: {seguridad_fisica: seguridad_fisica,economico:economico,seguridad_acceso:seguridad_acceso},
         
         success: function(output_string){
             $('#14').attr({
-                'class': 'list-group-item list-group-item-success',
-            });
+                    'class': 'list-group-item list-group-item-success',
+                });
             $("#contenido").html(output_string);
         }
     });

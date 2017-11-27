@@ -1,19 +1,19 @@
 <?php
 
-class Model_evaluacion extends CI_Model { 
-    
-    function __construct(){
+class Model_evaluacion extends CI_Model {
+
+    function __construct() {
         parent::__construct();
     }
-    
-    function getCaracteristicas(){
+
+    function getCaracteristicas() {
         $this->db->select('*');
         $this->db->from('caracteristica');
         $consulta = $this->db->get();
         return $consulta;
     }
-    
-    function getCaracteristicasEvaluacion($idEvaluacion){
+
+    function getCaracteristicasEvaluacion($idEvaluacion) {
         $this->db->select('DISTINCT(a.nombre)');
         $this->db->from('evaluacion_caracteristica as ea, caracteristica as a');
         $this->db->where('ea.idEvaluacion', $idEvaluacion);
@@ -21,26 +21,26 @@ class Model_evaluacion extends CI_Model {
         $consulta = $this->db->get();
         return $consulta;
     }
-    
-    function getSubCaracteristicas_Caracteristica($idCaracteristica){
+
+    function getSubCaracteristicas_Caracteristica($idCaracteristica) {
         $this->db->select('*');
         $this->db->from('subcaracteristica');
         $this->db->where('idCaracteristica', $idCaracteristica);
         $consulta = $this->db->get();
         return $consulta;
     }
-    
-    function guardarDefinicion($nombre, $descripcion){
+
+    function guardarDefinicion($nombre, $descripcion) {
         $this->db->trans_start();
         $data1 = array(
-               'nombre' => $nombre,
-               'descripcion' => $descripcion,
+            'nombre' => $nombre,
+            'descripcion' => $descripcion,
         );
-        
-        $this->db->insert('producto', $data1); 
+
+        $this->db->insert('producto', $data1);
         $idProducto = $this->db->insert_id();
         $this->db->trans_complete();
-        
+
         $this->db->trans_start();
         $data2 = array(
             'idProducto' => $idProducto,
@@ -48,13 +48,13 @@ class Model_evaluacion extends CI_Model {
             'idEstadoEvaluacion' => 1,
             'idParte' => 1,
         );
-        $this->db->insert('evaluacion', $data2); 
+        $this->db->insert('evaluacion', $data2);
         $idEvaluacion = $this->db->insert_id();
         $this->db->trans_complete();
         return $idEvaluacion;
     }
-    
-    function cargarProducto($idEvaluacion){
+
+    function cargarProducto($idEvaluacion) {
         $this->db->select('*');
         $this->db->from('producto as p, evaluacion as e');
         $this->db->where('e.idEvaluacion', $idEvaluacion);
@@ -62,35 +62,35 @@ class Model_evaluacion extends CI_Model {
         $consulta = $this->db->get();
         return $consulta;
     }
-    
-    function editarDefinicion($nombre, $descripcion, $idEvaluacion){
-        
+
+    function editarDefinicion($nombre, $descripcion, $idEvaluacion) {
+
         $this->db->select('*');
         $this->db->from('evaluacion as e');
         $this->db->where('e.idEvaluacion', $idEvaluacion);
         $query = $this->db->get();
-        
+
         $this->db->trans_start();
         $data = array(
-               'nombre' => $nombre,
-               'descripcion' => $descripcion,
+            'nombre' => $nombre,
+            'descripcion' => $descripcion,
         );
-        foreach ($query->result_array() as $q){
+        foreach ($query->result_array() as $q) {
             $this->db->where('idProducto', $q['idProducto']);
         }
-        $this->db->update('producto', $data); 
+        $this->db->update('producto', $data);
         $producto = $this->db->insert_id();
         $this->db->trans_complete();
-        
+
         return $producto;
     }
-    
-    function cantEvaluaciones(){ 
+
+    function cantEvaluaciones() {
         $consulta = $this->db->get('evaluacion');
         return $consulta->num_rows();
     }
-    
-    function getEvaluacionesPaginadas($limite, $start){
+
+    function getEvaluacionesPaginadas($limite, $start) {
         $this->db->select('*');
         $this->db->from('producto as p, evaluacion as e, estado_evaluacion as es');
         $this->db->where('e.idProducto = p.idProducto');
@@ -98,184 +98,188 @@ class Model_evaluacion extends CI_Model {
         $this->db->limit($limite, $start);
         $this->db->order_by("idEvaluacion", "desc");
         $query = $this->db->get();
-        
-        if($query->num_rows() == 0 ){
+
+        if ($query->num_rows() == 0) {
             return false;
-        }else{
+        } else {
             return $query;
         }
     }
-    
-    function cargarProposito($idEvaluacion){
+
+    function cargarProposito($idEvaluacion) {
         $this->db->select('*');
         $this->db->from('evaluacion as e');
         $this->db->where('e.idEvaluacion', $idEvaluacion);
         $consulta = $this->db->get();
         return $consulta;
     }
-    
-    function guardarProposito($proposito, $idEvaluacion){
-       $this->db->trans_start();
-       $data1 = array(
-              'proposito' => $proposito,
-       );
 
-       $this->db->where('idEvaluacion', $idEvaluacion);
-       $this->db->update('evaluacion', $data1); 
-       $this->db->trans_complete();
-
-       return $idEvaluacion;
-    }
-    
-    function editarProposito($proposito, $idEvaluacion){
+    function guardarProposito($proposito, $idEvaluacion) {
         $this->db->trans_start();
-        $data = array(
-               'proposito' => $proposito,
+        $data1 = array(
+            'proposito' => $proposito,
         );
 
         $this->db->where('idEvaluacion', $idEvaluacion);
-        $this->db->update('evaluacion', $data); 
+        $this->db->update('evaluacion', $data1);
+        $this->db->trans_complete();
+
+        return $idEvaluacion;
+    }
+
+    function editarProposito($proposito, $idEvaluacion) {
+        $this->db->trans_start();
+        $data = array(
+            'proposito' => $proposito,
+        );
+
+        $this->db->where('idEvaluacion', $idEvaluacion);
+        $this->db->update('evaluacion', $data);
         $producto = $this->db->insert_id();
         $this->db->trans_complete();
-        
+
         return $producto;
     }
-    
-    function existeProposito($idEvaluacion){
+
+    function existeProposito($idEvaluacion) {
         $this->db->select('*');
         $this->db->from('evaluacion as e');
         $this->db->where('e.idEvaluacion', $idEvaluacion);
         $query = $this->db->get();
-        
-        foreach ($query->result_array() as $q){
-            if ($q['proposito'] <> null){
+
+        foreach ($query->result_array() as $q) {
+            if ($q['proposito'] <> null) {
                 return true;
-            }else{
+            } else {
                 return false;
             }
         }
     }
-    
-    function cargar_1_2($idEvaluacion){
+
+    function cargar_1_2($idEvaluacion) {
         $this->db->select('*');
         $this->db->from('evaluacion_caracteristica as ec');
         $this->db->where('ec.idEvaluacion', $idEvaluacion);
         $consulta = $this->db->get();
         return $consulta;
     }
-    
-    function existe_1_2($idEvaluacion){
+
+    function existe_1_2($idEvaluacion) {
         $this->db->select('*');
         $this->db->from('evaluacion_caracteristica as ec');
         $this->db->where('ec.idEvaluacion', $idEvaluacion);
         $query = $this->db->get();
-        
-        if($query->num_rows() == 0 ){
+
+        if ($query->num_rows() == 0) {
             return false;
-        }else{
+        } else {
             return true;
         }
     }
-    
-    function guardarCaracteristicas($idCaracteristica, $idEvaluacion){
+
+    function guardarCaracteristicas($idCaracteristica, $idEvaluacion) {
         $this->db->trans_start();
 
-       $data1 = array(
+        $data1 = array(
             'idEvaluacion' => $idEvaluacion,
             'idCaracteristica' => $idCaracteristica,
-       );
+        );
 
-       $this->db->insert('evaluacion_caracteristica', $data1); 
-       $this->db->trans_complete();
+        $this->db->insert('evaluacion_caracteristica', $data1);
+        $this->db->trans_complete();
 
-       return $idEvaluacion;
+        return $idEvaluacion;
     }
-    
-    function getCaracteristicasSeleccionados($idEvaluacion){
+
+    function getCaracteristicasSeleccionados($idEvaluacion) {
         $this->db->select('*');
         $this->db->from('evaluacion_caracteristica');
         $this->db->where('idEvaluacion', $idEvaluacion);
         $consulta = $this->db->get();
         return $consulta;
     }
-    
-    function eliminarCaracteristicas($idEvaluacion){
+
+    function eliminarCaracteristicas($idEvaluacion) {
         $this->db->where('idEvaluacion', $idEvaluacion);
-        $this->db->delete('evaluacion_caracteristica'); 
+        $this->db->delete('evaluacion_caracteristica');
     }
-    
-    function getPartes(){
+
+    function getPartes() {
         $this->db->select('*');
         $this->db->from('parte');
         $consulta = $this->db->get();
         return $consulta;
     }
-    
-    function getParteSeleccionada($idEvaluacion){ 
+
+    function getParteSeleccionada($idEvaluacion) {
         $this->db->select('*');
         $this->db->from('evaluacion as e');
         $this->db->where('e.idEvaluacion', $idEvaluacion);
         $consulta = $this->db->get();
         return $consulta;
     }
-    
-    function agregarParte($parte, $idEvaluacion){
+
+    function agregarParte($parte, $idEvaluacion) {
         $this->db->trans_start();
 
         $data = array(
-             'idParte' => $parte,
+            'idParte' => $parte,
         );
 
         $this->db->where('idEvaluacion', $idEvaluacion);
-        $this->db->update('evaluacion', $data); 
+        $this->db->update('evaluacion', $data);
         $this->db->trans_complete();
-        
+
         return $parte;
     }
-	
-	function cargarRigor($idEvaluacion){
+
+    function cargarRigor($idEvaluacion) {
         $this->db->select('*');
         $this->db->from('evaluacion as e');
         $this->db->where('e.idEvaluacion', $idEvaluacion);
         $consulta = $this->db->get();
         return $consulta;
     }
-	
-	function getEvaluacionRigor($rigor){
+
+    function getEvaluacionRigor($rigor) {
         $this->db->select('*');
         $this->db->from('evaluacion_rigor as er');
         $this->db->where('er.idEvaluacionRigor', $rigor);
         $consulta = $this->db->get();
         return $consulta;
     }
-	
-	function modificarRigor($rigor, $seguridad_fisica, $economico, $seguridad_acceso){
-		$this->db->trans_start();
-        $this->db->where('idEvaluacionRigor', $rigor);
-        $this->db->update('seguridad_fisica', $seguridad_fisica); 
-		$this->db->update('economico', $economico); 
-		$this->db->update('seguridad_acceso', $seguridad_acceso); 
-        $this->db->trans_complete();
-        
-        return $rigor;
-	}
-	
-	function agregarRigor($idEvaluacion, $seguridad_fisica, $economico, $seguridad_acceso){
-		$this->db->trans_start();
+
+    function modificarRigor($rigor, $seguridad_fisica, $economico, $seguridad_acceso) {
+        $this->db->trans_start();
         $data1 = array(
-               'seguridad_fisica' => $seguridad_fisica,
-               'economico' => $economico,
-			   'seguridad_acceso' => $seguridad_acceso,
-        );        
-        $this->db->insert('evaluacion_rigor', $data1); 
+            'seguridad_fisica' => $seguridad_fisica,
+            'economico' => $economico,
+            'seguridad_acceso' => $seguridad_acceso,
+        );
+        $this->db->where('idEvaluacionRigor', $rigor);
+        $this->db->update('evaluacion_rigor', $data1);
+        $this->db->trans_complete();
+
+        return $rigor;
+    }
+
+    function agregarRigor($idEvaluacion, $seguridad_fisica, $economico, $seguridad_acceso) {
+        $this->db->trans_start();
+        $data1 = array(
+            'seguridad_fisica' => $seguridad_fisica,
+            'economico' => $economico,
+            'seguridad_acceso' => $seguridad_acceso,
+        );
+        $this->db->insert('evaluacion_rigor', $data1);
         $idEvaluacionRigor = $this->db->insert_id();
         $this->db->trans_complete();
-        
+
         $this->db->trans_start();
         $this->db->where('idEvaluacion', $idEvaluacion);
-		$this->db->update('idEvaluacionRigor', $idEvaluacionRigor);
+        $this->db->update('evaluacion', array('idEvaluacionRigor'=>$idEvaluacionRigor));
         $this->db->trans_complete();
-		
+
         return $idEvaluacion;
-	}
+    }
+
 }
