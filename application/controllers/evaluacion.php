@@ -118,6 +118,30 @@ class Evaluacion extends CI_Controller{
                 $this->load->view('sitio/view_definicionProducto', $datos);
             }
         }
+		
+		public function verEvaluacion(){
+			$this->load->model('model_evaluacion');
+			$nombre = "pepe";
+			$descripcion = "ss";
+			if($this->input->post()){
+				$idEvaluacion = $this->input->post('evaluacion');
+				$evaluacion_data = array(
+					'idEvaluacion' => $idEvaluacion,
+					'creada' => true,
+					);
+				$this->session->set_userdata($evaluacion_data);
+				$nombre = $this->model_evaluacion->getNombre($idEvaluacion);
+				$descripcion = $this->model_evaluacion->getDescripcion($idEvaluacion);
+			}
+			//var_dump($nombre); exit();
+			$datos = array('nombre' => $nombre, 'descripcion' => $descripcion);
+			//$this->load->view('sitio/view_definicionProducto', $datos);
+			
+			/*ACA*/
+			$contenido = array('contenido' => $this->load->view('sitio/view_definicionProducto', $datos, true));
+            $datos["cuerpo"] = $this->load->view('sitio/view_iniciarEvaluacion', $contenido, true);
+            $this->load->view('sitio/view_index', $datos);
+		}
         
         public function tarea_paso($tarea,$paso)
 	{
@@ -299,7 +323,7 @@ class Evaluacion extends CI_Controller{
                                     }else{
                                         $guardarProposito = $this->model_evaluacion->guardarProposito($proposito, $this->session->userdata('idEvaluacion'));
                                         if ($guardarProposito){
-                                            $this->session->set_flashdata('ExitoProposito', '¡Se cargó el propósito exitosamente!');
+                                            $this->session->set_flashdata('ExitoProposito', '¡Se cargaron los datos exitosamente!');
                                         }else{
                                             $this->session->set_flashdata('ErrorProposito', 'Ocurrió un error al guardar los datos');
                                         }
@@ -398,10 +422,10 @@ class Evaluacion extends CI_Controller{
                                 }
                                 if ($rigor <> 0) {
                                     $evaluacion = $this->model_evaluacion->modificarRigor($rigor, $seguridad_fisica, $economico, $seguridad_acceso);
-                                    $this->session->set_flashdata('ExitoRigor', '¡Se modificaron los datos exitosamente!');
+                                    $this->session->set_flashdata('ExitoRigor', '¡Se editaron los datos exitosamente!');
                                 } else {
                                     $evaluacion = $this->model_evaluacion->agregarRigor($idEvaluacion, $seguridad_fisica, $economico, $seguridad_acceso);
-                                    $this->session->set_flashdata('ExitoRigor', '¡Se agregaron los datos exitosamente!');
+                                    $this->session->set_flashdata('ExitoRigor', '¡Se cargaron los datos exitosamente!');
                                 }
                             }
                             

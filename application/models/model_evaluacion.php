@@ -113,6 +113,28 @@ class Model_evaluacion extends CI_Model {
         $consulta = $this->db->get();
         return $consulta;
     }
+	
+	function getNombre($idEvaluacion) {
+        $this->db->select('*');
+        $this->db->from('producto as p, evaluacion as e');
+		$this->db->where('e.idEvaluacion', $idEvaluacion);
+		$this->db->where('e.idProducto = p.idProducto');
+        $query = $this->db->get();
+		foreach ($query->result_array() as $q) {
+            return $q['nombre'];
+        }
+    }
+	
+	function getDescripcion($idEvaluacion) {
+        $this->db->select('*');
+        $this->db->from('producto as p, evaluacion as e');
+		$this->db->where('e.idEvaluacion', $idEvaluacion);
+		$this->db->where('e.idProducto = p.idProducto');
+        $query = $this->db->get();
+		foreach ($query->result_array() as $q) {
+            return $q['descripcion'];
+        }
+    }
 
     function guardarProposito($proposito, $idEvaluacion) {
         $this->db->trans_start();
