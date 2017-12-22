@@ -1,5 +1,5 @@
 <div>
-    <h2>Actividad 1: Establecer los requisitos de la evaluación</h2>
+    <h2>HolaprobandoActividad 1: Establecer los requisitos de la evaluación</h2>
 </div>
 <hr>
 <div>
