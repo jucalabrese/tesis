@@ -305,13 +305,11 @@ function guardarProducto(){
 function ver_evaluacion(evaluacion){
     var base_url = document.getElementById('baseurl').value;
     $.ajax({
+		type:'POST',
         url: base_url+'evaluacion/verEvaluacion',
-        type:'POST',
-		async: false,
         data: {evaluacion: evaluacion},
         success: function(output_string){
 			$("#contenido").html(output_string);
-		//	window.location.assign(output_string);
         } 
     });
 };

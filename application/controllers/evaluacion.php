@@ -2,8 +2,7 @@
 
 class Evaluacion extends CI_Controller{
 
-	public function iniciar_evaluacion()
-	{   
+		public function iniciar_evaluacion(){   
             $evaluacion_data = array(
                 'idEvaluacion' => null,
                 'creada' => false,
@@ -13,12 +12,11 @@ class Evaluacion extends CI_Controller{
             $contenido = array('contenido' => $this->load->view('sitio/view_definicionProducto', $datos, true));
             $datos["cuerpo"] = $this->load->view('sitio/view_iniciarEvaluacion', $contenido, true);
             $this->load->view('sitio/view_index', $datos);
-	}
+		}
         
-        public function introduccion_evaluacion()
-	{   
+        public function introduccion_evaluacion(){   
             $this->load->view('sitio/view_introduccionEvaluacion', '');
-	}
+		}
         
         public function evaluaciones(){
             
@@ -133,18 +131,14 @@ class Evaluacion extends CI_Controller{
 				$nombre = $this->model_evaluacion->getNombre($idEvaluacion);
 				$descripcion = $this->model_evaluacion->getDescripcion($idEvaluacion);
 			}
-			//var_dump($nombre); exit();
 			$datos = array('nombre' => $nombre, 'descripcion' => $descripcion);
-			//$this->load->view('sitio/view_definicionProducto', $datos);
-			
-			/*ACA*/
 			$contenido = array('contenido' => $this->load->view('sitio/view_definicionProducto', $datos, true));
             $datos["cuerpo"] = $this->load->view('sitio/view_iniciarEvaluacion', $contenido, true);
             $this->load->view('sitio/view_index', $datos);
+			//redirect('sitio/definicion_producto');
 		}
         
-        public function tarea_paso($tarea,$paso)
-	{
+        public function tarea_paso($tarea,$paso){
             $datos = null;
             $datos2 = null;
             $idEvaluacion = $this->session->userdata('idEvaluacion');
@@ -293,8 +287,7 @@ class Evaluacion extends CI_Controller{
             $this->load->view('tarea_paso/tarea1/view_tarea1_paso3', $datos);
         }
 
-        public function guardado($tarea,$paso)
-	{
+        public function guardado($tarea,$paso){
             $this->load->model('model_evaluacion');
             $idEvaluacion = $this->session->userdata('idEvaluacion');
             switch ($tarea){
