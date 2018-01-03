@@ -39,8 +39,7 @@
                               <td class="css_tabla_numProd"><?php echo $e['idEvaluacion']?></td>
                               <td class="css_tabla_producto"><?php echo $e['nombre']?></td>
                               <td class="css_tabla_estadoVer"><?php echo $e['estado']?></td>
-                              <td class="css_tabla_estadoVer">
-						      <button type="button" class="btn btn-success" onclick="ver_evaluacion(<?php echo $e['idEvaluacion']?>)">Ver</button></td>
+                              <td class="css_tabla_estadoVer"><a onclick="ver_evaluacion(<?php echo $e['idEvaluacion']?>)" href='<?php echo base_url()?>evaluacion/iniciar_evaluacion'>Ver</a></td>
                             </tr>
                             <?php }
                         } ?>
