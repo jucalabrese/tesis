@@ -1,5 +1,5 @@
 <div>
-    <h2>Tarea 1.1: Establecer el propósito de la evaluación</h2>
+    <h2>Establecer el propósito de la evaluación</h2>
 </div>
 <hr>
 <?php //Muestra cartel exito/error
@@ -23,7 +23,7 @@
           
           <div class="form-group">
             <div class="col-lg-12">
-                <textarea class="form-control text_area" rows="10" id="proposito" placeholder="Ingrese el propósito de la evaluación"><?php echo $proposito?></textarea>
+                <textarea name="proposito" class="form-control text_area" rows="10" id="proposito" placeholder="Ingrese el propósito de la evaluación"><?php echo $proposito?></textarea>
             </div>
         </div>
 

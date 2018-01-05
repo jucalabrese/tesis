@@ -325,7 +325,7 @@ function guardar_1_1(){
 function guardar_1_2(){
     var base_url = document.getElementById('baseurl').value;
     var texto = document.getElementById('texto').value;
-    var atributos = [];
+    var caracteristicas = [];
     
     
     $("#caracteristicas:checked").each(function(){
@@ -337,11 +337,11 @@ function guardar_1_2(){
     $.ajax({
         type:'POST',
         url: base_url+'evaluacion/guardado/1/2',
-        data: {atr: atributos, text: texto},
+        data: {car: caracteristicas, text: texto},
         
         success: function(output_string){
 
-            if (atributos!=''){
+            if (caracteristicas!=''){
                 $('#12').attr({
                     'class': 'list-group-item list-group-item-success',
                 });

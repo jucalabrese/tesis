@@ -1,5 +1,5 @@
 <div>
-    <h2>Tarea 1.2: Obtener los requisitos de calidad del producto</h2>
+    <h2>Características a evaluar</h2>
 </div>
 <hr>
     <?php //Muestra cartel exito/error

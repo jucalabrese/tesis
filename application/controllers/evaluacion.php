@@ -271,6 +271,7 @@ class Evaluacion extends CI_Controller{
 
         public function guardado($tarea,$paso)
 	{
+            unset($_SESSION['Exito']);
             $this->load->model('model_evaluacion');
             $idEvaluacion = $this->session->userdata('idEvaluacion');
             switch ($tarea){
@@ -281,28 +282,21 @@ class Evaluacion extends CI_Controller{
                         case 1:
                             if($this->input->post()){
                                 $proposito = $this->input->post('proposito');
-
+                                
                                 if ($proposito == ''){
-                                    unset($_SESSION['Exito']);
                                     $this->session->set_flashdata('ErrorProposito', 'El propósito no puede estar vacío');
-                                    $resul = $this->model_evaluacion->cargarProposito($this->session->userdata('idEvaluacion'));
+                                    $resul = $this->model_evaluacion->cargarProposito($idEvaluacion);
                                     foreach ($resul->result_array() as $e){
                                         $proposito = $e['proposito'];
                                     }
                                 }else{
-                                    $idEvaluacion = $this->session->userdata('idEvaluacion');
                                     $existeProposito = $this->model_evaluacion->existeProposito($idEvaluacion);
                                     if ($existeProposito){ //SE FIJA SI ES UNA EDICIÓN O LA PRIMERA VEZ
-                                        $idEvaluacion = $this->session->userdata('idEvaluacion');
                                         $this->model_evaluacion->editarProposito($proposito, $idEvaluacion);
                                         $this->session->set_flashdata('ExitoProposito', '¡Se editaron los datos exitosamente!');
                                     }else{
-                                        $guardarProposito = $this->model_evaluacion->guardarProposito($proposito, $this->session->userdata('idEvaluacion'));
-                                        if ($guardarProposito){
-                                            $this->session->set_flashdata('ExitoProposito', '¡Se cargó el propósito exitosamente!');
-                                        }else{
-                                            $this->session->set_flashdata('ErrorProposito', 'Ocurrió un error al guardar los datos');
-                                        }
+                                        $this->model_evaluacion->guardarProposito($proposito, $idEvaluacion);
+                                        $this->session->set_flashdata('ExitoProposito', '¡Se cargó el propósito exitosamente!');
                                     }
                                 }
                             }
