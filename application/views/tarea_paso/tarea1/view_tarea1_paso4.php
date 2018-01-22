@@ -135,18 +135,13 @@
         </tbody>
     </table>
     </div> -->
-    <div class="form-group">
-        <div class="col-lg-6 col-lg-offset-4">
-            <?php $this->load->view('tarea_paso/buttons', ''); ?>
-        </div>
-        <div class="form-group">
-            <div class="col-lg-6 col-lg-offset-4">
-                <div class="btn-group">
-                    <button type="button" class="btn btn-danger">Atrás</button>
-                    <button type="button" class="btn btn-warning">Agregar nota</button>
-                    <button type="button" class="btn btn-success" id="guardar" onclick="guardar_1_4()">Guardar</button>
-                </div>
-            </div>
-        </div>
-    </div>
+	<div class="form-group">
+		<div class="col-lg-6 col-lg-offset-4">
+			<div class="btn-group">
+				<button type="button" class="btn btn-danger">Atrás</button>
+				<button type="button" class="btn btn-warning">Agregar nota</button>
+				<button type="button" class="btn btn-success" id="guardar" onclick="guardar_1_4()">Guardar</button>
+			</div>
+		</div>
+	</div>
 </div>
