@@ -1,17 +1,17 @@
 <div>
-    <h2>Tarea 1.4: Definir el rigor de la evaluación</h2>
+    <h2>Rigor de la evaluación</h2>
 </div>
 <hr>
-<div class="col-lg-12">
-
-    <h4>Asignación de rigor de la evaluación</h4> <!-- TABLA DONDE SE ELIGE EL RIGOR -->
-    <br>
+<div>
+    <div class="form-group">
+        <span>Indique el rigor de la evaluación para cada uno de los siguientes aspectos: </span>
+    </div>
     <table class="table table-bordered">
         <thead class="color_panel4">
             <tr align="center">
-              <td class="tamaño_rigor_nivel">Aspecto de seguridad física <img src="<?php echo base_url('assets/images/ayuda.jpg')?>" title=" <?php echo ("Consecuencias: \n A: Las personas pueden morir \n B: Amenaza contra vidas humanas \n C: Daños materiales. Amenaza de daño a personas \n D: Pequeños daños materiales. No hay riesgo para las personas"); ?>" width="13px" class="img-rounded" alt="help"></td>
-              <td class="tamaño_rigor_nivel">Aspecto económico <img src="<?php echo base_url('assets/images/ayuda.jpg')?>" title=" <?php echo ("Consecuencias: \n A: Desastre financiero (la compañía no puede seguir funcionando) \n B: Pérdidas económicas importantes \n C: Pérdidas económicas significantes \n D: Pérdidas económicas insignificantes"); ?>" width="13px" class="img-rounded" alt="help"></td>
-              <td class="tamaño_rigor_nivel2">Aspecto de seguridad de acceso <img src="<?php echo base_url('assets/images/ayuda.jpg')?>" title=" <?php echo ("Consecuencias: \n A: Riesgo de protección de datos y servicios estratégicos \n B: Riesgo de protección de datos y servicios críticos \n C: Riesgo de protección de datos \n D: No se identifican riesgos"); ?>" width="13px" class="img-rounded" alt="help"></td>
+              <td class="tamaño_rigor_nivel">Aspecto de seguridad física <img src="<?php echo base_url('assets/images/ayuda.jpg')?>" title=" <?php echo ("Consecuencias \n A: Las personas pueden morir \n B: Amenaza contra vidas humanas \n C: Daños materiales. Amenaza de daño a personas \n D: Pequeños daños materiales. No hay riesgo para las personas"); ?>" width="13px" class="img-rounded" alt="help"></td>
+              <td class="tamaño_rigor_nivel">Aspecto económico <img src="<?php echo base_url('assets/images/ayuda.jpg')?>" title=" <?php echo ("Consecuencias \n A: Desastre financiero (la compañía no puede seguir funcionando) \n B: Pérdidas económicas importantes \n C: Pérdidas económicas significantes \n D: Pérdidas económicas insignificantes"); ?>" width="13px" class="img-rounded" alt="help"></td>
+              <td class="tamaño_rigor_nivel2">Aspecto de seguridad de acceso <img src="<?php echo base_url('assets/images/ayuda.jpg')?>" title=" <?php echo ("Consecuencias \n A: Riesgo de protección de datos y servicios estratégicos \n B: Riesgo de protección de datos y servicios críticos \n C: Riesgo de protección de datos \n D: No se identifican riesgos"); ?>" width="13px" class="img-rounded" alt="help"></td>
             </tr>
         </thead>
         <tbody>
@@ -46,7 +46,7 @@
             </tr>
         </tbody>
     </table>
-    <a href="#" onclick="ocultarTablasRigor()">Referencias - Anexo A (ISO 25040)</a>
+    <!-- <a href="#" onclick="ocultarTablasRigor()">Referencias - Anexo A (ISO 25040)</a>
     <div id="tablas" style="display: none; padding-top: 3%">
     <table class="table table-bordered">
         <thead class="color_panel1">
@@ -134,7 +134,7 @@
             </tr>
         </tbody>
     </table>
-    </div>
+    </div> -->
     <div class="form-group">
         <div class="col-lg-6 col-lg-offset-4">
             <?php $this->load->view('tarea_paso/buttons', ''); ?>
