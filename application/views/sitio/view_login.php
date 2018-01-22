@@ -1,5 +1,5 @@
 <div class="row"> 
-    <div style="background-image: url(<?php echo base_url('assets/images/FacInfo.jpg')?>); height: 400px; background-size: cover"></div>
+    <div style="background-image: url(<?php echo base_url('assets/images/FacInfo.jpg')?>); height: 350px; background-size: cover"></div>
 </div>
 <div class="row">  
     <?php if (validation_errors()): ?>

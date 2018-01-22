@@ -1,5 +1,5 @@
 <div class="row"> 
-    <div style="background-image: url(<?php echo base_url('assets/images/FacInfo.jpg')?>); height: 400px; background-size: cover"></div>
+    <div style="background-image: url(<?php echo base_url('assets/images/FacInfo.jpg')?>); height: 350px; background-size: cover"></div>
 </div>
 <div class="row">
     <?php //Muestra cartel exito/error
@@ -16,13 +16,16 @@
         } ?>
 </div>
 <div class="row">
-    <div class="col-md-10 col-md-offset-1">
+    <div class="col-md-1">
+    </div>
+    <div class="col-md-10">
         <h1>Sistema de Evaluación de Producto</h1>
-        <p>La norma ISO/IEC 25040 - Guía y modelo de referencia de evaluación: propone un modelo de referencia general para la evaluación, que considera las entradas al proceso de evaluación, las restricciones y los recursos necesarios para obtener las correspondientes salidas</p>
-    </div>   
+        <hr>
+    </div>
+    <div class="col-md-1">
+    </div>
 </div>
-<hr>
-<div class="row espacios">
+<div class="row espacios" style="padding-top: 2%">
     <div class="col-md-offset-3 col-md-3">
         <a href="http://weblidi.info.unlp.edu.ar/wp/" target="_blank"><img src="<?php echo base_url('assets/images/LogoLIDI.png')?>" class="img-thumbnail" alt="LIDI"></a>
     </div>   

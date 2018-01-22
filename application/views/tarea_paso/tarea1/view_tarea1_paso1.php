@@ -19,6 +19,7 @@
         
         <div class="form-group">
             <textarea class="form-control text_area" rows="10" id="proposito" placeholder="Ingrese el propósito por el cual la organización quiere evaluar la calidad de su producto de software."><?php echo $proposito?></textarea>      
+            <span class="col-lg-12">Propósito:</span>
         </div>
 
       <div class="form-group">

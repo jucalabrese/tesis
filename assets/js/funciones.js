@@ -325,7 +325,7 @@ function guardar_1_1(){
 function guardar_1_2(){
     var base_url = document.getElementById('baseurl').value;
     var texto = document.getElementById('texto').value;
-    var atributos = [];
+    var caracteristicas = [];
     
     
     $("#caracteristicas:checked").each(function(){
@@ -337,11 +337,11 @@ function guardar_1_2(){
     $.ajax({
         type:'POST',
         url: base_url+'evaluacion/guardado/1/2',
-        data: {atr: atributos, text: texto},
+        data: {car: caracteristicas, text: texto},
         
         success: function(output_string){
 
-            if (atributos!=''){
+            if (caracteristicas!=''){
                 $('#12').attr({
                     'class': 'list-group-item list-group-item-success',
                 });
@@ -355,7 +355,7 @@ function guardar_1_2(){
 function guardar_1_3(){
     var base_url = document.getElementById('baseurl').value;
     var parte = document.getElementById('partes').value;
-
+	
     $.ajax({
         type:'POST',
         url: base_url+'evaluacion/guardado/1/3',
@@ -367,6 +367,26 @@ function guardar_1_3(){
                     'class': 'list-group-item list-group-item-success',
                 });
             };
+            $("#contenido").html(output_string);
+        }
+    });
+};
+
+function guardar_1_4(){
+   var base_url = document.getElementById('baseurl').value;
+    var seguridad_fisica = document.getElementById('seguridad_fisica').value;
+    var economico = document.getElementById('economico').value;
+    var seguridad_acceso = document.getElementById('seguridad_acceso').value;
+	
+    $.ajax({
+        type:'POST',
+        url: base_url+'evaluacion/guardado/1/4',
+        data: {seguridad_fisica: seguridad_fisica,economico:economico,seguridad_acceso:seguridad_acceso},
+        
+        success: function(output_string){
+            $('#14').attr({
+                    'class': 'list-group-item list-group-item-success',
+                });
             $("#contenido").html(output_string);
         }
     });
