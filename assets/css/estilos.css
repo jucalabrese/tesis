@@ -106,3 +106,7 @@ body{
     background-color: #999;
     border-color: #dddddd;
 }
+
+.tamaño_criterio_decision{
+    width: 40%; 
+}

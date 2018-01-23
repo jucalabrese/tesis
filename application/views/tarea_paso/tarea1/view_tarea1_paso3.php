@@ -1,5 +1,5 @@
 <div>
-    <h2>Tarea 1.3: Identificar las partes del producto que se deben evaluar</h2>
+    <h2>Fase en la que se encuentra el producto</h2>
 </div>
 <hr>
 <?php //Muestra cartel exito/error
@@ -17,14 +17,13 @@
 ?>  
 <div class="col-lg-12">
       <form class="form-horizontal" role="form">
-        
-        <div class="form-group">
-            <div class="col-lg-12">
-               <span >Parte del producto a evaluar: </span>
-            </div>
-        </div>                 
-        <div class="form-group">
-            <div class="col-lg-12">
+        <div class="form-group">  
+            <div class="form-group">
+                <div class="col-lg-12">
+                    <span>Seleccione la fase en la que se encuentra el producto a evaluar: </span>
+                </div>
+            </div>                 
+            <div class="form-group col-lg-12">
                 <select class="form-control" id="partes">
                     <?php foreach ($partes->result_array() as $p){ 
                         if (($p['idParte']) == $parte_seleccionada){?>
@@ -35,8 +34,7 @@
                 </select>    
             </div>
         </div>
-        <br>
-       
+          
         <div class="form-group">
             <div class="col-lg-6 col-lg-offset-4">
                 <div class="btn-group">
@@ -45,6 +43,6 @@
                     <button type="button" class="btn btn-success" id="guardar" onclick="guardar_1_3()">Guardar</button>
                 </div>
             </div>
-        </div>  
+        </div>
     </form>
 </div>

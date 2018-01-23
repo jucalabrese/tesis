@@ -1,5 +1,5 @@
 <div>
-    <h2>Características a evaluar</h2>
+    <h2>Características del producto de software a evaluar</h2>
 </div>
 <hr>
     <?php //Muestra cartel exito/error
@@ -25,48 +25,47 @@
     ?>  
 <div class="col-lg-12">
       <form class="form-horizontal" role="form">
-        <div class="form-group">
-            <div class="col-lg-12">
-                <span class="lead">Seleccione las características a utilizar en la evaluación: </span>
+        <div class="form-group"> 
+            <div class="form-group">
+                <div class="col-lg-12">
+                    <span>Seleccione una o más características a evaluar: </span>
+                </div>
             </div>
-        </div>
-        <?php foreach ($caracteristicas->result_array() as $atr){
-            if ($caracteristicasSeleccionadas <> null){
-                if (in_array($atr['idCaracteristica'], $caracteristicasSeleccionadas)){?>           
+            <?php foreach ($caracteristicas->result_array() as $atr){
+                if ($caracteristicasSeleccionadas <> null){
+                    if (in_array($atr['idCaracteristica'], $caracteristicasSeleccionadas)){?>           
+                        <div class="form-group">
+                                <div class="checkbox">
+                                    <label style="margin-left: 10%">
+                                        <input type="checkbox" checked value="<?php echo $atr['idCaracteristica']?>" id="caracteristicas" name="caracteristicas">
+                                        <?php echo $atr['nombre']?>
+                                    </label>   
+                            </div>
+                        </div>
+            <?php }else{ ?>
                     <div class="form-group">
+                            <div class="checkbox">
+                                <label style="margin-left: 10%">
+                                    <input type="checkbox" value="<?php echo $atr['idCaracteristica']?>" id="caracteristicas" name="caracteristicas">
+                                    <?php echo $atr['nombre']?>
+                                </label>
+                            </div>    
+                    </div>
+            <?php }}else{ ?>
+                <div class="form-group">
                         <div class="col-lg-12">
                             <div class="checkbox">
-                                <label>
-                                    <input type="checkbox" checked value="<?php echo $atr['idCaracteristica']?>" id="caracteristicas" name="caracteristicas">
+                                <label style="margin-left: 10%">
+                                    <input type="checkbox" value="<?php echo $atr['idCaracteristica']?>" id="caracteristicas" name="caracteristicas">
                                     <?php echo $atr['nombre']?>
                                 </label>
                             </div>    
                         </div>
-                    </div>
-        <?php }else{ ?>
-                <div class="form-group">
-                    <div class="col-lg-12">
-                        <div class="checkbox">
-                            <label>
-                                <input type="checkbox" value="<?php echo $atr['idCaracteristica']?>" id="caracteristicas" name="caracteristicas">
-                                <?php echo $atr['nombre']?>
-                            </label>
-                        </div>    
-                    </div>
                 </div>
-        <?php }}else{ ?>
-            <div class="form-group">
-                    <div class="col-lg-12">
-                        <div class="checkbox">
-                            <label>
-                                <input type="checkbox" value="<?php echo $atr['idCaracteristica']?>" id="caracteristicas" name="caracteristicas">
-                                <?php echo $atr['nombre']?>
-                            </label>
-                        </div>    
-                    </div>
-            </div>
-        <?php }} ?> 
-
+            <?php }} ?> 
+            <hr>
+            <span>Nota: Las características se encuentran definidas en el modelo de calidad brindado por la norma ISO/IEC 25010.</span>
+        </div>
         <div class="form-group">
             <div class="col-lg-6 col-lg-offset-4">
                 <div class="btn-group">
