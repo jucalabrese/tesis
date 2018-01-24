@@ -1,5 +1,5 @@
 <div>
-    <h2>Características del producto de software a evaluar</h2>
+    <h2>Características a evaluar del producto de software</h2>
 </div>
 <hr>
     <?php //Muestra cartel exito/error
@@ -35,8 +35,8 @@
                 if ($caracteristicasSeleccionadas <> null){
                     if (in_array($atr['idCaracteristica'], $caracteristicasSeleccionadas)){?>           
                         <div class="form-group">
-                                <div class="checkbox">
-                                    <label style="margin-left: 10%">
+                                <div class="checkbox col-md-12">
+                                    <label>
                                         <input type="checkbox" checked value="<?php echo $atr['idCaracteristica']?>" id="caracteristicas" name="caracteristicas">
                                         <?php echo $atr['nombre']?>
                                     </label>   
@@ -44,8 +44,8 @@
                         </div>
             <?php }else{ ?>
                     <div class="form-group">
-                            <div class="checkbox">
-                                <label style="margin-left: 10%">
+                            <div class="checkbox col-md-12">
+                                <label>
                                     <input type="checkbox" value="<?php echo $atr['idCaracteristica']?>" id="caracteristicas" name="caracteristicas">
                                     <?php echo $atr['nombre']?>
                                 </label>
@@ -54,8 +54,8 @@
             <?php }}else{ ?>
                 <div class="form-group">
                         <div class="col-lg-12">
-                            <div class="checkbox">
-                                <label style="margin-left: 10%">
+                            <div class="checkbox col-md-12">
+                                <label>
                                     <input type="checkbox" value="<?php echo $atr['idCaracteristica']?>" id="caracteristicas" name="caracteristicas">
                                     <?php echo $atr['nombre']?>
                                 </label>

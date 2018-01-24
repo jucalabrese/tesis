@@ -1,26 +1,26 @@
 <div>
-    <h2>Propósito de la evaluación</h2>
+    <h2>Actividades de la evaluación</h2>
 </div>
 <hr>
 <?php //Muestra cartel exito/error
-    if ($this->session->flashdata('ExitoProposito')){ ?>
+    if ($this->session->flashdata('ExitoActividades')){ ?>
         <div class="alert alert-success">
-            <?php echo $this->session->flashdata('ExitoProposito'); ?>
+            <?php echo $this->session->flashdata('ExitoActividades'); ?>
         </div>
     <?php } else { 
-        if ($this->session->flashdata('ErrorProposito')){?>
+        if ($this->session->flashdata('ErrorActividades')){?>
             <div class="alert alert-danger">
-                <?php echo $this->session->flashdata('ErrorProposito'); ?>    
+                <?php echo $this->session->flashdata('ErrorActividades'); ?>    
             </div>
     <?php } 
 } ?>
 <div class="col-lg-12">
     <form class="form-horizontal" role="form">
         <div class="form-group">
-                <span>Ingrese el propósito por el cual la organización quiere evaluar la calidad de su producto de software:</span>
+            <span>Ingrese el plan de actividades de la evaluación:</span>
         </div>
         <div class="form-group">
-            <textarea class="form-control text_area" rows="10" id="proposito" placeholder="Tener en cuenta blablabla"><?php echo $proposito?></textarea>      
+            <textarea class="form-control text_area" rows="15" id="actividades" placeholder="Tener en cuenta blablabla"><?php //echo $proposito?></textarea>      
         </div>
 
       <div class="form-group">
@@ -28,7 +28,7 @@
             <div class="btn-group">
                 <button type="button" class="btn btn-danger">Atrás</button>
                 <button type="button" class="btn btn-warning">Agregar nota</button>
-                <button type="button" class="btn btn-success" id="guardar" onclick="guardar_1_1()">Guardar</button>
+                <button type="button" class="btn btn-success" id="guardar" onclick="guardar_3_1()">Guardar</button>
             </div>
         </div>
       </div>
