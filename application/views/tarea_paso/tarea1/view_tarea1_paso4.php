@@ -2,6 +2,14 @@
     <h2>Rigor de la evaluación</h2>
 </div>
 <hr>
+<?php //Muestra cartel exito/error
+if ($this->session->flashdata('ExitoRigor')) {
+    ?>
+    <div class="alert alert-success">
+    <?php echo $this->session->flashdata('ExitoRigor'); ?>
+    </div>
+<?php }
+?>
 <div>
     <div class="form-group">
         <span>Indique el rigor de la evaluación para cada uno de los siguientes aspectos:</span>
@@ -17,31 +25,31 @@
         <tbody>
             <tr>
               <td align="center">
-                  <select class="form-control tamaño_rigor_select">
-                        <option>N/A</option>
-                        <option>A</option>
-                        <option>B</option>
-                        <option>C</option>
-                        <option>D</option>
-                  </select>
+				<select class="form-control tamaño_rigor_select" id="seguridad_fisica">
+					<option value="N/A" <?php if ($seguridad_fisica == "N/A") {echo "selected";} ?>>N/A</option>
+                    <option value="A" <?php if ($seguridad_fisica == "A") {echo "selected";} ?>>A</option>
+                    <option value="B"<?php if ($seguridad_fisica == "B") {echo "selected";} ?>>B</option>
+                    <option value="C"<?php if ($seguridad_fisica == "C") {echo "selected";} ?>>C</option>
+                    <option value="D"<?php if ($seguridad_fisica == "D") {echo "selected";} ?>>D</option>
+                </select>
               </td>
               <td align="center">
-                  <select class="form-control tamaño_rigor_select">
-                        <option>N/A</option>
-                        <option>A</option>
-                        <option>B</option>
-                        <option>C</option>
-                        <option>D</option>
-                  </select>
+                <select class="form-control tamaño_rigor_select" id="economico">
+                    <option value="N/A" <?php if ($economico == "N/A") {echo "selected";} ?>>N/A</option>
+                    <option value="A" <?php if ($economico == "A") {echo "selected";} ?>>A</option>
+                    <option value="B"<?php if ($economico == "B") {echo "selected";} ?>>B</option>
+                    <option value="C"<?php if ($economico == "C") {echo "selected";} ?>>C</option>
+                    <option value="D"<?php if ($economico == "D") {echo "selected";} ?>>D</option>
+                </select>
               </td>
               <td align="center">
-                  <select class="form-control tamaño_rigor_select">
-                        <option>N/A</option>
-                        <option>A</option>
-                        <option>B</option>
-                        <option>C</option>
-                        <option>D</option>
-                  </select>
+                <select class="form-control tamaño_rigor_select" id="seguridad_acceso">
+                    <option value="N/A" <?php if ($seguridad_acceso == "N/A") {echo "selected";} ?>>N/A</option>
+                    <option value="A" <?php if ($seguridad_acceso == "A") {echo "selected";} ?>>A</option>
+                    <option value="B"<?php if ($seguridad_acceso == "B") {echo "selected";} ?>>B</option>
+                    <option value="C"<?php if ($seguridad_acceso == "C") {echo "selected";} ?>>C</option>
+                    <option value="D"<?php if ($seguridad_acceso == "D") {echo "selected";} ?>>D</option>
+                </select>
               </td>
             </tr>
         </tbody>

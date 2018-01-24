@@ -192,7 +192,12 @@ class Evaluacion extends CI_Controller{
 
                         break;
                         case 2:
-                           
+							$subcaracteristicas = $this->model_evaluacion->getSubcaracteristicasEvaluacion($idEvaluacion);
+							$inaceptable = "";
+                            $min_aceptable = "";
+							$aceptable = "";
+							$excede = "";
+                            $datos = array('subcaracteristicas' => $subcaracteristicas, 'inaceptable' => $inaceptable, 'min_aceptable' => $min_aceptable, 'aceptable' => $aceptable, 'excede' => $excede);
                         break;
                         case 3:
                         
@@ -414,7 +419,36 @@ class Evaluacion extends CI_Controller{
 
                         break;
                         case 2:
-                            
+                            if ($this->input->post()) { //SE RECIBEN DATOS
+                                $subcaracteristica = $this->input->post('subcaracteristica');
+								$data = $this->model_evaluacion->getEvaluacionSubcaracteristica($idEvaluacion,$subcaracteristica);
+								foreach ($data->result_array() as $d) {
+                                    $evaluacion_subcaracteristica = $d['idEvaluacionSubcaracteristica'];
+                                }
+								$inaceptable = $this->input->post('inaceptable');
+                                $min_aceptable = $this->input->post('min_aceptable');
+								$aceptable = $this->input->post('aceptable');
+								$excede = $this->input->post('excede');
+								unset($_SESSION['ExitoNiveles']);
+								$subc_nivel=$this->model_evaluacion->getSubcaracteristicaNivel($evaluacion_subcaracteristica);
+								if(empty($subc_nivel->result_array())){
+									$this->model_evaluacion->agregarNivelInaceptableSub($evaluacion_subcaracteristica,$inaceptable);
+									$this->model_evaluacion->agregarNivelMinAceptableSub($evaluacion_subcaracteristica,$min_aceptable);
+									$this->model_evaluacion->agregarNivelAceptableSub($evaluacion_subcaracteristica,$aceptable);
+									$this->model_evaluacion->agregarNivelExcedeSub($evaluacion_subcaracteristica,$excede);
+									$this->session->set_flashdata('ExitoNiveles', '¡Se agregaron los datos exitosamente!');
+								}
+								else{
+									$this->model_evaluacion->modificarNivelInaceptableSub($evaluacion_subcaracteristica,$inaceptable);
+									$this->model_evaluacion->modificarNivelMinAceptableSub($evaluacion_subcaracteristica,$min_aceptable);
+									$this->model_evaluacion->modificarNivelAceptableSub($evaluacion_subcaracteristica,$aceptable);
+									$this->model_evaluacion->modificarNivelExcedeSub($evaluacion_subcaracteristica,$excede);
+									$this->session->set_flashdata('ExitoNiveles', '¡Se modificaron los datos exitosamente!');
+								}
+							}
+							var_dump($inaceptable);exit();
+							$subcaracteristicas = $this->model_evaluacion->getSubcaracteristicasEvaluacion($idEvaluacion);
+                            $datos = array('subcaracteristicas' => $subcaracteristicas, 'inaceptable' => $inaceptable, 'min_aceptable' => $min_aceptable, 'aceptable' => $aceptable, 'excede' => $excede);
                         break;
                         case 3:
                         

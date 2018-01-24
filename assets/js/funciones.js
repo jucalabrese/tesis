@@ -370,3 +370,23 @@ function guardar_1_4(){
         }
     });
 };
+
+function guardar_niveles(subcaracteristica) {
+    var base_url = document.getElementById('baseurl').value;
+	var inaceptable = document.getElementById('inaceptable').value;
+	var min_aceptable = document.getElementById('min_aceptable').value;
+	var aceptable = document.getElementById('aceptable').value;
+	var excede = document.getElementById('excede').value;
+    $.ajax({
+        type: 'POST',
+        url: base_url + 'evaluacion/guardado/2/2',
+        data: {subcaracteristica: subcaracteristica, inaceptable: inaceptable, min_aceptable: min_aceptable, aceptable: aceptable, excede: excede},
+        success: function (output_string) {
+			$('#22').attr({
+                    'class': 'list-group-item list-group-item-success',
+                });
+            $("#contenido").html(output_string);
+        }
+    });
+}
+;
