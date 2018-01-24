@@ -28,17 +28,6 @@ class Model_evaluacion extends CI_Model {
         $consulta = $this->db->get();
         return $consulta;
     }
-<<<<<<< HEAD
-    
-//    function getCaracteristicasEvaluacion($idEvaluacion) {
-//        $this->db->select('DISTINCT(a.nombre)');
-//        $this->db->from('evaluacion_caracteristica as ea, caracteristica as a');
-//        $this->db->where('ea.idEvaluacion', $idEvaluacion);
-//        $this->db->where('ea.idCaracteristica = a.idCaracteristica');
-//        $consulta = $this->db->get();
-//        return $consulta;
-//    }
-=======
 	
 	function getSubcaracteristicasEvaluacion($idEvaluacion) {
         $this->db->select('s.*');
@@ -48,7 +37,6 @@ class Model_evaluacion extends CI_Model {
         $consulta = $this->db->get();
         return $consulta;
     }
->>>>>>> 9f884d7b9e55adcee310cd4cf2b35136ecad4b79
 
     function getSubcaracteristicas_Caracteristica($idCaracteristica) { //ACA CAMBIE UNA MAYUSCULA
         $this->db->select('*');
@@ -318,7 +306,6 @@ class Model_evaluacion extends CI_Model {
 
         return $idEvaluacion;
     }
-<<<<<<< HEAD
     
     function obtenerPreguntas($idCaracteristica){
         //SELECT DISTINCT(p.pregunta), car.idCaracteristica, p.idPregunta 
@@ -327,7 +314,7 @@ class Model_evaluacion extends CI_Model {
         //WHERE (car.idCaracteristica = '6') ORDER BY `p`.`idPregunta` ASC
         //$consulta = $this->db->get();
         //return $consulta;
-=======
+    }
 	
 	function getSubcaracteristicaNivel($evaluacion_subcaracteristica){
 		$this->db->select('*');
@@ -361,7 +348,6 @@ class Model_evaluacion extends CI_Model {
         $idSubcaracteristicaNivel = $this->db->insert_id();
         $this->db->trans_complete();
 		return $evaluacion_subcaracteristica;
->>>>>>> 9f884d7b9e55adcee310cd4cf2b35136ecad4b79
     }
 
 	function agregarNivelAceptableSub($evaluacion_subcaracteristica,$aceptable) {
