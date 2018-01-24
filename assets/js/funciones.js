@@ -290,9 +290,9 @@ function guardarProducto(){
                     'class': 'list-group-item list-group-item-success',
                 });
                 
-                $('.menu_index').attr({
-                    'data-toggle': 'collapse',
-                });  
+//                $('.menu_index').attr({
+//                    'data-toggle': 'collapse',
+//                });  
                 
                 document.getElementById('nombre_producto').innerHTML = nombre + '<small> Evaluación</small>';  
             };
