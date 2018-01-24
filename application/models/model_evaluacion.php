@@ -14,13 +14,22 @@ class Model_evaluacion extends CI_Model {
     }
 
     function getCaracteristicasEvaluacion($idEvaluacion) {
-        $this->db->select('DISTINCT(a.nombre)');
-        $this->db->from('evaluacion_caracteristica as ea, caracteristica as a');
+        $this->db->select('*');
+        $this->db->from('evaluacion_caracteristica as ea, caracteristica as c');
         $this->db->where('ea.idEvaluacion', $idEvaluacion);
-        $this->db->where('ea.idCaracteristica = a.idCaracteristica');
+        $this->db->where('ea.idCaracteristica = c.idCaracteristica');
         $consulta = $this->db->get();
         return $consulta;
     }
+    
+//    function getCaracteristicasEvaluacion($idEvaluacion) {
+//        $this->db->select('DISTINCT(a.nombre)');
+//        $this->db->from('evaluacion_caracteristica as ea, caracteristica as a');
+//        $this->db->where('ea.idEvaluacion', $idEvaluacion);
+//        $this->db->where('ea.idCaracteristica = a.idCaracteristica');
+//        $consulta = $this->db->get();
+//        return $consulta;
+//    }
 
     function getSubCaracteristicas_Caracteristica($idCaracteristica) {
         $this->db->select('*');
@@ -211,13 +220,13 @@ class Model_evaluacion extends CI_Model {
         return $consulta;
     }
 
-    function getParteSeleccionada($idEvaluacion) {
-        $this->db->select('*');
-        $this->db->from('evaluacion as e');
-        $this->db->where('e.idEvaluacion', $idEvaluacion);
-        $consulta = $this->db->get();
-        return $consulta;
-    }
+//    function getParteSeleccionada($idEvaluacion) {
+//        $this->db->select('*');
+//        $this->db->from('evaluacion as e');
+//        $this->db->where('e.idEvaluacion', $idEvaluacion);
+//        $consulta = $this->db->get();
+//        return $consulta;
+//    }
 
     function agregarParte($parte, $idEvaluacion) {
         $this->db->trans_start();
@@ -280,6 +289,15 @@ class Model_evaluacion extends CI_Model {
         $this->db->trans_complete();
 
         return $idEvaluacion;
+    }
+    
+    function obtenerPreguntas($idCaracteristica){
+        //SELECT DISTINCT(p.pregunta), car.idCaracteristica, p.idPregunta 
+        //FROM pregunta as p INNER JOIN criterio_pregunta as cp ON cp.idPregunta=p.idPregunta INNER JOIN criterio as c ON cp.idCriterio=c.idCriterio 
+        //INNER JOIN subcaracteristica as s ON c.idSubcaracteristica=s.idSubcaracteristica INNER JOIN caracteristica as car ON s.idCaracteristica = car.idCaracteristica 
+        //WHERE (car.idCaracteristica = '6') ORDER BY `p`.`idPregunta` ASC
+        //$consulta = $this->db->get();
+        //return $consulta;
     }
 
 }
