@@ -108,5 +108,9 @@ body{
 }
 
 .tamaño_criterio_decision{
-    width: 40%; 
+    width: 20%; 
+}
+
+.tamaño_criterio_select{
+    width: 65%; 
 }
