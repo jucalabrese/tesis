@@ -4,7 +4,7 @@
 <hr>
 <div>
     <div class="form-group">
-        <span>Indique el rigor de la evaluación para cada uno de los siguientes aspectos: </span>
+        <span>Indique el rigor de la evaluación para cada uno de los siguientes aspectos:</span>
     </div>
     <table class="table table-bordered">
         <thead class="color_panel4">
