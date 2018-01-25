@@ -16,7 +16,7 @@
             }
     $caracteristicasSeleccionadas = array();
     $cant = 0;
-    if ($caracteristicas_seleccionadas <> null){
+    if (!empty($caracteristicas_seleccionadas)){
         foreach ($caracteristicas_seleccionadas as $atr){
             $caracteristicasSeleccionadas[$cant] = $atr;
             $cant++;

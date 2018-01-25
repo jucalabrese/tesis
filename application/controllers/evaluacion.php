@@ -149,7 +149,7 @@ class Evaluacion extends CI_Controller{
                                 $texto = $dato['texto'];
                                 $cant++;
                             };
-
+							var_dump($caracteristicas);exit();
                             $datos = array('caracteristicas' => $caracteristicas, 'caracteristicas_seleccionadas' => $arregloCaracteristicas, 'texto' => $texto); //Guardo el resultado de la consulta en un arreglo para pasar a la vista
                             break;
                         case 3:
@@ -219,7 +219,7 @@ class Evaluacion extends CI_Controller{
                         case 0:
                         break;
                         case 1:
-                            $cant = 0;
+                           /* $cant = 0;
                             $arregloCaracteristicas = array();
                             $data = $this->model_evaluacion->getCaracteristicasEvaluacion(344);
                             foreach ($data->result_array() as $dato){
@@ -228,7 +228,7 @@ class Evaluacion extends CI_Controller{
                             }
                             $preguntas = $this->model_evaluacion->obtenerPreguntas(6);
                             var_dump($preguntas);
-                            $datos = array('caracteristicas' => $arregloCaracteristicas, 'preguntas' => $preguntas); 
+                            $datos = array('caracteristicas' => $arregloCaracteristicas, 'preguntas' => $preguntas); */
                         break;
                     };
                     
