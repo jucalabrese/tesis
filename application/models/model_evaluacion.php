@@ -236,13 +236,13 @@ class Model_evaluacion extends CI_Model {
         return $consulta;
     }
 
-//    function getParteSeleccionada($idEvaluacion) {
-//        $this->db->select('*');
-//        $this->db->from('evaluacion as e');
-//        $this->db->where('e.idEvaluacion', $idEvaluacion);
-//        $consulta = $this->db->get();
-//        return $consulta;
-//    }
+    function getParteSeleccionada($idEvaluacion) {
+        $this->db->select('*');
+        $this->db->from('evaluacion as e');
+        $this->db->where('e.idEvaluacion', $idEvaluacion);
+        $consulta = $this->db->get();
+        return $consulta;
+    }
 
     function agregarParte($parte, $idEvaluacion) {
         $this->db->trans_start();
@@ -307,13 +307,17 @@ class Model_evaluacion extends CI_Model {
         return $idEvaluacion;
     }
     
-    function obtenerPreguntas($idCaracteristica){
-        //SELECT DISTINCT(p.pregunta), car.idCaracteristica, p.idPregunta 
-        //FROM pregunta as p INNER JOIN criterio_pregunta as cp ON cp.idPregunta=p.idPregunta INNER JOIN criterio as c ON cp.idCriterio=c.idCriterio 
-        //INNER JOIN subcaracteristica as s ON c.idSubcaracteristica=s.idSubcaracteristica INNER JOIN caracteristica as car ON s.idCaracteristica = car.idCaracteristica 
-        //WHERE (car.idCaracteristica = '6') ORDER BY `p`.`idPregunta` ASC
-        //$consulta = $this->db->get();
-        //return $consulta;
+    function obtenerPreguntas($idCaracteristica){ //ORDER BY `p`.`idPregunta` ASC
+
+        $this->db->select('DISTINCT(p.pregunta), car.idCaracteristica, p.idPregunta');    
+        $this->db->from('pregunta as p');
+        $this->db->join('criterio_pregunta as cp', 'cp.idPregunta=p.idPregunta');
+        $this->db->join('criterio as c', 'cp.idCriterio=c.idCriterio');
+        $this->db->join('subcaracteristica as s', 'c.idSubcaracteristica=s.idSubcaracteristica');
+        $this->db->join('caracteristica as car', 's.idCaracteristica = car.idCaracteristica');
+        $this->db->where('car.idCaracteristica', $idCaracteristica);
+        $consulta = $this->db->get();
+        return $consulta;
     }
 	
 	function getSubcaracteristicaNivel($evaluacion_subcaracteristica){

@@ -3,6 +3,7 @@
 </div>
 <hr>
 <?php //Muestra cartel exito/error
+    $cant = 1;
     if ($this->session->flashdata('ExitoMediciones')){ ?>
         <div class="alert alert-success">
             <?php echo $this->session->flashdata('ExitoMediciones'); ?>
@@ -20,7 +21,7 @@
     </div>
     <div class="form-group">
         <select class="form-control" id="partes">
-    <?php   foreach ($caracteristicas as $c){ ?>
+    <?php   foreach ($caracteristicas->result_array() as $c){ ?>
                 <option value="<?php echo $c['idCaracteristica']?>"><?php echo $c['nombre']?></option>      
     <?php       
             } ?>       
@@ -40,10 +41,11 @@
                 </tr>
             </thead>
             <tbody>
-                 <?php   foreach ($preguntas->result_array() as $p){ ?>     
+                 <?php foreach ($preguntas->result_array() as $p){ ?>     
                 <tr>
                   <td align="center">
-                    1
+                    <?php echo $cant; 
+                            $cant++?>
                   </td>
                   <td>
                       <?php echo $p['pregunta']?>
