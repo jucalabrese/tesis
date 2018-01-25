@@ -145,27 +145,6 @@ function cargarVistaTareas_4_1(){
     });
 };
 
-function cargarVistaTareas_4_2(){
-    var base_url = document.getElementById('baseurl').value;
-    $.ajax({
-        url: base_url+'/evaluacion/tarea_paso/4/2',
-        type:'POST',
-        success: function(output_string){
-            $('#contenido').html(output_string);
-        } 
-    });
-};
-
-function cargarVistaTareas_4_3(){
-    var base_url = document.getElementById('baseurl').value;
-    $.ajax({
-        url: base_url+'/evaluacion/tarea_paso/4/3',
-        type:'POST',
-        success: function(output_string){
-            $('#contenido').html(output_string);
-        } 
-    });
-};
 
 function cargarVistaTareas_5_0(){
     var base_url = document.getElementById('baseurl').value;

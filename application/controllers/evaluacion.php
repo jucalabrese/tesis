@@ -217,16 +217,18 @@ class Evaluacion extends CI_Controller{
                 case 4:
                     switch ($paso) {
                         case 0:
-                        
                         break;
                         case 1:
-                        
-                        break;
-                        case 2:
-                        
-                        break;
-                        case 3:
-                        
+                            $cant = 0;
+                            $arregloCaracteristicas = array();
+                            $data = $this->model_evaluacion->getCaracteristicasEvaluacion(344);
+                            foreach ($data->result_array() as $dato){
+                                $arregloCaracteristicas[$cant] = $dato;
+                                $cant++;
+                            }
+                            $preguntas = $this->model_evaluacion->obtenerPreguntas(6);
+                            var_dump($preguntas);
+                            $datos = array('caracteristicas' => $arregloCaracteristicas, 'preguntas' => $preguntas); 
                         break;
                     };
                     
