@@ -5,6 +5,10 @@
         <group>
             <file>file:/D:/xampp/htdocs/tesis/application/controllers/evaluacion.php</file>
             <file>file:/D:/xampp/htdocs/tesis/assets/js/funciones.js</file>
+<<<<<<< HEAD
+=======
+            <file>file:/D:/xampp/htdocs/tesis/application/views/tarea_paso/tarea1/view_tarea1_paso1.php</file>
+>>>>>>> 386677582dff61f83e576d7390027db14224342f
             <file>file:/D:/xampp/htdocs/tesis/application/models/model_evaluacion.php</file>
             <file>file:/D:/xampp/htdocs/tesis/application/views/tarea_paso/tarea4/view_tarea4_paso1.php</file>
         </group>

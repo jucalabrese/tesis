@@ -8,7 +8,13 @@
 			<div class="alert alert-success">
 				<?php echo $this->session->flashdata('ExitoNiveles'); ?>
 			</div>
-	<?php }
+	<?php } else { 
+                if ($this->session->flashdata('ErrorNiveles')){?>
+                    <div class="alert alert-danger">
+                        <?php echo $this->session->flashdata('ErrorNiveles'); ?>    
+                    </div>
+            <?php } 
+            }
 		?>
 <div class="col-lg-12">
 	<?php foreach ($subcaracteristicas->result_array() as $s){?>

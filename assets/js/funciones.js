@@ -12,16 +12,6 @@ function cargarVistaTareas_1_0(){
     });
 };
 
-function cargarVistaTareas_1_1(){
-    var base_url = document.getElementById('baseurl').value;
-    $.ajax({
-        url: base_url+'/evaluacion/tarea_paso/1/1',
-        type:'POST',
-        success: function(output_string){
-            $('#contenido').html(output_string);
-        } 
-    });
-};
 
 function cargarVistaTareas_1_2(){
     var base_url = document.getElementById('baseurl').value;
@@ -145,6 +135,16 @@ function cargarVistaTareas_4_1(){
     });
 };
 
+function cargarVistaTareas_1_1(){
+    var base_url = document.getElementById('baseurl').value;
+    $.ajax({
+        url: base_url+'/evaluacion/tarea_paso/1/1',
+        type:'POST',
+        success: function(output_string){
+            $('#contenido').html(output_string);
+        } 
+    });
+};
 
 function cargarVistaTareas_5_0(){
     var base_url = document.getElementById('baseurl').value;
