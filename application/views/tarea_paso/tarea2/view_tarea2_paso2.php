@@ -37,7 +37,7 @@
 					Valor máximo: 
 						<select class="form-control tamaño_criterio_select" id="inaceptable"> 
 							 <?php for ($i=1; $i<=7; $i++){?> 
-								<option value="0.<?php echo $i;?>" <?php if (($i) == $inaceptable){ echo "selected"; }?>>0.<?php echo $i;?></option> 
+								<option value="0.<?php echo $i;?>" <?php if ("0.".($i) == $inaceptable){ echo "selected"; }?>>0.<?php echo $i;?></option> 
 							 <?php } ?>
 						</select>
 				</td>
@@ -45,7 +45,7 @@
 					Valor máximo: 
 						<select class="form-control tamaño_criterio_select" id="min_aceptable"> 
 							 <?php for ($i=2; $i<=8; $i++){?> 
-								<option value="0.<?php echo $i;?>">0.<?php echo $i;?></option> 
+								<option value="0.<?php echo $i;?>" <?php if ("0.".($i) == $min_aceptable){ echo "selected"; }?>>0.<?php echo $i;?></option> 
 							 <?php } ?>
 						</select>
 				</td>
@@ -53,7 +53,7 @@
 					Valor máximo: 
 						<select class="form-control tamaño_criterio_select" id="aceptable"> 
 							 <?php for ($i=3; $i<=9; $i++){?> 
-								<option value="0.<?php echo $i;?>">0.<?php echo $i;?></option> 
+								<option value="0.<?php echo $i;?>" <?php if ("0.".($i) == $aceptable){ echo "selected"; }?>>0.<?php echo $i;?></option> 
 							 <?php } ?>
 						</select>
 				</td>
