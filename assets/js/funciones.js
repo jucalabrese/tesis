@@ -146,7 +146,6 @@ function cargarVistaTareas_1_1(){
     });
 };
 
-
 function cargarVistaTareas_5_0(){
     var base_url = document.getElementById('baseurl').value;
     $.ajax({

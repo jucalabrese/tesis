@@ -307,6 +307,7 @@ class Model_evaluacion extends CI_Model {
         return $idEvaluacion;
     }
     
+
     function obtenerPreguntas($idCaracteristica){ //ORDER BY `p`.`idPregunta` ASC
 
         $this->db->select('DISTINCT(p.pregunta), car.idCaracteristica, p.idPregunta');    
