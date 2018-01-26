@@ -21,46 +21,50 @@
     </div>
     <div class="form-group">
         <select class="form-control" id="partes">
+            <option value="0" onclick="cargarVistaTareas_4_1(0)">Seleccione una característica</option>
     <?php   foreach ($caracteristicas->result_array() as $c){ ?>
-                <option value="<?php echo $c['idCaracteristica']?>"><?php echo $c['nombre']?></option>      
+                <option value="<?php echo $c['idCaracteristica']?>" onclick="cargarVistaTareas_4_1(<?php echo $c['idCaracteristica']?>)"><?php echo $c['nombre']?></option>      
     <?php       
             } ?>       
         </select>
     </div>
     <hr> 
-    <div class="form-group">
-        <span>Responda las siguientes preguntas asociadas a la característica (nombre característica):</span>
-    </div> 
-    <div class="form-group">
-        <table class="table table-bordered">
-            <thead class="color_panel4">
-                <tr align="center">
-                  <td class="tamaño_rigor_nivel" style="width: 1%">Número</td>
-                  <td class="tamaño_rigor_nivel">Pregunta</td>
-                  <td class="tamaño_rigor_nivel" style="width: 5%">Respuesta</td>
-                </tr>
-            </thead>
-            <tbody>
-                 <?php foreach ($preguntas->result_array() as $p){ ?>     
-                <tr>
-                  <td align="center">
-                    <?php echo $cant; 
-                            $cant++?>
-                  </td>
-                  <td>
-                      <?php echo $p['pregunta']?>
-                  </td>
-                  <td align="center">
-                      <select class="form-control">
-                            <option>N/A</option>
-                            <option>SI</option>
-                            <option>NO</option>
-                      </select>
-                  </td>
-                </tr>
-            <?php } ?> 
-            </tbody>
-        </table>
+    <div id="preguntas" style="display: none;">
+        <div class="form-group">
+            <span>Responda las siguientes preguntas asociadas a la característica <?php echo $c['nombre']?>:</span>
+        </div> 
+        <div class="form-group">
+            <table class="table table-bordered">
+                <thead class="color_panel4">
+                    <tr align="center">
+                      <td class="tamaño_rigor_nivel" style="width: 1%">Número</td>
+                      <td class="tamaño_rigor_nivel">Pregunta</td>
+                      <td class="tamaño_rigor_nivel" style="width: 5%">Respuesta</td>
+                    </tr>
+                </thead>
+                <tbody>
+                     <?php if (!empty($preguntas)){
+                     foreach ($preguntas->result_array() as $p){ ?>     
+                    <tr>
+                      <td align="center">
+                        <?php echo $cant; 
+                                $cant++?>
+                      </td>
+                      <td>
+                          <?php echo $p['pregunta']?>
+                      </td>
+                      <td align="center">
+                          <select class="form-control" style="width: 70%">
+                                <option>N/A</option>
+                                <option>SI</option>
+                                <option>NO</option>
+                          </select>
+                      </td>
+                    </tr>
+                     <?php }} ?> 
+                </tbody>
+            </table>
+        </div>
     </div>
     <div class="form-group">
         <div class="col-lg-6 col-lg-offset-4">

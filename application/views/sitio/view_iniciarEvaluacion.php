@@ -37,7 +37,7 @@
                 </div>
                 <a href="#item4" class="list-group-item color_menu menu_index" data-parent="#MainMenu" data-toggle="collapse" onclick="cargarVistaTareas_4_0()"><strong>4. Ejecutar la evaluación</strong></a>
                 <div class="collapse" id="item4">
-                    <a href="#" class="list-group-item" onclick="cargarVistaTareas_4_1()">- Mediciones</a>
+                    <a href="#" class="list-group-item" onclick="cargarVistaTareas_4_1(0)">- Mediciones</a>
                 </div>
                 <a href="#item5" class="list-group-item color_menu menu_index" data-parent="#MainMenu" data-toggle="collapse" onclick="cargarVistaTareas_5_0()"><strong>5. Concluir la evaluación</strong></a>
                 <div class="collapse" id="item5">

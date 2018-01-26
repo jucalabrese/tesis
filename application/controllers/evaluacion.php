@@ -217,8 +217,12 @@ class Evaluacion extends CI_Controller{
                         case 0:
                         break;
                         case 1:
-                            $caracteristicas = $this->model_evaluacion->getCaracteristicasEvaluacion(363);
-                            $preguntas = $this->model_evaluacion->obtenerPreguntas(4);
+                            $preguntas = array();
+                            $valor = $this->input->post('valor');
+                            $caracteristicas = $this->model_evaluacion->getCaracteristicasEvaluacion(363); //PONER IDEVALUACION
+                            if ($valor<>0){
+                                $preguntas = $this->model_evaluacion->obtenerPreguntas($valor);
+                            }
                             $datos = array('caracteristicas' => $caracteristicas, 'preguntas' => $preguntas); 
                             break;
                     };
