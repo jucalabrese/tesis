@@ -5,7 +5,15 @@ class Model_evaluacion extends CI_Model {
     function __construct() {
         parent::__construct();
     }
-
+    
+    function getCaracteristica($idCaracteristica){
+        $this->db->select('*');
+        $this->db->from('caracteristica as c');
+        $this->db->where('c.idCaracteristica', $idCaracteristica);
+        $consulta = $this->db->get();
+        return $consulta;
+    }
+    
     function getCaracteristicas() {
         $this->db->select('*');
         $this->db->from('caracteristica');
@@ -50,7 +58,7 @@ class Model_evaluacion extends CI_Model {
 		$this->db->select('*');
         $this->db->from('evaluacion_subcaracteristica');
         $this->db->where('idSubcaracteristica', $subcaracteristica);
-		$this->db->where('idEvaluacion', $idEvaluacion);
+        $this->db->where('idEvaluacion', $idEvaluacion);
         $consulta = $this->db->get();
         return $consulta;
 	}

@@ -124,7 +124,19 @@ function cargarVistaTareas_4_0(){
     });
 };
 
-function cargarVistaTareas_4_1(value){
+function cargarVistaTareas_4_1(){
+    var base_url = document.getElementById('baseurl').value;
+    $.ajax({
+        url: base_url+'/evaluacion/tarea_paso/4/1',
+        type:'POST',
+        success: function(output_string){
+            $('#contenido').html(output_string);
+
+        } 
+    });
+};
+
+function cargarPreguntas(value){
     var base_url = document.getElementById('baseurl').value;
     $.ajax({
         url: base_url+'/evaluacion/tarea_paso/4/1',
@@ -132,9 +144,8 @@ function cargarVistaTareas_4_1(value){
         data: {valor: value},
         success: function(output_string){
             $("#preguntas").slideUp('slow');
-            if (value==0){
-                $('#contenido').html(output_string);
-            }else{
+            $('#contenido').html(output_string);
+            if (value!=0){
                 $("#preguntas").slideDown('slow');
             }
         } 

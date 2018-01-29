@@ -23,7 +23,7 @@
         <select class="form-control" id="partes">
             <option value="0" onclick="cargarVistaTareas_4_1(0)">Seleccione una característica</option>
     <?php   foreach ($caracteristicas->result_array() as $c){ ?>
-                <option value="<?php echo $c['idCaracteristica']?>" onclick="cargarVistaTareas_4_1(<?php echo $c['idCaracteristica']?>)"><?php echo $c['nombre']?></option>      
+                <option value="<?php echo $c['idCaracteristica']?>" onclick="cargarPreguntas(<?php echo $c['idCaracteristica']?>)"><?php echo $c['nombre']?></option>      
     <?php       
             } ?>       
         </select>
@@ -31,7 +31,7 @@
     <hr> 
     <div id="preguntas" style="display: none;">
         <div class="form-group">
-            <span>Responda las siguientes preguntas asociadas a la característica <?php echo $c['nombre']?>:</span>
+            <span>Responda las siguientes preguntas asociadas a la característica <strong><?php echo $caracteristica?></strong>:</span>
         </div> 
         <div class="form-group">
             <table class="table table-bordered">

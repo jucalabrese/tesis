@@ -250,12 +250,17 @@ class Evaluacion extends CI_Controller{
                         break;
                         case 1:
                             $preguntas = array();
-                            $valor = $this->input->post('valor');
-                            $caracteristicas = $this->model_evaluacion->getCaracteristicasEvaluacion(363); //PONER IDEVALUACION
-                            if ($valor<>0){
+                            $cSeleccionada = '';
+                            if ($this->input->post()){
+                                $valor = $this->input->post('valor');
                                 $preguntas = $this->model_evaluacion->obtenerPreguntas($valor);
+                                $data = $this->model_evaluacion->getCaracteristica($valor);
+                                foreach ($data->result_array() as $dato){
+                                    $cSeleccionada = $dato['nombre'];
+                                }  
                             }
-                            $datos = array('caracteristicas' => $caracteristicas, 'preguntas' => $preguntas); 
+                            $caracteristicas = $this->model_evaluacion->getCaracteristicasEvaluacion(363); //PONER IDEVALUACION
+                            $datos = array('caracteristicas' => $caracteristicas, 'preguntas' => $preguntas, 'caracteristica' => $cSeleccionada); 
                             break;
                     };
                 break;
