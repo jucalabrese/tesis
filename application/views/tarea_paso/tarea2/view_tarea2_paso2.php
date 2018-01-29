@@ -17,10 +17,7 @@
             }
 		?>
 <div class="col-lg-12">
-	<?php foreach ($subcaracteristicas->result_array() as $s){?>
-	<div class="form-group">
-		<span><?php echo $s['nombre']?>:</span>
-	</div>
+	
 	<table class="table table-bordered">
 		<thead class="color_panel4">
 			<tr align="center">
@@ -28,7 +25,6 @@
 				<td class="tamaño_criterio_decision">Mínimamente aceptable</td>
 				<td class="tamaño_criterio_decision">Rango objetivo</td>
 				<td class="tamaño_criterio_decision">Excede los requerimientos</td>
-				<td style="width: 30%"></td>
 			</tr>
 		</thead>
 		<tbody>
@@ -63,12 +59,50 @@
 							<option value="1" selected disabled>1</option>
 						</select>
 				</td>
-				<td align="center" style="vertical-align: middle;">
-					<button type="button" class="btn btn-success" id="guardar" onclick="guardar_niveles(<?php echo $s['idSubcaracteristica']?>)">Guardar</button>
-				</td>
 			</tr>			
 		</tbody>		
 	</table>
 	<br>
-	<?php } ?>
+	<table class="table table-bordered">
+		<thead class="color_panel4">
+			<tr align="center">
+				<td rowspan="2" style="vertical-align: middle;" >Subcaracterística</td>
+				<td colspan="4">Niveles</td>
+				<td rowspan="2" style="width: 15%"></td>
+			</tr>
+			<tr align="center">
+				<td style="font-size:80%; vertical-align: middle;">Inaceptable</td>
+				<td style="font-size:80%; vertical-align: middle;">Mín. aceptable</td>
+				<td style="font-size:80%; vertical-align: middle;">Aceptable</td>
+				<td style="font-size:80%; vertical-align: middle;">Excede los req.</td>
+			</tr>
+		</thead>
+		<tbody>
+		<?php foreach ($subcaracteristicas->result_array() as $s){?>
+			<tr>				
+				<td align="center" style="vertical-align: middle;"><?php echo $s['nombre']?></td>
+				<?php foreach ($asignado as $a){
+						if ($a['id'] == $s['idSubcaracteristica']){
+							$sub=$a;
+						}
+					}?>
+				<?php if ($sub['asignado']){ ?>
+					<td align="center" style="vertical-align: middle;"> 0 - <?php echo $sub['inaceptable'] ?></td>
+					<td align="center" style="vertical-align: middle;"> <?php echo ($sub['inaceptable']+0.01) ?> - <?php echo $sub['min_aceptable'] ?> </td>
+					<td align="center" style="vertical-align: middle;"> <?php echo ($sub['min_aceptable']+0.01) ?> - <?php echo $sub['aceptable'] ?> </td>
+					<td align="center" style="vertical-align: middle;"> <?php echo ($sub['aceptable']+0.01) ?>-<?php echo $sub['excede'] ?> </td>
+				<?php } else { ?>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+				<?php } ?>	
+				<td align="center" style="vertical-align: middle;">
+					<button type="button" class="btn btn-success" id="guardar" onclick="guardar_niveles(<?php echo $s['idSubcaracteristica']?>)">Asignar</button>
+				</td>
+			</tr>	
+		<?php } ?>				
+		</tbody>		
+	</table>
+	
 </div>
