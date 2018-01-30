@@ -369,7 +369,7 @@ function guardar_1_3(){
 };
 
 function guardar_1_4(){
-   var base_url = document.getElementById('baseurl').value;
+    var base_url = document.getElementById('baseurl').value;
     var seguridad_fisica = document.getElementById('seguridad_fisica').value;
     var economico = document.getElementById('economico').value;
     var seguridad_acceso = document.getElementById('seguridad_acceso').value;
@@ -413,3 +413,43 @@ function mostrarPreguntas(value){
         $("#preguntas").slideDown('slow');
     };
 };
+
+function guardar_4_1(){
+    var base_url = document.getElementById('baseurl').value;
+    var respuestas = [];
+    
+    $("#respuestas option:selected").each(function(){
+        respuestas.push($(this).val());
+    });
+    alert(respuestas)
+
+    
+    $.ajax({
+        type:'POST',
+        url: base_url+'evaluacion/guardado/4/1',
+        //data: {car: caracteristicas, text: texto},
+        
+        success: function(output_string){
+
+//            if (caracteristicas!=''){
+//                $('#12').attr({
+//                    'class': 'list-group-item list-group-item-success',
+//                });
+//            };
+
+            $("#contenido").html(output_string);
+        }
+    });
+};
+
+function cargarRespuestas(idPregunta, respuestas){
+    var base_url = document.getElementById('baseurl').value;
+    respuestas = [];
+//    $("#respuestas option:selected").each(function(){
+//        respuestas.push($(this).val());
+//    });
+
+ var foo = $('#respuestas[]').val(); 
+ alert(foo);
+    
+}

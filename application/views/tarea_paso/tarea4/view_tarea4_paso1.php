@@ -4,6 +4,7 @@
 <hr>
 <?php //Muestra cartel exito/error
     $cant = 1;
+    $respuestas = array();
     if ($this->session->flashdata('ExitoMediciones')){ ?>
         <div class="alert alert-success">
             <?php echo $this->session->flashdata('ExitoMediciones'); ?>
@@ -54,8 +55,8 @@
                           <?php echo $p['pregunta']?>
                       </td>
                       <td align="center">
-                          <select class="form-control" style="width: 70%">
-                                <option>N/A</option>
+                          <select id="respuestas" class="form-control" style="width: 70%">
+                                <option></option>
                                 <option>SI</option>
                                 <option>NO</option>
                           </select>
@@ -71,7 +72,7 @@
                 <div class="btn-group">
                         <button type="button" class="btn btn-danger">Atrás</button>
                         <button type="button" class="btn btn-warning">Agregar nota</button>
-                        <button type="button" class="btn btn-success" id="guardar" onclick="guardar_1_4()">Guardar</button>
+                        <button type="button" class="btn btn-success" id="guardar" onclick="guardar_4_1()">Guardar</button>
                 </div>
         </div>
     </div>

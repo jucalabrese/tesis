@@ -316,7 +316,7 @@ class Model_evaluacion extends CI_Model {
     }
     
 
-    function obtenerPreguntas($idCaracteristica){ //ORDER BY `p`.`idPregunta` ASC
+    function obtenerPreguntas($idCaracteristica){
 
         $this->db->select('DISTINCT(p.pregunta), car.idCaracteristica, p.idPregunta');    
         $this->db->from('pregunta as p');
@@ -325,12 +325,13 @@ class Model_evaluacion extends CI_Model {
         $this->db->join('subcaracteristica as s', 'c.idSubcaracteristica=s.idSubcaracteristica');
         $this->db->join('caracteristica as car', 's.idCaracteristica = car.idCaracteristica');
         $this->db->where('car.idCaracteristica', $idCaracteristica);
+        $this->db->order_by("p.idPregunta", "ASC");
         $consulta = $this->db->get();
         return $consulta;
     }
 	
 	function getSubcaracteristicaNivel($evaluacion_subcaracteristica){
-		$this->db->select('*');
+        $this->db->select('*');
         $this->db->from('subcaracteristica_nivel');
         $this->db->where('idEvaluacionSubcaracteristica', $evaluacion_subcaracteristica);
         $consulta = $this->db->get();
