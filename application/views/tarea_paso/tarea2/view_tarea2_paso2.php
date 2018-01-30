@@ -90,16 +90,19 @@
 					<td align="center" style="vertical-align: middle;"> 0 - <?php echo $sub['inaceptable'] ?></td>
 					<td align="center" style="vertical-align: middle;"> <?php echo ($sub['inaceptable']+0.01) ?> - <?php echo $sub['min_aceptable'] ?> </td>
 					<td align="center" style="vertical-align: middle;"> <?php echo ($sub['min_aceptable']+0.01) ?> - <?php echo $sub['aceptable'] ?> </td>
-					<td align="center" style="vertical-align: middle;"> <?php echo ($sub['aceptable']+0.01) ?>-<?php echo $sub['excede'] ?> </td>
+					<td align="center" style="vertical-align: middle;"> <?php echo ($sub['aceptable']+0.01) ?> - <?php echo $sub['excede'] ?> </td>
+					<td align="center" style="vertical-align: middle;">
+						<button type="button" class="btn btn-warning btn-sm" id="guardar" onclick="guardar_niveles(<?php echo $s['idSubcaracteristica']?>)">Modificar</button>
+					</td>
 				<?php } else { ?>
 					<td></td>
 					<td></td>
 					<td></td>
 					<td></td>
+					<td align="center" style="vertical-align: middle;">
+						<button type="button" class="btn btn-success btn-sm" id="guardar" onclick="guardar_niveles(<?php echo $s['idSubcaracteristica']?>)">Asignar</button>
+					</td>
 				<?php } ?>	
-				<td align="center" style="vertical-align: middle;">
-					<button type="button" class="btn btn-success" id="guardar" onclick="guardar_niveles(<?php echo $s['idSubcaracteristica']?>)">Asignar</button>
-				</td>
 			</tr>	
 		<?php } ?>				
 		</tbody>		
