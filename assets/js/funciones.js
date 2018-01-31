@@ -439,3 +439,4 @@ var respuesta = $("#respuestas"+pregunta).val();
         }
     });
 }
+

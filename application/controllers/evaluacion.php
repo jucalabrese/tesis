@@ -86,7 +86,12 @@ class Evaluacion extends CI_Controller{
             $idEvaluacion = $this->session->userdata('idEvaluacion');
             $idPregunta = $this->input->post('idPregunta');
             $respuesta = $this->input->post('respuesta');
-            $this->model_evaluacion->cargarRespuesta($idEvaluacion, $idPregunta, $respuesta);
+            $existe = $this->model_evaluacion->getRespuesta($idEvaluacion, $idPregunta);
+            if ($existe == false){
+                $this->model_evaluacion->cargarRespuesta($idEvaluacion, $idPregunta, $respuesta);    
+            }else{
+                $this->model_evaluacion->editarRespuesta($idEvaluacion, $idPregunta, $respuesta);   
+            }
 	}
         
         public function guardarProducto(){
@@ -263,7 +268,7 @@ class Evaluacion extends CI_Controller{
                             $cSeleccionada = '';
                             if ($this->input->post()){
                                 $valor = $this->input->post('valor');
-                                $preguntas = $this->model_evaluacion->obtenerPreguntas($valor);
+                                $preguntas = $this->model_evaluacion->obtenerPreguntas($valor, $idEvaluacion);
                                 $data = $this->model_evaluacion->getCaracteristica($valor);
                                 foreach ($data->result_array() as $dato){
                                     $cSeleccionada = $dato['nombre'];
