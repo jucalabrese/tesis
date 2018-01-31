@@ -316,15 +316,16 @@ class Model_evaluacion extends CI_Model {
     }
     
 
-    function obtenerPreguntas($idCaracteristica){
-
+    function obtenerPreguntas($idCaracteristica, $idEvaluacion){
         $this->db->select('DISTINCT(p.pregunta), car.idCaracteristica, p.idPregunta as idPregunta');    
         $this->db->from('pregunta as p');
         $this->db->join('criterio_pregunta as cp', 'cp.idPregunta=p.idPregunta');
         $this->db->join('criterio as c', 'cp.idCriterio=c.idCriterio');
         $this->db->join('subcaracteristica as s', 'c.idSubcaracteristica=s.idSubcaracteristica');
+        $this->db->join('evaluacion_subcaracteristica as es', 's.idSubcaracteristica=es.idSubcaracteristica'); //AGREGUE ESTA LINEA
         $this->db->join('caracteristica as car', 's.idCaracteristica = car.idCaracteristica');
         $this->db->where('car.idCaracteristica', $idCaracteristica);
+        $this->db->where('es.idEvaluacion', 366);
         $this->db->order_by("p.idPregunta", "ASC");
         $consulta = $this->db->get();
         return $consulta;
@@ -451,5 +452,32 @@ class Model_evaluacion extends CI_Model {
         $this->db->trans_complete();
 
         return $idEvaluacion;
+    }
+    
+     function editarRespuesta($idEvaluacion, $idPregunta, $respuesta) {
+        $this->db->trans_start();
+        $data = array(
+            'respuesta' => $respuesta,
+        );
+        $this->db->update('evaluacion_pregunta', $data);
+        $this->db->where('idEvaluacion', 366);
+        $this->db->where('idPregunta', $idPregunta);
+        $this->db->trans_complete();
+
+        return $idEvaluacion;
+    }
+    
+    function getRespuesta($idEvaluacion, $idPregunta) {
+        $this->db->select('*');
+        $this->db->from('evaluacion_pregunta as ep');
+        $this->db->where('ep.idEvaluacion', 366);
+        $this->db->where('ep.idPregunta', $idPregunta);
+        $query = $this->db->get();
+
+        if ($query->num_rows() == 0) {
+            return false;
+        } else {
+            return true;
+        }
     }
 }
