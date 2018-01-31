@@ -41,6 +41,7 @@
                       <td class="tamaño_rigor_nivel" style="width: 1%">Número</td>
                       <td class="tamaño_rigor_nivel">Pregunta</td>
                       <td class="tamaño_rigor_nivel" style="width: 5%">Respuesta</td>
+                      <td class="tamaño_rigor_nivel" style="width: 5%">Estado</td>
                     </tr>
                 </thead>
                 <tbody>
@@ -55,11 +56,14 @@
                           <?php echo $p['pregunta']?>
                       </td>
                       <td align="center">
-                          <select id="respuestas" class="form-control" style="width: 70%">
+                          <select name="respuestas" id="respuestas<?php echo $p['idPregunta']?>" onchange="cargarRespuesta(<?php echo $p['idPregunta']?>);" class="form-control miSelect" style="width: 70%">
                                 <option></option>
                                 <option>SI</option>
                                 <option>NO</option>
                           </select>
+                      </td>
+                      <td align="center">
+                          <div id="respuesta<?php echo $p['idPregunta']?>"><span>Sin responder</span></div>
                       </td>
                     </tr>
                      <?php }} ?> 

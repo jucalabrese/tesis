@@ -318,7 +318,7 @@ class Model_evaluacion extends CI_Model {
 
     function obtenerPreguntas($idCaracteristica){
 
-        $this->db->select('DISTINCT(p.pregunta), car.idCaracteristica, p.idPregunta');    
+        $this->db->select('DISTINCT(p.pregunta), car.idCaracteristica, p.idPregunta as idPregunta');    
         $this->db->from('pregunta as p');
         $this->db->join('criterio_pregunta as cp', 'cp.idPregunta=p.idPregunta');
         $this->db->join('criterio as c', 'cp.idCriterio=c.idCriterio');
@@ -436,5 +436,20 @@ class Model_evaluacion extends CI_Model {
 		$this->db->update('subcaracteristica_nivel', $data);
         $this->db->trans_complete();
 		return $evaluacion_subcaracteristica;
+    }
+    
+     function cargarRespuesta($idEvaluacion, $idPregunta, $respuesta) {
+        $this->db->trans_start();
+
+        $data = array(
+            'idEvaluacion' => 366,
+            'idPregunta' => $idPregunta,
+            'respuesta' => $respuesta,
+        );
+
+        $this->db->insert('evaluacion_pregunta', $data);
+        $this->db->trans_complete();
+
+        return $idEvaluacion;
     }
 }

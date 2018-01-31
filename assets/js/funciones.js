@@ -416,40 +416,26 @@ function mostrarPreguntas(value){
 
 function guardar_4_1(){
     var base_url = document.getElementById('baseurl').value;
-    var respuestas = [];
-    
-    $("#respuestas option:selected").each(function(){
-        respuestas.push($(this).val());
-    });
-    alert(respuestas)
 
-    
     $.ajax({
         type:'POST',
         url: base_url+'evaluacion/guardado/4/1',
-        //data: {car: caracteristicas, text: texto},
-        
         success: function(output_string){
-
-//            if (caracteristicas!=''){
-//                $('#12').attr({
-//                    'class': 'list-group-item list-group-item-success',
-//                });
-//            };
-
             $("#contenido").html(output_string);
         }
     });
 };
 
-function cargarRespuestas(idPregunta, respuestas){
-    var base_url = document.getElementById('baseurl').value;
-    respuestas = [];
-//    $("#respuestas option:selected").each(function(){
-//        respuestas.push($(this).val());
-//    });
+function cargarRespuesta(pregunta){
+var base_url = document.getElementById('baseurl').value;
+var respuesta = $("#respuestas"+pregunta).val();
 
- var foo = $('#respuestas[]').val(); 
- alert(foo);
-    
+ $.ajax({
+        type:'POST',
+        url: base_url+'evaluacion/guardarRespuesta',
+        data: {idPregunta:pregunta,respuesta: respuesta},
+        success: function(output_string){
+            $("#respuesta"+pregunta).html("<span class='glyphicon glyphicon-ok' aria-hidden='true' style='color: green'></span>");
+        }
+    });
 }
