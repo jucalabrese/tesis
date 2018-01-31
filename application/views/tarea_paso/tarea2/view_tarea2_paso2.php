@@ -1,5 +1,5 @@
 <div>
-    <h2>Definir los criterios de decisión para las métricas</h2>
+    <h2>Criterios de decisión de las subcaracterísticas</h2>
 </div>
 <hr>
 <?php //Muestra cartel exito/error
@@ -87,10 +87,10 @@
 						}
 					}?>
 				<?php if ($sub['asignado']){ ?>
-					<td align="center" style="vertical-align: middle;"> 0 - <?php echo $sub['inaceptable'] ?></td>
-					<td align="center" style="vertical-align: middle;"> <?php echo ($sub['inaceptable']+0.01) ?> - <?php echo $sub['min_aceptable'] ?> </td>
-					<td align="center" style="vertical-align: middle;"> <?php echo ($sub['min_aceptable']+0.01) ?> - <?php echo $sub['aceptable'] ?> </td>
-					<td align="center" style="vertical-align: middle;"> <?php echo ($sub['aceptable']+0.01) ?> - <?php echo $sub['excede'] ?> </td>
+					<td align="center" style="vertical-align: middle;"> 0.00 - <?php echo $sub['inaceptable'] ?>0</td>
+					<td align="center" style="vertical-align: middle;"> <?php echo ($sub['inaceptable']+0.01) ?> - <?php echo $sub['min_aceptable'] ?>0 </td>
+					<td align="center" style="vertical-align: middle;"> <?php echo ($sub['min_aceptable']+0.01) ?> - <?php echo $sub['aceptable'] ?>0 </td>
+					<td align="center" style="vertical-align: middle;"> <?php echo ($sub['aceptable']+0.01) ?> - <?php echo $sub['excede'] ?>.00 </td>
 					<td align="center" style="vertical-align: middle;">
 						<button type="button" class="btn btn-warning btn-sm" id="guardar" onclick="guardar_niveles(<?php echo $s['idSubcaracteristica']?>)">Modificar</button>
 					</td>
