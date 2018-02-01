@@ -19,17 +19,17 @@
     <div class="col-md-1">
     </div>
     <div class="col-md-10">
-        <h1>Sistema de Evaluación de Producto</h1>
+        <h1 align="center">Sistema de Evaluación de Producto</h1>
         <hr>
     </div>
     <div class="col-md-1">
     </div>
 </div>
-<div class="row espacios" style="padding-top: 2%">
-    <div class="col-md-offset-3 col-md-3">
-        <a href="http://weblidi.info.unlp.edu.ar/wp/" target="_blank"><img src="<?php echo base_url('assets/images/LogoLIDI.png')?>" class="img-thumbnail" alt="LIDI"></a>
-    </div>   
-    <div class="col-md-5">
+<div class="row" style="padding-top: 2%">
+<!--    <div class="col-md-offset-3 col-md-3">
+        <a href="http://weblidi.info.unlp.edu.ar/wp/" target="_blank"><img src="<?php //echo base_url('assets/images/LogoLIDI.png')?>" class="img-thumbnail" alt="LIDI"></a>
+    </div>   -->
+    <div class="col-md-12" align="center">
         <a href="http://info.unlp.edu.ar/" target="_blank"><img src="<?php echo base_url('assets/images/LogoINFO.png')?>" class="img-thumbnail" alt="INFO"></a>
     </div>
 </div>

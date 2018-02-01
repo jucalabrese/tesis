@@ -21,12 +21,11 @@
         <span>Seleccione una característica:</span>
     </div>
     <div class="form-group">
-        <select class="form-control" id="partes">
+        <select class="form-control" id="partes" onchange="cargarPreguntas(value)">
             <option value="0" onclick="cargarVistaTareas_4_1(0)">Seleccione una característica</option>
     <?php   foreach ($caracteristicas->result_array() as $c){ ?>
-                <option value="<?php echo $c['idCaracteristica']?>" onclick="cargarPreguntas(<?php echo $c['idCaracteristica']?>)"><?php echo $c['nombre']?></option>      
-    <?php       
-            } ?>       
+                <option value="<?php echo $c['idCaracteristica']?>"><?php echo $c['nombre']?></option>      
+    <?php   } ?>       
         </select>
     </div>
     <hr> 
@@ -57,7 +56,7 @@
                       </td>
                       <td align="center">
                           <select name="respuestas" id="respuestas<?php echo $p['idPregunta']?>" onchange="cargarRespuesta(<?php echo $p['idPregunta']?>);" class="form-control miSelect" style="width: 70%">
-                                <option></option>
+                                <option id="sinrespuesta<?php echo $p['idPregunta']?>"></option>
                                 <option>SI</option>
                                 <option>NO</option>
                           </select>

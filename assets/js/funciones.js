@@ -435,6 +435,7 @@ var respuesta = $("#respuestas"+pregunta).val();
         url: base_url+'evaluacion/guardarRespuesta',
         data: {idPregunta:pregunta,respuesta: respuesta},
         success: function(output_string){
+            $("#sinrespuesta"+pregunta).remove();
             $("#respuesta"+pregunta).html("<span class='glyphicon glyphicon-ok' aria-hidden='true' style='color: green'></span>");
         }
     });

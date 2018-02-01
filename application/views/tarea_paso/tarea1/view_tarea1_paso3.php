@@ -25,10 +25,11 @@
             </div>                 
             <div class="form-group col-lg-12">
                 <select class="form-control" id="partes">
+                    <option value="0">Seleccione la fase del proyecto</option>
                     <?php foreach ($partes->result_array() as $p){ 
                         if (($p['idParte']) == $parte_seleccionada){?>
                             <option value="<?php echo $p['idParte']?>" selected><?php echo $p['parte']?></option>
-                    <?php }else{ ?>
+                  <?php }else{ ?>
                             <option value="<?php echo $p['idParte']?>"><?php echo $p['parte']?></option>
                     <?php }} ?>
                 </select>    

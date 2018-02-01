@@ -170,7 +170,6 @@ class Evaluacion extends CI_Controller{
                             foreach ($parteSeleccionada->result_array() as $p){
                                 $idParte = $p['idParte'];
                             }
- 
                             $datos = array('partes' => $partes, 'parte_seleccionada' => $idParte); //Guardo el resultado de la consulta en un arreglo para pasar a la vista
                             break;
                         case 4:
