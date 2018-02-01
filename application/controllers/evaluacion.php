@@ -207,6 +207,8 @@ class Evaluacion extends CI_Controller{
                             $min_aceptable = "";
 							$aceptable = "";
 							$excede = "";
+							unset($_SESSION['ExitoNiveles']);
+							unset($_SESSION['ErrorNiveles']);
 							$asignado=array();
 							foreach ($subcaracteristicas->result_array() as $s){
 								$p=array();
@@ -498,7 +500,39 @@ class Evaluacion extends CI_Controller{
 								}
 							}
 							$subcaracteristicas = $this->model_evaluacion->getSubcaracteristicasEvaluacion($idEvaluacion);
-                            $datos = array('subcaracteristicas' => $subcaracteristicas, 'inaceptable' => $inaceptable, 'min_aceptable' => $min_aceptable, 'aceptable' => $aceptable, 'excede' => $excede);
+							$asignado=array();
+							foreach ($subcaracteristicas->result_array() as $s){
+								$p=array();
+								$p['id']=$s['idSubcaracteristica'];
+								$subcar=$this->model_evaluacion->getEvaluacionSubcaracteristica($idEvaluacion,$s['idSubcaracteristica']);
+								foreach ($subcar->result_array() as $sub){
+									$subc_nivel=$this->model_evaluacion->getSubcaracteristicaNivel($sub['idEvaluacionSubcaracteristica']);
+								}
+								if (!empty($subc_nivel->result_array())){
+									$p['asignado']=true;
+									foreach ($subc_nivel->result_array() as $sn){
+										switch($sn['idNivel']){
+											case 1:
+												$p['inaceptable']=$sn['valorMaximo'];
+											break;
+											case 2:
+												$p['min_aceptable']=$sn['valorMaximo'];
+											break;
+											case 3:
+												$p['aceptable']=$sn['valorMaximo'];
+											break;
+											case 4:
+												$p['excede']=$sn['valorMaximo'];
+											break;
+										}
+									}
+								}
+								else{
+									$p['asignado']=false;
+								}
+								$asignado[]=$p;
+							}				
+                            $datos = array('subcaracteristicas' => $subcaracteristicas, 'asignado' => $asignado, 'inaceptable' => $inaceptable, 'min_aceptable' => $min_aceptable, 'aceptable' => $aceptable, 'excede' => $excede);
                         break;
                         case 3:
                         
