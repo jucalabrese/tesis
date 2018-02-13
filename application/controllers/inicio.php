@@ -22,6 +22,17 @@ class Inicio extends CI_Controller {
             $this->load->view('sitio/view_index', $datos);
 	}
         
+         public function registro()
+	{
+            $data = array(
+            'nombre' => '',
+            'apellido' => '',
+            'email' => '',
+           );
+            $datos["cuerpo"] = $this->load->view('sitio/view_registro', $data, true);
+            $this->load->view('sitio/view_index', $datos);
+	}
+        
         public function principal()
 	{
             redirect(base_url("inicio/index"));

@@ -20,6 +20,9 @@
                         </li>     
                     <?php } else { ?>
                         <li>
+                            <a href="<?php echo base_url('inicio/registro')?>">Registrarse</a>
+                        </li>
+                        <li>
                             <a href="<?php echo base_url('inicio/login')?>">Iniciar Sesión</a>
                         </li>
                     <?php } ?>
