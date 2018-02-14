@@ -80,6 +80,22 @@ function cargarVistaTareas_2_2(){
     });
 };
 
+function cargarCriteriosSubcaracteristicas(value){
+    var base_url = document.getElementById('baseurl').value;
+    $.ajax({
+        url: base_url+'/evaluacion/tarea_paso/2/2',
+        type:'POST',
+        data: {valor: value},
+        success: function(output_string){
+            $("#criterios").slideUp('slow');
+            $('#contenido').html(output_string);
+            if (value!=0){
+                $("#criterios").slideDown('slow');
+            }
+        } 
+    });
+};
+
 function cargarVistaTareas_2_3(){
     var base_url = document.getElementById('baseurl').value;
     $.ajax({
