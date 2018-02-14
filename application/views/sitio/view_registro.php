@@ -20,12 +20,15 @@
         <?php } 
         } ?>
 </div>
-<div class="col-md-5 col-md-offset-4">
+<div class="col-md-6 col-md-offset-3">
     <div>
         <h3>Registro</h3>
     </div>
     <hr>
-    <div id="loginbox" style="margin-top: 3%" class="mainbox col-md-10 col-md-offset-1 col-sm-offset-2">                    
+    <div class="form-group">
+        <span>Complete los siguientes campos obligatorios:</span>
+    </div>
+    <div id="loginbox" style="margin-top: 2%" class="mainbox col-md-10 col-md-offset-1 col-sm-offset-2">                    
                 <form method="post" action="<?php echo base_url() ?>inicio/iniciar_sesion" id="loginform" class="form-horizontal" role="form">
                     <div style="margin-bottom: 25px" class="input-group">
                                 <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>

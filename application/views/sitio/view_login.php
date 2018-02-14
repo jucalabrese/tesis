@@ -20,7 +20,7 @@
         <?php } 
         } ?>
 </div>
-<div class="col-md-5 col-md-offset-4">
+<div class="col-md-6 col-md-offset-3">
     <div>
         <h3>Iniciar Sesión</h3>
     </div>
