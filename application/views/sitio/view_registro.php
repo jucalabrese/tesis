@@ -29,7 +29,7 @@
         <span>Complete los siguientes campos obligatorios:</span>
     </div>
     <div id="loginbox" style="margin-top: 2%" class="mainbox col-md-10 col-md-offset-1 col-sm-offset-2">                    
-                <form method="post" action="<?php echo base_url() ?>inicio/iniciar_sesion" id="loginform" class="form-horizontal" role="form">
+                <form method="post" action="<?php echo base_url() ?>inicio/registrarse" id="loginform" class="form-horizontal" role="form">
                     <div style="margin-bottom: 25px" class="input-group">
                                 <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
                                 <input id="nombre" required type="nombre" class="form-control" name="nombre" placeholder="Nombre" value="<?php echo $nombre?>">                                        

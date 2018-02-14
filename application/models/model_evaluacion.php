@@ -210,7 +210,7 @@ class Model_evaluacion extends CI_Model {
         }
     }
 
-    function guardarCaracteristicas($idCaracteristica, $idEvaluacion) {
+    function guardarCaracteristicas($idCaracteristica, $idEvaluacion){
         $this->db->trans_start();
 
         $data1 = array(

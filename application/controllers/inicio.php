@@ -22,17 +22,6 @@ class Inicio extends CI_Controller {
             $this->load->view('sitio/view_index', $datos);
 	}
         
-         public function registro()
-	{
-            $data = array(
-            'nombre' => '',
-            'apellido' => '',
-            'email' => '',
-           );
-            $datos["cuerpo"] = $this->load->view('sitio/view_registro', $data, true);
-            $this->load->view('sitio/view_index', $datos);
-	}
-        
         public function principal()
 	{
             redirect(base_url("inicio/index"));
@@ -87,4 +76,43 @@ class Inicio extends CI_Controller {
            $this->session->set_userdata($usuario_data);
            $this->principal();
         }   
+        
+        public function registro()
+	{
+            $data = array(
+            'nombre' => '',
+            'apellido' => '',
+            'email' => '',
+           );
+            $datos["cuerpo"] = $this->load->view('sitio/view_registro', $data, true);
+            $this->load->view('sitio/view_index', $datos);
+	}
+        
+         public function registrarse(){
+            unset($_SESSION['ExitoAtr']);
+            unset($_SESSION['ErrorAtr']);
+            $this->load->model('model_usuario');
+            if($this->input->post()){ //SE RECIBEN DATOS
+                $nombre = $this->input->post('nombre');
+                $apellido = $this->input->post('apellido');
+                $email = $this->input->post('email');
+                $clave = $this->input->post('clave');
+                $this->form_validation->set_rules('nombre', 'nombre', 'required');
+                $this->form_validation->set_rules('apellido', 'apellido', 'required');
+                $this->form_validation->set_rules('email', 'e-mail', 'required');
+                $this->form_validation->set_rules('clave', 'clave', 'required');
+                $this->form_validation->set_message('required', 'El campo %s es obligatorio');
+                $existe = $this->model_usuario->verificarEmail($email);
+                if ($existe){
+                    $this->session->set_flashdata('Error', 'El e-mail ingresado ya existe. Ingrese otra cuenta de correo electrónico.');
+                }else{
+                    $this->model_usuario->altaPersona($nombre, $apellido, $email, $clave);
+                    $this->session->set_flashdata('Exito', 'La persona fue registrada con éxito. Inicie sesión para continuar.');
+                    redirect(base_url("inicio/login"));
+                }
+            }
+            $datos = array('nombre' => $nombre, 'apellido' => $apellido, 'email' => $email, 'clave' => $clave);
+            $datos["cuerpo"] = $this->load->view('sitio/view_registro', $datos, true);
+            $this->load->view('sitio/view_index', $datos);
+        }  
 }
