@@ -88,7 +88,7 @@ class Inicio extends CI_Controller {
             $this->load->view('sitio/view_index', $datos);
 	}
         
-         public function registrarse(){
+        public function registrarse(){
             unset($_SESSION['ExitoAtr']);
             unset($_SESSION['ErrorAtr']);
             $this->load->model('model_usuario');
