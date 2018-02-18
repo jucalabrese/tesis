@@ -198,46 +198,56 @@ class Evaluacion extends CI_Controller {
 
                         break;
                     case 2:
-                        $caracteristicas = $this->model_evaluacion->getCaracteristicasEvaluacion($idEvaluacion);
-                        $subcaracteristicas = $this->model_evaluacion->getSubcaracteristicasEvaluacion($idEvaluacion); //ARREGLAR
-                        $inaceptable = "";
-                        $min_aceptable = "";
-                        $aceptable = "";
-                        $excede = "";
                         unset($_SESSION['ExitoNiveles']);
                         unset($_SESSION['ErrorNiveles']);
+                        $caracteristicas = $this->model_evaluacion->getCaracteristicasEvaluacion($idEvaluacion);
+                        $caracteristica = '';
+                        $subcaracteristicas = array();
+                        $inaceptable = '';
+                        $min_aceptable = '';
+                        $aceptable = '';
+                        $excede = '';
                         $asignado = array();
-                        foreach ($subcaracteristicas->result_array() as $s) {
-                            $p = array();
-                            $p['id'] = $s['idSubcaracteristica'];
-                            $subcar = $this->model_evaluacion->getEvaluacionSubcaracteristica($idEvaluacion, $s['idSubcaracteristica']);
-                            foreach ($subcar->result_array() as $sub) {
-                                $subc_nivel = $this->model_evaluacion->getSubcaracteristicaNivel($sub['idEvaluacionSubcaracteristica']);
+                        if ($this->input->post()) {
+                            $carac = $this->input->post('carac');
+                            $car = $this->model_evaluacion->getCaracteristica($carac);
+                            foreach ($car->result_array() as $c) {
+                                    $caracteristica = $c;
                             }
-                            if (!empty($subc_nivel->result_array())) {
-                                $p['asignado'] = true;
-                                foreach ($subc_nivel->result_array() as $sn) {
-                                    switch ($sn['idNivel']) {
-                                        case 1:
-                                            $p['inaceptable'] = $sn['valorMaximo'];
-                                            break;
-                                        case 2:
-                                            $p['min_aceptable'] = $sn['valorMaximo'];
-                                            break;
-                                        case 3:
-                                            $p['aceptable'] = $sn['valorMaximo'];
-                                            break;
-                                        case 4:
-                                            $p['excede'] = $sn['valorMaximo'];
-                                            break;
-                                    }
+                            $subcaracteristicas = $this->model_evaluacion->getSubcaracteristicasEvaluacionCaracteristica($idEvaluacion, $carac);
+                            foreach ($subcaracteristicas->result_array() as $s) {
+                                $p = array();
+                                $p['id'] = $s['idSubcaracteristica'];
+                                $subcar = $this->model_evaluacion->getEvaluacionSubcaracteristica($idEvaluacion, $s['idSubcaracteristica']);
+                                foreach ($subcar->result_array() as $sub) {
+                                    $subc_nivel = $this->model_evaluacion->getSubcaracteristicaNivel($sub['idEvaluacionSubcaracteristica']);
                                 }
-                            } else {
-                                $p['asignado'] = false;
+                                if (!empty($subc_nivel->result_array())) {
+                                    $p['asignado'] = true;
+                                    foreach ($subc_nivel->result_array() as $sn) {
+                                        switch ($sn['idNivel']) {
+                                            case 1:
+                                                $p['inaceptable'] = $sn['valorMaximo'];
+                                                break;
+                                            case 2:
+                                                $p['min_aceptable'] = $sn['valorMaximo'];
+                                                break;
+                                            case 3:
+                                                $p['aceptable'] = $sn['valorMaximo'];
+                                                break;
+                                            case 4:
+                                                $p['excede'] = $sn['valorMaximo'];
+                                                break;
+                                        }
+                                    }
+                                } else {
+                                    $p['asignado'] = false;
+                                }
+                                $asignado[] = $p;
                             }
-                            $asignado[] = $p;
                         }
-                        $datos = array('subcaracteristicas' => $subcaracteristicas, 'caracteristicas' => $caracteristicas, 'asignado' => $asignado, 'inaceptable' => $inaceptable, 'min_aceptable' => $min_aceptable, 'aceptable' => $aceptable, 'excede' => $excede);
+
+                        $datos = array('subcaracteristicas' => $subcaracteristicas, 'caracteristicas' => $caracteristicas, 'caracteristica' => $caracteristica, 'asignado' => $asignado, 'inaceptable' => $inaceptable, 'min_aceptable' => $min_aceptable, 'aceptable' => $aceptable, 'excede' => $excede);
                         break;
                     case 3:
 
@@ -491,7 +501,13 @@ class Evaluacion extends CI_Controller {
                                 }
                             }
                         }
-                        $subcaracteristicas = $this->model_evaluacion->getSubcaracteristicasEvaluacion($idEvaluacion);
+                        $caracteristicas = $this->model_evaluacion->getCaracteristicasEvaluacion($idEvaluacion);
+                        $carac = $this->input->post('caracteristica');
+                        $car = $this->model_evaluacion->getCaracteristica($carac);
+                        foreach ($car->result_array() as $c) {
+                                    $caracteristica = $c;
+                            }
+                        $subcaracteristicas = $this->model_evaluacion->getSubcaracteristicasEvaluacionCaracteristica($idEvaluacion, $carac);
                         $asignado = array();
                         foreach ($subcaracteristicas->result_array() as $s) {
                             $p = array();
@@ -523,7 +539,7 @@ class Evaluacion extends CI_Controller {
                             }
                             $asignado[] = $p;
                         }
-                        $datos = array('subcaracteristicas' => $subcaracteristicas, 'asignado' => $asignado, 'inaceptable' => $inaceptable, 'min_aceptable' => $min_aceptable, 'aceptable' => $aceptable, 'excede' => $excede);
+                        $datos = array('subcaracteristicas' => $subcaracteristicas, 'caracteristicas' => $caracteristicas, 'caracteristica' => $caracteristica, 'asignado' => $asignado, 'inaceptable' => $inaceptable, 'min_aceptable' => $min_aceptable, 'aceptable' => $aceptable, 'excede' => $excede);
                         break;
                     case 3:
 
