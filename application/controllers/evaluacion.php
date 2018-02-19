@@ -250,7 +250,66 @@ class Evaluacion extends CI_Controller {
                         $datos = array('subcaracteristicas' => $subcaracteristicas, 'caracteristicas' => $caracteristicas, 'caracteristica' => $caracteristica, 'asignado' => $asignado, 'inaceptable' => $inaceptable, 'min_aceptable' => $min_aceptable, 'aceptable' => $aceptable, 'excede' => $excede);
                         break;
                     case 3:
-
+                        $caracteristicas = array();
+                        $car = $this->model_evaluacion->getCaracteristicasEvaluacion($idEvaluacion);
+                        foreach ($car->result_array() as $c) {
+                            $c['subcaracteristicas'] = $this->model_evaluacion->getSubcaracteristicasEvaluacionCaracteristica($idEvaluacion,$c['idCaracteristica']);
+                            $cant = 0;
+                            foreach ($c['subcaracteristicas']->result_array() as $s) {
+                                $cant += 1;
+                            }
+                            switch ($c['idCaracteristica']){
+                                case 1: 
+                                    if ($cant == 3){
+                                        $c['cantidad'] = $cant;
+                                        $caracteristicas[] = $c;
+                                    }
+                                    break;
+                                case 2:
+                                    if ($cant == 3){
+                                        $c['cantidad'] = $cant;
+                                        $caracteristicas[] = $c;
+                                    }
+                                    break;
+                                case 3: 
+                                    if ($cant == 2){
+                                        $c['cantidad'] = $cant;
+                                        $caracteristicas[] = $c;
+                                    }
+                                    break;
+                                case 4:
+                                    if ($cant == 6){
+                                        $c['cantidad'] = $cant;
+                                        $caracteristicas[] = $c;
+                                    }
+                                    break;
+                                case 5:
+                                    if ($cant == 4){
+                                        $c['cantidad'] = $cant;
+                                        $caracteristicas[] = $c;
+                                    }
+                                    break;
+                                case 6:
+                                    if ($cant == 5){
+                                        $c['cantidad'] = $cant;
+                                        $caracteristicas[] = $c;
+                                    }
+                                    break;
+                                case 7:
+                                    if ($cant == 5){
+                                        $c['cantidad'] = $cant;
+                                        $caracteristicas[] = $c;
+                                    }
+                                    break;
+                                case 8:
+                                    if ($cant == 3){
+                                        $c['cantidad'] = $cant;
+                                        $caracteristicas[] = $c;
+                                    }
+                                    break;
+                            }
+                        }
+                        $datos = array('caracteristicas' => $caracteristicas);
                         break;
                 };
                 break;

@@ -29,7 +29,7 @@
                 <div class="collapse" id="item2">
                     <a href="#" class="list-group-item" onclick="cargarVistaTareas_2_1()">- Subcaracterísticas a evaluar</a>
                     <a href="#" class="list-group-item" onclick="cargarVistaTareas_2_2()">- Criterios de decisión de las subcaracterísticas</a>
-                    <a href="#" class="list-group-item" onclick="cargarVistaTareas_2_3()">- Criterios de decisión de la evaluación</a>
+                    <a href="#" class="list-group-item" onclick="cargarVistaTareas_2_3()">- Criterios de decisión de las características</a>
                 </div>
                 <a href="#item3" class="list-group-item color_menu menu_index" data-parent="#MainMenu" data-toggle="collapse" onclick="cargarVistaTareas_3_0()"><strong>3. Diseñar la evaluación</strong></a>
                 <div class="collapse" id="item3">
