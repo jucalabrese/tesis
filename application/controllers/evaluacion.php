@@ -329,13 +329,15 @@ class Evaluacion extends CI_Controller {
                     case 0:
                         break;
                     case 1:
+                        unset($_SESSION['ExitoProposito']);
+                        unset($_SESSION['ErrorProposito']);
                         if ($this->input->post()) {
                             $proposito = $this->input->post('proposito');
 
-                            if ($proposito == '') {
+                            if ($proposito == ''){
                                 $this->session->set_flashdata('ErrorProposito', 'El propósito no puede estar vacío');
                                 $resul = $this->model_evaluacion->cargarProposito($idEvaluacion);
-                                foreach ($resul->result_array() as $e) {
+                                foreach ($resul->result_array() as $e){
                                     $proposito = $e['proposito'];
                                 }
                             } else {
@@ -349,6 +351,7 @@ class Evaluacion extends CI_Controller {
                                 }
                             }
                         }
+                        
                         $datos = array('proposito' => $proposito);
 
                         break;
