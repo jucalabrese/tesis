@@ -148,17 +148,15 @@ class Evaluacion extends CI_Controller {
                         $datos = array('proposito' => $proposito);
                         break;
                     case 2:
-                        $texto = '';
                         $cant = 0;
-                        $arregloCaracteristicas = array(); //ARREGLO CON CARACTERISTICAS ELEGIDAS POR EL USUARIO
                         $caracteristicas = $this->model_evaluacion->getCaracteristicas(); //TODAS LAS CARACTERISTICAS
-                        $data = $this->model_evaluacion->cargar_1_2($idEvaluacion);
-                        foreach ($data->result_array() as $dato) {
+                        $arregloCaracteristicas = array(); //ARREGLO CON CARACTERISTICAS ELEGIDAS POR EL USUARIO
+                        $data = $this->model_evaluacion->cargar_1_2($idEvaluacion); //TRAE TODAS LAS CARACTERISTICAS ELEGIDAS POR EL USUARIO
+                        foreach ($data->result_array() as $dato){
                             $arregloCaracteristicas[$cant] = $dato['idCaracteristica'];
-                            $texto = $dato['texto'];
                             $cant++;
                         };
-                        $datos = array('caracteristicas' => $caracteristicas, 'caracteristicas_seleccionadas' => $arregloCaracteristicas, 'texto' => $texto); //Guardo el resultado de la consulta en un arreglo para pasar a la vista
+                        $datos = array('caracteristicas' => $caracteristicas, 'caracteristicas_seleccionadas' => $arregloCaracteristicas); 
                         break;
                     case 3:
                         $partes = $this->model_evaluacion->getPartes();
@@ -425,51 +423,34 @@ class Evaluacion extends CI_Controller {
 
                         break;
                     case 2:
+                        unset($_SESSION['ExitoCar']);
+                        unset($_SESSION['ErrorCar']);
                         $arregloCaracteristicas = array();
                         $cant = 0;
-                        $idEvaluacion = $this->session->userdata('idEvaluacion');
-                        $texto = '';
-
                         if ($this->input->post()) { //SE RECIBEN DATOS
-                            $textoNuevo = $this->input->post('text');
-                            $caracteristicas = $this->input->post('atr');
-
-                            if ($caracteristicas == '') { //SI ESTÁ VACÍO EL ARREGLO DE CARACTERISTICAS
-                                unset($_SESSION['ExitoAtr']);
-                                $this->session->set_flashdata('ErrorAtr', 'Debe seleccionar al menos una característica');
-                            } else { //SI NO ESTÁ VACÍO EL ARREGLO DE CARACTERISTICAS
-                                $existe12 = $this->model_evaluacion->existe_1_2($idEvaluacion); //SI EXISTE AL MENOS UNA CARACTERISTICA EN LA BASE
-                                if ($existe12) { //SI EXISTE, ES UNA EDICIÓN
-                                    $resul = $this->model_evaluacion->cargar_1_2($idEvaluacion); //TRAE TODOS LOS DATOS (ATRIBUTOS+TEXTO)
-                                    foreach ($resul->result_array() as $e) { //GUARDA TODAS LAS CARACTERISTICAS DE LA BASE Y EL TEXTO PARA LA VISTA
-                                        $arregloCaracteristicas[$cant] = $e['idCaracteristica'];
-                                        $cant++;
-                                    }
-                                    $this->model_evaluacion->eliminarCaracteristicas($idEvaluacion);
-                                    foreach ($caracteristicas as $c) { //POR CADA CARACTERISTICA SELECCIONADA POR EL USUARIO
-                                        $this->model_evaluacion->guardarCaracteristicas($c, $idEvaluacion); //LOS ACTUALIZA
-                                    }
-                                    $this->model_evaluacion->editarTexto($textoNuevo, $idEvaluacion);
-                                    $this->session->set_flashdata('ExitoAtr', '¡Se editaron los datos exitosamente!');
-                                } else { //SI ES LA PRIMERA VEZ
-                                    $this->model_evaluacion->guardarTexto($textoNuevo, $idEvaluacion);
-                                    foreach ($caracteristicas as $c) {
-                                        $this->model_evaluacion->guardarCaracteristicas($c, $idEvaluacion);
-                                    }
-                                    $this->session->set_flashdata('ExitoAtr', '¡Se cargaron los datos exitosamente!');
-                                }
+                            $caracteristicas = $this->input->post('car');
+                            $existe = $this->model_evaluacion->existe_1_2($idEvaluacion); //SI EXISTE AL MENOS UNA CARACTERISTICA EN LA BASE
+                            if ($existe){ //SI EXISTE, ES UNA EDICIÓN
+                                $this->model_evaluacion->eliminarCaracteristicas($idEvaluacion);
+                                $this->session->set_flashdata('ExitoCar', '¡Se editaron los datos exitosamente!');
+                            }else{ //SI NO EXISTE, ES LA PRIMERA VEZ
+                                $this->session->set_flashdata('ExitoCar', '¡Se cargaron los datos exitosamente!');
                             }
+                            foreach ($caracteristicas as $c) { //POR CADA CARACTERISTICA SELECCIONADA POR EL USUARIO
+                                $this->model_evaluacion->guardarCaracteristicas($c, $idEvaluacion); //LOS ACTUALIZA
+                            }
+                        }else{
+                            $this->session->set_flashdata('ErrorCar', 'Debe seleccionar al menos una característica');
                         }
 
                         $resul = $this->model_evaluacion->cargar_1_2($idEvaluacion);
                         foreach ($resul->result_array() as $e) {
                             $arregloCaracteristicas[$cant] = $e['idCaracteristica'];
-                            $texto = $e['texto'];
                             $cant++;
                         }
 
                         $caracteristicas = $this->model_evaluacion->getCaracteristicas();
-                        $datos = array('caracteristicas' => $caracteristicas, 'caracteristicas_seleccionadas' => $arregloCaracteristicas, 'texto' => $texto); //Guardo el resultado de la consulta en un arreglo para pasar a la vista        
+                        $datos = array('caracteristicas' => $caracteristicas, 'caracteristicas_seleccionadas' => $arregloCaracteristicas);
                         break;
                     case 3:
                         if ($this->input->post()) { //SE RECIBEN DATOS

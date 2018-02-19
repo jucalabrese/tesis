@@ -3,25 +3,25 @@
 </div>
 <hr>
     <?php //Muestra cartel exito/error
-            if ($this->session->flashdata('ExitoAtr')){ ?>
+            if ($this->session->flashdata('ExitoCar')){ ?>
                 <div class="alert alert-success">
-                    <?php echo $this->session->flashdata('ExitoAtr'); ?>
+                    <?php echo $this->session->flashdata('ExitoCar'); ?>
                 </div>
             <?php } else { 
-                if ($this->session->flashdata('ErrorAtr')){?>
+                if ($this->session->flashdata('ErrorCar')){?>
                     <div class="alert alert-danger">
-                        <?php echo $this->session->flashdata('ErrorAtr'); ?>    
+                        <?php echo $this->session->flashdata('ErrorCar'); ?>    
                     </div>
             <?php } 
             }
-    $caracteristicasSeleccionadas = array();
-    $cant = 0;
-    if (!empty($caracteristicas_seleccionadas)){
-        foreach ($caracteristicas_seleccionadas as $atr){
-            $caracteristicasSeleccionadas[$cant] = $atr;
-            $cant++;
-        }
-    }
+//    $caracteristicasSeleccionadas = array();
+//    $cant = 0;
+//    if (!empty($caracteristicas_seleccionadas)){
+//        foreach ($caracteristicas_seleccionadas as $atr){
+//            $caracteristicasSeleccionadas[$cant] = $atr;
+//            $cant++;
+//        }
+//    }
     ?>  
 <div class="col-lg-12">
       <form class="form-horizontal" role="form">
@@ -32,18 +32,18 @@
                 </div>
             </div>
             <?php foreach ($caracteristicas->result_array() as $atr){
-                if ($caracteristicasSeleccionadas <> null){
-                    if (in_array($atr['idCaracteristica'], $caracteristicasSeleccionadas)){?>           
+                //if ($caracteristicasSeleccionadas <> null){
+                    if (in_array($atr['idCaracteristica'], $caracteristicas_seleccionadas)){?> <!-- SI LA CARACTERISTICA FUE UNA DE LAS ELEGIDAS POR EL USUARIO -->          
                         <div class="form-group">
                                 <div class="checkbox col-md-12">
-                                    <label>
+                                    <label> <!-- MARCARLA COMO SELECCIONADA -->
                                         <input type="checkbox" checked value="<?php echo $atr['idCaracteristica']?>" id="caracteristicas" name="caracteristicas">
                                         <?php echo $atr['nombre']?>
                                     </label>   
                             </div>
                         </div>
-            <?php }else{ ?>
-                    <div class="form-group">
+            <?php   }else{ ?>
+                    <div class="form-group"> <!-- SI NO FUE ELEGIDA, MOSTRARLA NORMAL -->
                             <div class="checkbox col-md-12">
                                 <label>
                                     <input type="checkbox" value="<?php echo $atr['idCaracteristica']?>" id="caracteristicas" name="caracteristicas">
@@ -51,18 +51,20 @@
                                 </label>
                             </div>    
                     </div>
-            <?php }}else{ ?>
-                <div class="form-group">
+            <?php   }
+                //}else{ ?>
+<!--                <div class="form-group">
                         <div class="col-lg-12">
                             <div class="checkbox col-md-12">
                                 <label>
-                                    <input type="checkbox" value="<?php echo $atr['idCaracteristica']?>" id="caracteristicas" name="caracteristicas">
-                                    <?php echo $atr['nombre']?>
+                                    <input type="checkbox" value="<?php //echo $atr['idCaracteristica']?>" id="caracteristicas" name="caracteristicas">
+                                    <?php //echo $atr['nombre']?>
                                 </label>
                             </div>    
                         </div>
-                </div>
-            <?php }} ?> 
+                </div>-->
+            <?php }
+            //} ?> 
             <hr>
             <span>Nota: Las características se encuentran definidas en el modelo de calidad brindado por la norma ISO/IEC 25010.</span>
         </div>

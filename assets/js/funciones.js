@@ -364,9 +364,7 @@ function guardar_1_1() {
 
 function guardar_1_2() {
     var base_url = document.getElementById('baseurl').value;
-    var texto = document.getElementById('texto').value;
     var caracteristicas = [];
-
 
     $("#caracteristicas:checked").each(function () {
         if (this.checked) {
@@ -377,17 +375,15 @@ function guardar_1_2() {
     $.ajax({
         type: 'POST',
         url: base_url + 'evaluacion/guardado/1/2',
-        data: {car: caracteristicas, text: texto},
+        data: {car: caracteristicas},
 
         success: function (output_string) {
-
             if (caracteristicas != '') {
                 $('#12').attr({
                     'class': 'list-group-item list-group-item-success',
                 });
             }
             ;
-
             $("#contenido").html(output_string);
         }
     });
