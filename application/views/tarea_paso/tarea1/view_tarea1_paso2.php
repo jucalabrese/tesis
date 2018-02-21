@@ -14,14 +14,6 @@
                     </div>
             <?php } 
             }
-//    $caracteristicasSeleccionadas = array();
-//    $cant = 0;
-//    if (!empty($caracteristicas_seleccionadas)){
-//        foreach ($caracteristicas_seleccionadas as $atr){
-//            $caracteristicasSeleccionadas[$cant] = $atr;
-//            $cant++;
-//        }
-//    }
     ?>  
 <div class="col-lg-12">
       <form class="form-horizontal" role="form">
@@ -51,20 +43,8 @@
                                 </label>
                             </div>    
                     </div>
-            <?php   }
-                //}else{ ?>
-<!--                <div class="form-group">
-                        <div class="col-lg-12">
-                            <div class="checkbox col-md-12">
-                                <label>
-                                    <input type="checkbox" value="<?php //echo $atr['idCaracteristica']?>" id="caracteristicas" name="caracteristicas">
-                                    <?php //echo $atr['nombre']?>
-                                </label>
-                            </div>    
-                        </div>
-                </div>-->
-            <?php }
-            //} ?> 
+            <?php }} ?> 
+
             <hr>
             <span>Nota: Las características se encuentran definidas en el modelo de calidad brindado por la norma ISO/IEC 25010.</span>
         </div>

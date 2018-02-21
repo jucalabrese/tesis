@@ -161,7 +161,7 @@ class Evaluacion extends CI_Controller {
                     case 3:
                         $partes = $this->model_evaluacion->getPartes();
                         $parteSeleccionada = $this->model_evaluacion->getParteSeleccionada($idEvaluacion);
-                        foreach ($parteSeleccionada->result_array() as $p) {
+                        foreach ($parteSeleccionada->result_array() as $p){
                             $idParte = $p['idParte'];
                         }
                         $datos = array('partes' => $partes, 'parte_seleccionada' => $idParte); //Guardo el resultado de la consulta en un arreglo para pasar a la vista
@@ -193,7 +193,25 @@ class Evaluacion extends CI_Controller {
 
                         break;
                     case 1:
-
+                        $cant = 0;
+                        $subcaracteristicas = array();
+                        $scseleccionadas = array();
+                        $cSeleccionada = '';
+                        $caracteristicas = $this->model_evaluacion->getCaracteristicasEvaluacion(363); //TRAE LAS CARACTERISTICAS DE LA EVALUACIÓN
+                        if ($this->input->post()){
+                            $idCaracteristica = $this->input->post('valor');
+                            $subcaracteristicas = $this->model_evaluacion->getSubcaracteristicas_Caracteristica($idCaracteristica);
+                            $data = $this->model_evaluacion->getSubcaracteristicasEvaluacionCaracteristica(363,$idCaracteristica);
+                            foreach($data->result_array() as $dato){
+                                $scseleccionadas[$cant] = $dato['idSubcaracteristica'];
+                                $cant++;
+                            };
+                            $data = $this->model_evaluacion->getCaracteristica($idCaracteristica);
+                            foreach ($data->result_array() as $dato) {
+                                $cSeleccionada = $dato['nombre'];
+                            }
+                        }                        
+                        $datos = array('caracteristicas' => $caracteristicas, 'cSeleccionada' => $cSeleccionada, 'subcaracteristicas' => $subcaracteristicas, 'scseleccionadas' => $scseleccionadas); 
                         break;
                     case 2:
                         unset($_SESSION['ExitoNiveles']);
@@ -386,7 +404,7 @@ class Evaluacion extends CI_Controller {
         $this->load->view('tarea_paso/tarea1/view_tarea1_paso3', $datos);
     }
 
-    public function guardado($tarea, $paso) {
+    public function guardado($tarea, $paso){
         unset($_SESSION['Exito']);
         $this->load->model('model_evaluacion');
         $idEvaluacion = $this->session->userdata('idEvaluacion');
@@ -453,24 +471,15 @@ class Evaluacion extends CI_Controller {
                         $datos = array('caracteristicas' => $caracteristicas, 'caracteristicas_seleccionadas' => $arregloCaracteristicas);
                         break;
                     case 3:
-                        if ($this->input->post()) { //SE RECIBEN DATOS
+                        unset($_SESSION['ExitoPart']);
+                        unset($_SESSION['ErrorPart']);
+                        if ($this->input->post()){ //SE RECIBEN DATOS
                             $parte = $this->input->post('parte');
-                            unset($_SESSION['ExitoAtr']);
-                            if ($parte == 1) {
-                                unset($_SESSION['ExitoAtr']);
+                            if ($parte == 0){
                                 $this->session->set_flashdata('ErrorPart', 'Debe seleccionar la parte del sistema a evaluar');
                             } else {
-                                unset($_SESSION['ErrorAtr']);
-                                $evaluacion = $this->model_evaluacion->getParteSeleccionada($idEvaluacion);
-                                foreach ($evaluacion->result_array() as $e) {
-                                    $idParte = $e['idParte'];
-                                }
                                 $evaluacion = $this->model_evaluacion->agregarParte($parte, $idEvaluacion);
-                                if ($idParte == 1) {
-                                    $this->session->set_flashdata('ExitoPart', '¡Se cargaron los datos exitosamente!');
-                                } else {
-                                    $this->session->set_flashdata('ExitoPart', '¡Se editaron los datos exitosamente!');
-                                }
+                                $this->session->set_flashdata('ExitoPart', '¡Se actualizaron los datos exitosamente!');
                             }
                         }
 
@@ -510,7 +519,42 @@ class Evaluacion extends CI_Controller {
 
                         break;
                     case 1:
+                        
+                        unset($_SESSION['ExitoSubcar']);
+                        unset($_SESSION['ErrorSubcar']);
+                        $cant = 0;
+                        $scseleccionadas=array();
+                        $caracteristicas = $this->model_evaluacion->getCaracteristicasEvaluacion(363);
+                        if ($this->input->post()) { //SE RECIBEN DATOS
+                            $idCaracteristica = $this->input->post('car');
+                            $subcaracteristicas = $this->input->post('subcar');
+                            $existe = $this->model_evaluacion->existe_2_1(363); //SI EXISTE AL MENOS UNA SUBCARACTERISTICA EN LA BASE
+                            if ($existe){ //SI EXISTE, ES UNA EDICIÓN
+                                $this->model_evaluacion->eliminarSubcaracteristicas(363);
+                                $this->session->set_flashdata('ExitoSubcar', '¡Se editaron los datos exitosamente!');
+                            }else{ //SI NO EXISTE, ES LA PRIMERA VEZ
+                                $this->session->set_flashdata('ExitoSubcar', '¡Se cargaron los datos exitosamente!');
+                            }
+                            foreach ($subcaracteristicas as $s) { //POR CADA CARACTERISTICA SELECCIONADA POR EL USUARIO
+                                $this->model_evaluacion->guardarSubcaracteristicas($c, 363); //LOS ACTUALIZA
+                            }
+                        }else{
+                            $this->session->set_flashdata('ErrorSubcar', 'Debe seleccionar al menos una subcaracterística para la característica');
+                        }
 
+                        $subcaracteristicas = $this->model_evaluacion->getSubcaracteristicas_Caracteristica($idCaracteristica); //LISTADO DE TODAS LAS SUBCARACTERISTICAS
+                        $data1 = $this->model_evaluacion->getSubcaracteristicasEvaluacionCaracteristica(363,$idCaracteristica); //LISTADO DE SUBCARACTERISTICAS ELEGIDAS
+                        foreach($data1->result_array() as $dato){
+                            $scseleccionadas[$cant] = $dato['idSubcaracteristica'];
+                            $cant++;
+                        };
+                        $data2 = $this->model_evaluacion->getCaracteristica($idCaracteristica);
+                        foreach ($data2->result_array() as $dato){
+                            $cSeleccionada = $dato['nombre'];
+                        }                        
+                        
+                        $datos = array('caracteristicas' => $caracteristicas, 'cSeleccionada' => $cSeleccionada, 'subcaracteristicas' => $subcaracteristicas, 'scseleccionadas' => $scseleccionadas);
+                        
                         break;
                     case 2:
                         if ($this->input->post()) { //SE RECIBEN DATOS
