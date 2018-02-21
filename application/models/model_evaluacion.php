@@ -21,13 +21,6 @@ class Model_evaluacion extends CI_Model {
         return $consulta;
     }
 
-    function getSubcaracteristicas() {
-        $this->db->select('*');
-        $this->db->from('subcaracteristica');
-        $consulta = $this->db->get();
-        return $consulta;
-    }
-
     function getCaracteristicasEvaluacion($idEvaluacion) {
         $this->db->select('*');
         $this->db->from('evaluacion_caracteristica as ea, caracteristica as c');
@@ -89,7 +82,7 @@ class Model_evaluacion extends CI_Model {
             'idProducto' => $idProducto,
             'idUsuario' => $this->session->userdata('id'),
             'idEstadoEvaluacion' => 1,
-            'idParte' => 1,
+            'idParte' => 0,
         );
         $this->db->insert('evaluacion', $data2);
         $idEvaluacion = $this->db->insert_id();
@@ -206,6 +199,14 @@ class Model_evaluacion extends CI_Model {
         $consulta = $this->db->get();
         return $consulta;
     }
+    
+    function cargar_2_1($idEvaluacion) {
+        $this->db->select('*');
+        $this->db->from('evaluacion_subcaracteristica as es');
+        $this->db->where('es.idEvaluacion', $idEvaluacion);
+        $consulta = $this->db->get();
+        return $consulta;
+    }
 
     function existe_1_2($idEvaluacion) {
         $this->db->select('*');
@@ -214,6 +215,18 @@ class Model_evaluacion extends CI_Model {
         $query = $this->db->get();
 
         if ($query->num_rows() == 0) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+    
+    function existe_2_1($idEvaluacion) {
+        $this->db->select('*');
+        $this->db->from('evaluacion_subcaracteristica as es');
+        $this->db->where('es.idEvaluacion', $idEvaluacion);
+        $consulta = $this->db->get();
+        if ($consulta->num_rows() == 0) {
             return false;
         } else {
             return true;
@@ -233,6 +246,20 @@ class Model_evaluacion extends CI_Model {
 
         return $idEvaluacion;
     }
+    
+    function guardarSubcaracteristicas($idSubcaracteristica, $idEvaluacion) {
+        $this->db->trans_start();
+
+        $data1 = array(
+            'idEvaluacion' => $idEvaluacion,
+            'idSubcaracteristica' => $idSubcaracteristica,
+        );
+
+        $this->db->insert('evaluacion_subcaracteristica', $data1);
+        $this->db->trans_complete();
+
+        return $idEvaluacion;
+    }
 
     function getCaracteristicasSeleccionados($idEvaluacion) {
         $this->db->select('*');
@@ -247,6 +274,11 @@ class Model_evaluacion extends CI_Model {
         $this->db->delete('evaluacion_caracteristica');
     }
 
+    function eliminarSubcaracteristicas($idEvaluacion) {
+        $this->db->where('idEvaluacion', $idEvaluacion);
+        $this->db->delete('evaluacion_subcaracteristica');
+    }
+    
     function getPartes() {
         $this->db->select('*');
         $this->db->from('parte');
@@ -254,7 +286,7 @@ class Model_evaluacion extends CI_Model {
         return $consulta;
     }
 
-    function getParteSeleccionada($idEvaluacion) {
+    function getParteSeleccionada($idEvaluacion){
         $this->db->select('*');
         $this->db->from('evaluacion as e');
         $this->db->where('e.idEvaluacion', $idEvaluacion);

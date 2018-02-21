@@ -179,8 +179,23 @@ function cargarPreguntas(value) {
             }
         }
     });
-}
-;
+};
+
+function cargarSubcaracteristicas(value) {
+    var base_url = document.getElementById('baseurl').value;
+    $.ajax({
+        url: base_url + '/evaluacion/tarea_paso/2/1',
+        type: 'POST',
+        data: {valor: value},
+        success: function (output_string) {
+            $("#subcaracteristicas").slideUp('slow');
+            $('#contenido').html(output_string);
+            if (value != 0) {
+                $("#subcaracteristicas").slideDown('slow');
+            }
+        }
+    });
+};
 
 function cargarVistaTareas_1_1() {
     var base_url = document.getElementById('baseurl').value;
@@ -390,9 +405,9 @@ function guardar_1_2() {
 }
 ;
 
-function guardar_1_3() {
+function guardar_1_3(){
     var base_url = document.getElementById('baseurl').value;
-    var parte = document.getElementById('partes').value;
+    var parte = document.getElementById('parte').value;
 
     $.ajax({
         type: 'POST',
@@ -400,7 +415,7 @@ function guardar_1_3() {
         data: {parte: parte},
 
         success: function (output_string) {
-            if (parte != 1) {
+            if (parte != 0) {
                 $('#13').attr({
                     'class': 'list-group-item list-group-item-success',
                 });
@@ -409,8 +424,7 @@ function guardar_1_3() {
             $("#contenido").html(output_string);
         }
     });
-}
-;
+};
 
 function guardar_1_4() {
     var base_url = document.getElementById('baseurl').value;
@@ -460,6 +474,35 @@ function mostrarPreguntas(value) {
         $("#preguntas").slideDown('slow');
     }
     ;
+}
+;
+
+function guardar_2_1() {
+    var base_url = document.getElementById('baseurl').value;
+    var caracteristica = document.getElementById('caracteristica').value;
+    var subcaracteristicas = [];
+
+    $("#subcaracteristicas:checked").each(function () {
+        if (this.checked) {
+            subcaracteristicas.push($(this).val());
+        }
+    });
+
+    $.ajax({
+        type: 'POST',
+        url: base_url + 'evaluacion/guardado/2/1',
+        data: {subcar: subcaracteristicas, car: caracteristica},
+
+        success: function (output_string) {
+            if (subcaracteristicas != '') {
+                $('#12').attr({
+                    'class': 'list-group-item list-group-item-success',
+                });
+            }
+            ;
+            $("#contenido").html(output_string);
+        }
+    });
 }
 ;
 
