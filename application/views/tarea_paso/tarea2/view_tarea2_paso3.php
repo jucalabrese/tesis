@@ -28,9 +28,10 @@ if ($this->session->flashdata('ExitoNivelesCar')) {
             <table class="table table-bordered">
                 <thead class="color_panel4">
                     <tr align="center">
-                        <td colspan="<?php echo $c['cantidad']; ?>"><?php echo $c['nombre']; ?></td>
+                        <td colspan="<?php echo $c['cantidad']+1; ?>"><?php echo $c['nombre']; ?></td>
                     </tr>
                     <tr align="center">
+                        <td></td>
                         <?php foreach ($c['subcaracteristicas']->result_array() as $s) { ?>
                             <td style="font-size:80%;"><?php echo $s['nombre']; ?></td>
         <?php } ?>  
@@ -38,15 +39,57 @@ if ($this->session->flashdata('ExitoNivelesCar')) {
                 </thead>
                 <tbody>
                     <tr>
+                        <td align="center" style="vertical-align: middle;">Inaceptable</td>
         <?php foreach ($c['subcaracteristicas']->result_array() as $s) { ?>
                             <td align="center">
-                                Esperado: 
-                                <select class="form-control tamaño_criterio_select" id="nivel<?php echo $s['nombre']; ?>"> 
-                                   <option value="0">Seleccionar</option>
-                                   <option value="1">Inaceptable</option>
-                                   <option value="2">Minimamente aceptable</option>
-                                   <option value="3">Rango objetivo</option>
-                                   <option value="4">Excede los requerimientos</option>
+                                <select class="form-control" id="inaceptable<?php echo $s['idSubcaracteristica']; ?>"> 
+                                   <option value="0">---</option>
+                                   <option value="1">Inac.</option>
+                                   <option value="2">Min. Ac.</option>
+                                   <option value="3">Rango Obj.</option>
+                                   <option value="4">Excede</option>
+                                </select>
+                            </td>
+        <?php } ?>  
+                    </tr>
+                    <tr>
+                        <td align="center" style="vertical-align: middle;">Minimamente aceptable</td>
+        <?php foreach ($c['subcaracteristicas']->result_array() as $s) { ?>
+                            <td align="center">
+                                <select class="form-control" id="min_aceptable<?php echo $s['idSubcaracteristica']; ?>"> 
+                                   <option value="0">---</option>
+                                   <option value="1">Inac.</option>
+                                   <option value="2">Min. Ac.</option>
+                                   <option value="3">Rango Obj.</option>
+                                   <option value="4">Excede</option>
+                                </select>
+                            </td>
+        <?php } ?>  
+                    </tr>
+                    <tr>
+                        <td align="center" style="vertical-align: middle;">Rango objetivo</td>
+        <?php foreach ($c['subcaracteristicas']->result_array() as $s) { ?>
+                            <td align="center">
+                                <select class="form-control" id="aceptable<?php echo $s['idSubcaracteristica']; ?>"> 
+                                   <option value="0">---</option>
+                                   <option value="1">Inac.</option>
+                                   <option value="2">Min. Ac.</option>
+                                   <option value="3">Rango Obj.</option>
+                                   <option value="4">Excede</option>
+                                </select>
+                            </td>
+        <?php } ?>  
+                    </tr>
+                    <tr>
+                        <td align="center" style="vertical-align: middle;">Excede los requerimientos</td>
+        <?php foreach ($c['subcaracteristicas']->result_array() as $s) { ?>
+                            <td align="center">
+                                <select class="form-control" id="excede<?php echo $s['idSubcaracteristica']; ?>"> 
+                                   <option value="0">---</option>
+                                   <option value="1">Inac.</option>
+                                   <option value="2">Min. Ac.</option>
+                                   <option value="3">Rango Obj.</option>
+                                   <option value="4">Excede</option>
                                 </select>
                             </td>
         <?php } ?>  
