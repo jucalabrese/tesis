@@ -526,5 +526,56 @@ function cargarRespuesta(pregunta) {
             $("#respuesta" + pregunta).html("<span class='glyphicon glyphicon-ok' aria-hidden='true' style='color: green'></span>");
         }
     });
-}
+};
 
+function cargarInaceptable(subcaracteristica) {
+    var base_url = document.getElementById('baseurl').value;
+    var nivel = $("#inaceptable" + subcaracteristica).val();
+    $.ajax({
+        type: 'POST',
+        url: base_url + 'evaluacion/guardarInaceptable',
+        data: {idSubcaracteristica: subcaracteristica, nivel_inac: nivel},
+        success: function (output_string) {
+            $("#sin_inaceptable" + subcaracteristica).remove();
+        }
+    });
+};
+
+function cargarMinAceptable(subcaracteristica) {
+    var base_url = document.getElementById('baseurl').value;
+    var nivel = $("#min_aceptable" + subcaracteristica).val();
+    $.ajax({
+        type: 'POST',
+        url: base_url + 'evaluacion/guardarMinAceptable',
+        data: {idSubcaracteristica: subcaracteristica, nivel_minac: nivel},
+        success: function (output_string) {
+            $("#sin_minaceptable" + subcaracteristica).remove();
+        }
+    });
+};
+
+function cargarAceptable(subcaracteristica) {
+    var base_url = document.getElementById('baseurl').value;
+    var nivel = $("#aceptable" + subcaracteristica).val();
+    $.ajax({
+        type: 'POST',
+        url: base_url + 'evaluacion/guardarAceptable',
+        data: {idSubcaracteristica: subcaracteristica, nivel_acep: nivel},
+        success: function (output_string) {
+            $("#sin_aceptable" + subcaracteristica).remove();
+        }
+    });
+};
+
+function cargarExcede(subcaracteristica) {
+    var base_url = document.getElementById('baseurl').value;
+    var nivel = $("#excede" + subcaracteristica).val();
+    $.ajax({
+        type: 'POST',
+        url: base_url + 'evaluacion/guardarExcede',
+        data: {idSubcaracteristica: subcaracteristica, nivel_excede: nivel},
+        success: function (output_string) {
+            $("#sin_excede" + subcaracteristica).remove();
+        }
+    });
+};

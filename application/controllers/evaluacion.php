@@ -110,6 +110,54 @@ class Evaluacion extends CI_Controller {
             $this->model_evaluacion->guardarSubcaracteristicas($c, $idEvaluacion); //LOS ACTUALIZA
         }
     }
+    
+    public function guardarInaceptable() {
+        $this->load->model('model_evaluacion');
+        $idEvaluacion = $this->session->userdata('idEvaluacion');
+        $nivel_inac = $this->input->post('nivel_inac');
+        $idSubcaracteristica = $this->input->post('idSubcaracteristica');
+        $subc = $this->model_evaluacion->getEvaluacionSubcaracteristica($idEvaluacion, $idSubcaracteristica);
+        foreach ($subc->result_array() as $s){
+            $subcaracteristica = $s['idEvaluacionSubcaracteristica'];
+        }
+        $this->model_evaluacion->cargarInaceptable($subcaracteristica, $nivel_inac);
+    }
+    
+    public function guardarMinAceptable() {
+        $this->load->model('model_evaluacion');
+        $idEvaluacion = $this->session->userdata('idEvaluacion');
+        $nivel_minac = $this->input->post('nivel_minac');
+        $idSubcaracteristica = $this->input->post('idSubcaracteristica');
+        $subc = $this->model_evaluacion->getEvaluacionSubcaracteristica($idEvaluacion, $idSubcaracteristica);
+        foreach ($subc->result_array() as $s){
+            $subcaracteristica = $s['idEvaluacionSubcaracteristica'];
+        }
+        $this->model_evaluacion->cargarMinAceptable($subcaracteristica, $nivel_minac);
+    }
+    
+    public function guardarAceptable() {
+        $this->load->model('model_evaluacion');
+        $idEvaluacion = $this->session->userdata('idEvaluacion');
+        $nivel_acep = $this->input->post('nivel_acep');
+        $idSubcaracteristica = $this->input->post('idSubcaracteristica');
+        $subc = $this->model_evaluacion->getEvaluacionSubcaracteristica($idEvaluacion, $idSubcaracteristica);
+        foreach ($subc->result_array() as $s){
+            $subcaracteristica = $s['idEvaluacionSubcaracteristica'];
+        }
+        $this->model_evaluacion->cargarAceptable($subcaracteristica, $nivel_acep);
+    }
+    
+    public function guardarExcede() {
+        $this->load->model('model_evaluacion');
+        $idEvaluacion = $this->session->userdata('idEvaluacion');
+        $nivel_excede = $this->input->post('nivel_excede');
+        $idSubcaracteristica = $this->input->post('idSubcaracteristica');
+        $subc = $this->model_evaluacion->getEvaluacionSubcaracteristica($idEvaluacion, $idSubcaracteristica);
+        foreach ($subc->result_array() as $s){
+            $subcaracteristica = $s['idEvaluacionSubcaracteristica'];
+        }
+        $this->model_evaluacion->cargarExcede($subcaracteristica, $nivel_excede);
+    }
 
     public function guardarProducto() {
         $this->load->model('model_evaluacion');
@@ -291,9 +339,33 @@ class Evaluacion extends CI_Controller {
                         $car = $this->model_evaluacion->getCaracteristicasEvaluacion($idEvaluacion);
                         foreach ($car->result_array() as $c) {
                             $c['subcaracteristicas'] = $this->model_evaluacion->getSubcaracteristicasEvaluacionCaracteristica($idEvaluacion,$c['idCaracteristica']);
-                            $cant = 0;
+                            $cant = 0;                            
                             foreach ($c['subcaracteristicas']->result_array() as $s) {
+                                $c['asignado_inac'.$s['idSubcaracteristica']]=false;
+                                $c['asignado_minac'.$s['idSubcaracteristica']]=false;
+                                $c['asignado_acep'.$s['idSubcaracteristica']]=false;
+                                $c['asignado_excede'.$s['idSubcaracteristica']]=false;
                                 $cant += 1;
+                                $subc=$this->model_evaluacion->getEvaluacionSubcaracteristica($idEvaluacion, $s['idSubcaracteristica']);
+                                foreach ($subc->result_array() as $su) {
+                                    $sub=$su;
+                                }
+                                if ($sub['nivel_inac']!= null){
+                                    $c['asignado_inac'.$s['idSubcaracteristica']]=true;
+                                    $c['inaceptable'.$s['idSubcaracteristica']] = $sub['nivel_inac'];
+                                }
+                                if ($sub['nivel_minac']!= null){
+                                    $c['asignado_minac'.$s['idSubcaracteristica']]=true;
+                                    $c['min_aceptable'.$s['idSubcaracteristica']] = $sub['nivel_minac'];
+                                }
+                                if ($sub['nivel_acep']!= null){
+                                    $c['asignado_acep'.$s['idSubcaracteristica']]=true;
+                                    $c['aceptable'.$s['idSubcaracteristica']] = $sub['nivel_acep'];
+                                }
+                                if ($sub['nivel_excede']!= null){
+                                    $c['asignado_excede'.$s['idSubcaracteristica']]=true;
+                                    $c['excede'.$s['idSubcaracteristica']] = $sub['nivel_excede'];
+                                }
                             }
                             switch ($c['idCaracteristica']){
                                 case 1: 
@@ -649,8 +721,8 @@ class Evaluacion extends CI_Controller {
                         $datos = array('subcaracteristicas' => $subcaracteristicas, 'caracteristicas' => $caracteristicas, 'caracteristica' => $caracteristica, 'asignado' => $asignado, 'inaceptable' => $inaceptable, 'min_aceptable' => $min_aceptable, 'aceptable' => $aceptable, 'excede' => $excede);
                         break;
                     case 3:
-
-                        break;
+                       
+                    break;
                 };
                 break;
             case 3:

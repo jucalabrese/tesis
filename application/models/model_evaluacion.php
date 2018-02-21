@@ -523,5 +523,49 @@ class Model_evaluacion extends CI_Model {
             return true;
         }
     }
+    
+    function cargarInaceptable($subcaracteristica, $nivel_inac) {
+        $this->db->trans_start();
+        $data = array(
+            'nivel_inac' => $nivel_inac,
+        );
+        $this->db->where('idEvaluacionSubcaracteristica', $subcaracteristica);
+        $this->db->update('evaluacion_subcaracteristica', $data);
+        $this->db->trans_complete();
+        return true;
+    }
+    
+    function cargarMinAceptable($subcaracteristica, $nivel_minac) {
+        $this->db->trans_start();
+        $data = array(
+            'nivel_minac' => $nivel_minac,
+        );
+        $this->db->where('idEvaluacionSubcaracteristica', $subcaracteristica);
+        $this->db->update('evaluacion_subcaracteristica', $data);
+        $this->db->trans_complete();
+        return true;
+    }
+    
+    function cargarAceptable($subcaracteristica, $nivel_acep) {
+        $this->db->trans_start();
+        $data = array(
+            'nivel_acep' => $nivel_acep,
+        );
+        $this->db->where('idEvaluacionSubcaracteristica', $subcaracteristica);
+        $this->db->update('evaluacion_subcaracteristica', $data);
+        $this->db->trans_complete();
+        return true;
+    }
+    
+    function cargarExcede($subcaracteristica, $nivel_excede) {
+        $this->db->trans_start();
+        $data = array(
+            'nivel_excede' => $nivel_excede,
+        );
+        $this->db->where('idEvaluacionSubcaracteristica', $subcaracteristica);
+        $this->db->update('evaluacion_subcaracteristica', $data);
+        $this->db->trans_complete();
+        return true;
+    }
 
 }

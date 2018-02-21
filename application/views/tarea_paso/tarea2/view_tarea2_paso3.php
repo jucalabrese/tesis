@@ -2,24 +2,6 @@
     <h2>Criterios de decisión de las características</h2>
 </div>
 <hr>
-<?php
-//Muestra cartel exito/error
-if ($this->session->flashdata('ExitoNivelesCar')) {
-    ?>
-    <div class="alert alert-success">
-        <?php echo $this->session->flashdata('ExitoNivelesCar'); ?>
-    </div>
-    <?php
-} else {
-    if ($this->session->flashdata('ErrorNivelesCar')) {
-        ?>
-        <div class="alert alert-danger">
-            <?php echo $this->session->flashdata('ErrorNivelesCar'); ?>    
-        </div>
-        <?php
-    }
-}
-?>
 <div class="col-lg-12">
     <?php
     if (!empty($caracteristicas)) {
@@ -42,12 +24,12 @@ if ($this->session->flashdata('ExitoNivelesCar')) {
                         <td align="center" style="vertical-align: middle;">Inaceptable</td>
         <?php foreach ($c['subcaracteristicas']->result_array() as $s) { ?>
                             <td align="center">
-                                <select class="form-control" id="inaceptable<?php echo $s['idSubcaracteristica']; ?>"> 
-                                   <option value="0">---</option>
-                                   <option value="1">Inac.</option>
-                                   <option value="2">Min. Ac.</option>
-                                   <option value="3">Rango Obj.</option>
-                                   <option value="4">Excede</option>
+                                <select class="form-control" id="inaceptable<?php echo $s['idSubcaracteristica']; ?>" onchange="cargarInaceptable(<?php echo $s['idSubcaracteristica']?>)" > 
+                                   <option id="sin_inaceptable<?php echo $s['idSubcaracteristica']?>">---</option>
+                                   <option value="1" <?php if ($c['asignado_inac'.$s['idSubcaracteristica']]){ if ($c['inaceptable'.$s['idSubcaracteristica']]==1){ echo "selected";}} ?>>Inac.</option>
+                                   <option value="2" <?php if ($c['asignado_inac'.$s['idSubcaracteristica']]){ if ($c['inaceptable'.$s['idSubcaracteristica']]==2){ echo "selected";}} ?>>Min. Ac.</option>
+                                   <option value="3" <?php if ($c['asignado_inac'.$s['idSubcaracteristica']]){ if ($c['inaceptable'.$s['idSubcaracteristica']]==3){ echo "selected";}} ?>>Rango Obj.</option>
+                                   <option value="4" <?php if ($c['asignado_inac'.$s['idSubcaracteristica']]){ if ($c['inaceptable'.$s['idSubcaracteristica']]==4){ echo "selected";}} ?>>Excede</option>
                                 </select>
                             </td>
         <?php } ?>  
@@ -56,12 +38,12 @@ if ($this->session->flashdata('ExitoNivelesCar')) {
                         <td align="center" style="vertical-align: middle;">Minimamente aceptable</td>
         <?php foreach ($c['subcaracteristicas']->result_array() as $s) { ?>
                             <td align="center">
-                                <select class="form-control" id="min_aceptable<?php echo $s['idSubcaracteristica']; ?>"> 
-                                   <option value="0">---</option>
-                                   <option value="1">Inac.</option>
-                                   <option value="2">Min. Ac.</option>
-                                   <option value="3">Rango Obj.</option>
-                                   <option value="4">Excede</option>
+                                <select class="form-control" id="min_aceptable<?php echo $s['idSubcaracteristica']; ?>" onchange="cargarMinAceptable(<?php echo $s['idSubcaracteristica']?>)" > 
+                                   <option id="sin_minaceptable<?php echo $s['idSubcaracteristica']?>" value="0">---</option>
+                                   <option value="1" <?php if ($c['asignado_minac'.$s['idSubcaracteristica']]){ if ($c['min_aceptable'.$s['idSubcaracteristica']]==1){ echo "selected";}} ?>>Inac.</option>
+                                   <option value="2" <?php if ($c['asignado_minac'.$s['idSubcaracteristica']]){ if ($c['min_aceptable'.$s['idSubcaracteristica']]==2){ echo "selected";}} ?>>Min. Ac.</option>
+                                   <option value="3" <?php if ($c['asignado_minac'.$s['idSubcaracteristica']]){ if ($c['min_aceptable'.$s['idSubcaracteristica']]==3){ echo "selected";}} ?>>Rango Obj.</option>
+                                   <option value="4" <?php if ($c['asignado_minac'.$s['idSubcaracteristica']]){ if ($c['min_aceptable'.$s['idSubcaracteristica']]==4){ echo "selected";}} ?>>Excede</option>
                                 </select>
                             </td>
         <?php } ?>  
@@ -70,12 +52,12 @@ if ($this->session->flashdata('ExitoNivelesCar')) {
                         <td align="center" style="vertical-align: middle;">Rango objetivo</td>
         <?php foreach ($c['subcaracteristicas']->result_array() as $s) { ?>
                             <td align="center">
-                                <select class="form-control" id="aceptable<?php echo $s['idSubcaracteristica']; ?>"> 
-                                   <option value="0">---</option>
-                                   <option value="1">Inac.</option>
-                                   <option value="2">Min. Ac.</option>
-                                   <option value="3">Rango Obj.</option>
-                                   <option value="4">Excede</option>
+                                <select class="form-control" id="aceptable<?php echo $s['idSubcaracteristica']; ?>" onchange="cargarAceptable(<?php echo $s['idSubcaracteristica']?>)" > 
+                                   <option id="sin_aceptable<?php echo $s['idSubcaracteristica']?>" value="0">---</option>
+                                   <option value="1" <?php if ($c['asignado_acep'.$s['idSubcaracteristica']]){ if ($c['aceptable'.$s['idSubcaracteristica']]==1){ echo "selected";}} ?>>Inac.</option>
+                                   <option value="2" <?php if ($c['asignado_acep'.$s['idSubcaracteristica']]){ if ($c['aceptable'.$s['idSubcaracteristica']]==2){ echo "selected";}} ?>>Min. Ac.</option>
+                                   <option value="3" <?php if ($c['asignado_acep'.$s['idSubcaracteristica']]){ if ($c['aceptable'.$s['idSubcaracteristica']]==3){ echo "selected";}} ?>>Rango Obj.</option>
+                                   <option value="4" <?php if ($c['asignado_acep'.$s['idSubcaracteristica']]){ if ($c['aceptable'.$s['idSubcaracteristica']]==4){ echo "selected";}} ?>>Excede</option>
                                 </select>
                             </td>
         <?php } ?>  
@@ -84,12 +66,12 @@ if ($this->session->flashdata('ExitoNivelesCar')) {
                         <td align="center" style="vertical-align: middle;">Excede los requerimientos</td>
         <?php foreach ($c['subcaracteristicas']->result_array() as $s) { ?>
                             <td align="center">
-                                <select class="form-control" id="excede<?php echo $s['idSubcaracteristica']; ?>"> 
-                                   <option value="0">---</option>
-                                   <option value="1">Inac.</option>
-                                   <option value="2">Min. Ac.</option>
-                                   <option value="3">Rango Obj.</option>
-                                   <option value="4">Excede</option>
+                                <select class="form-control" id="excede<?php echo $s['idSubcaracteristica']; ?>" onchange="cargarExcede(<?php echo $s['idSubcaracteristica']?>)" > 
+                                   <option id="sin_excede<?php echo $s['idSubcaracteristica']?>" value="0">---</option>
+                                   <option value="1" <?php if ($c['asignado_excede'.$s['idSubcaracteristica']]){ if ($c['excede'.$s['idSubcaracteristica']]==1){ echo "selected";}} ?>>Inac.</option>
+                                   <option value="2" <?php if ($c['asignado_excede'.$s['idSubcaracteristica']]){ if ($c['excede'.$s['idSubcaracteristica']]==2){ echo "selected";}} ?>>Min. Ac.</option>
+                                   <option value="3" <?php if ($c['asignado_excede'.$s['idSubcaracteristica']]){ if ($c['excede'.$s['idSubcaracteristica']]==3){ echo "selected";}} ?>>Rango Obj.</option>
+                                   <option value="4" <?php if ($c['asignado_excede'.$s['idSubcaracteristica']]){ if ($c['excede'.$s['idSubcaracteristica']]==4){ echo "selected";}} ?>>Excede</option>
                                 </select>
                             </td>
         <?php } ?>  
@@ -97,7 +79,6 @@ if ($this->session->flashdata('ExitoNivelesCar')) {
                 </tbody>
                 
             </table>
-    <button type="button" class="btn btn-success btn-sm" id="guardar" onclick="#">Guardar</button>
     <hr>
         <?php }
     } else {
