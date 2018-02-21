@@ -274,9 +274,11 @@ class Model_evaluacion extends CI_Model {
         $this->db->delete('evaluacion_caracteristica');
     }
 
-    function eliminarSubcaracteristicas($idEvaluacion) {
-        $this->db->where('idEvaluacion', $idEvaluacion);
-        $this->db->delete('evaluacion_subcaracteristica');
+    function eliminarSubcaracteristicas($idEvaluacion, $idCaracteristica){ 
+       $this->db->query("
+        DELETE  es.* FROM evaluacion_subcaracteristica as es
+        INNER JOIN subcaracteristica as s ON (s.idSubcaracteristica = es.idSubcaracteristica)
+        WHERE es.idEvaluacion = $idEvaluacion AND s.idCaracteristica = $idCaracteristica");   
     }
     
     function getPartes() {
@@ -366,7 +368,7 @@ class Model_evaluacion extends CI_Model {
         $this->db->join('evaluacion_subcaracteristica as es', 's.idSubcaracteristica=es.idSubcaracteristica'); //AGREGUE ESTA LINEA
         $this->db->join('caracteristica as car', 's.idCaracteristica = car.idCaracteristica');
         $this->db->where('car.idCaracteristica', $idCaracteristica);
-        $this->db->where('es.idEvaluacion', 366);
+        $this->db->where('es.idEvaluacion', $idEvaluacion);
         $this->db->order_by("p.idPregunta", "ASC");
         $consulta = $this->db->get();
         return $consulta;
@@ -484,7 +486,7 @@ class Model_evaluacion extends CI_Model {
         $this->db->trans_start();
 
         $data = array(
-            'idEvaluacion' => 366,
+            'idEvaluacion' => $idEvaluacion,
             'idPregunta' => $idPregunta,
             'respuesta' => $respuesta,
         );
@@ -501,7 +503,7 @@ class Model_evaluacion extends CI_Model {
             'respuesta' => $respuesta,
         );
         $this->db->update('evaluacion_pregunta', $data);
-        $this->db->where('idEvaluacion', 366);
+        $this->db->where('idEvaluacion', $idEvaluacion);
         $this->db->where('idPregunta', $idPregunta);
         $this->db->trans_complete();
 
@@ -511,7 +513,7 @@ class Model_evaluacion extends CI_Model {
     function getRespuesta($idEvaluacion, $idPregunta) {
         $this->db->select('*');
         $this->db->from('evaluacion_pregunta as ep');
-        $this->db->where('ep.idEvaluacion', 366);
+        $this->db->where('ep.idEvaluacion', $idEvaluacion);
         $this->db->where('ep.idPregunta', $idPregunta);
         $query = $this->db->get();
 

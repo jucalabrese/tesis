@@ -23,10 +23,14 @@
     <div class="form-group">
         <select class="form-control" id="partes" onchange="cargarPreguntas(value)">
             <option value="0" onclick="cargarVistaTareas_4_1(0)">Seleccione una característica</option>
-    <?php   foreach ($caracteristicas->result_array() as $c){ ?>
-                <option value="<?php echo $c['idCaracteristica']?>"><?php echo $c['nombre']?></option>      
-    <?php   } ?>       
-        </select>
+    <?php   foreach ($caracteristicas->result_array() as $c){ 
+                if ($idCaracteristica == $c['idCaracteristica']){ ?>
+                    <option value="<?php echo $c['idCaracteristica']?>" selected><?php echo $c['nombre']?></option>   
+                <?php }else{ ?>
+                    <option value="<?php echo $c['idCaracteristica']?>"><?php echo $c['nombre']?></option>   
+                <?php }   
+            }   ?>    
+   </select>
     </div>
     <hr> 
     <div id="preguntas" style="display: none;">
@@ -70,13 +74,11 @@
             </table>
         </div>
     </div>
-    <div class="form-group">
+<!--    <div class="form-group">
         <div class="col-lg-6 col-lg-offset-4">
                 <div class="btn-group">
                         <button type="button" class="btn btn-danger">Atrás</button>
-                        <button type="button" class="btn btn-warning">Agregar nota</button>
-                        <button type="button" class="btn btn-success" id="guardar" onclick="guardar_4_1()">Guardar</button>
                 </div>
         </div>
-    </div>
+    </div>-->
 </div>

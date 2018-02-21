@@ -2,7 +2,7 @@
     <h2>Criterios de decisión de las subcaracterísticas</h2>
 </div>
 <hr>
-<div class="col-lg-12">	
+<div>	
     <div class="form-group">
         <span>Seleccione una característica:</span>
     </div>

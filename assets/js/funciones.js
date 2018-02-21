@@ -65,6 +65,7 @@ function cargarVistaTareas_2_0() {
 
 function cargarVistaTareas_2_1() {
     var base_url = document.getElementById('baseurl').value;
+    
     $.ajax({
         url: base_url + '/evaluacion/tarea_paso/2/1',
         type: 'POST',
@@ -183,6 +184,7 @@ function cargarPreguntas(value) {
 
 function cargarSubcaracteristicas(value) {
     var base_url = document.getElementById('baseurl').value;
+
     $.ajax({
         url: base_url + '/evaluacion/tarea_paso/2/1',
         type: 'POST',
@@ -477,9 +479,8 @@ function mostrarPreguntas(value) {
 }
 ;
 
-function guardar_2_1() {
+function guardar_2_1(caracteristica) {
     var base_url = document.getElementById('baseurl').value;
-    var caracteristica = document.getElementById('caracteristica').value;
     var subcaracteristicas = [];
 
     $("#subcaracteristicas:checked").each(function () {
@@ -490,17 +491,10 @@ function guardar_2_1() {
 
     $.ajax({
         type: 'POST',
-        url: base_url + 'evaluacion/guardado/2/1',
+        url: base_url + 'evaluacion/guardarSubcaracteristicas',
         data: {subcar: subcaracteristicas, car: caracteristica},
 
-        success: function (output_string) {
-            if (subcaracteristicas != '') {
-                $('#12').attr({
-                    'class': 'list-group-item list-group-item-success',
-                });
-            }
-            ;
-            $("#contenido").html(output_string);
+        success: function (output_string){
         }
     });
 }
