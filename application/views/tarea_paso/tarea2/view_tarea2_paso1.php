@@ -2,7 +2,7 @@
     <h2>Subcaracterísticas a evaluar</h2>
 </div>
 <hr>
-<div id='pepe'>
+<div>
     <?php //Muestra cartel exito/error
 
         if ($this->session->flashdata('ExitoSubcar')){ ?>

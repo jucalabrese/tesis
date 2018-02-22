@@ -516,7 +516,7 @@ function guardar_4_1() {
 function cargarRespuesta(pregunta) {
     var base_url = document.getElementById('baseurl').value;
     var respuesta = $("#respuestas" + pregunta).val();
-
+    alert(respuesta);
     $.ajax({
         type: 'POST',
         url: base_url + 'evaluacion/guardarRespuesta',

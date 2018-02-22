@@ -48,28 +48,45 @@
                     </tr>
                 </thead>
                 <tbody>
-                     <?php if (!empty($preguntas)){
-                     foreach ($preguntas->result_array() as $p){ ?>     
+                    <?php if (!empty($preguntas)){
+                    foreach ($preguntas->result_array() as $p){ ?>     
                     <tr>
                       <td align="center">
-                        <?php echo $cant; 
+                        <?php echo $cant;
                                 $cant++?>
                       </td>
                       <td>
                           <?php echo $p['pregunta']?>
                       </td>
                       <td align="center">
+                          <?php if ($p['respuesta'] <> null){ ?>   
+                          <select name="respuestas" id="respuestas<?php echo $p['idPregunta']?>" onchange="cargarRespuesta(<?php echo $p['idPregunta']?>);" class="form-control miSelect" style="width: 70%">
+                              <?php if ($p['respuesta'] == 'SI'){?>
+                                <option selected><?php echo $p['respuesta']?></option>
+                                <option>NO</option>
+                              <?php }else{ ?>
+                                <option selected><?php echo $p['respuesta']?></option>
+                                <option>SI</option>
+                             <?php } ?>
+                          </select>
+                        <?php }else{ ?>
                           <select name="respuestas" id="respuestas<?php echo $p['idPregunta']?>" onchange="cargarRespuesta(<?php echo $p['idPregunta']?>);" class="form-control miSelect" style="width: 70%">
                                 <option id="sinrespuesta<?php echo $p['idPregunta']?>"></option>
                                 <option>SI</option>
                                 <option>NO</option>
-                          </select>
+                            </select>
+                        <?php } ?>
+                            
                       </td>
                       <td align="center">
-                          <div id="respuesta<?php echo $p['idPregunta']?>"><span>Sin responder</span></div>
+                          <?php if ($p['respuesta'] <> null){ ?> 
+                          <div id="respuesta<?php echo $p['idPregunta']?>"><span class='glyphicon glyphicon-ok' aria-hidden='true' style='color: green'></span></div>
+                          <?php }else{ ?>
+                          <div id="respuesta<?php echo $p['idPregunta']?>"><span>Sin responder</span></div>    
+                          <?php } ?> 
                       </td>
                     </tr>
-                     <?php }} ?> 
+                    <?php }} ?> 
                 </tbody>
             </table>
         </div>

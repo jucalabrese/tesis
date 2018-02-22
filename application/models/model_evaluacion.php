@@ -325,6 +325,14 @@ class Model_evaluacion extends CI_Model {
         $consulta = $this->db->get();
         return $consulta;
     }
+    
+    function obtenerRespuestas($idEvaluacion) {
+        $this->db->select('*');
+        $this->db->from('evaluacion_pregunta as ep');
+        $this->db->where('ep.idEvaluacion', $idEvaluacion);
+        $consulta = $this->db->get();
+        return $consulta;
+    }
 
     function modificarRigor($rigor, $seguridad_fisica, $economico, $seguridad_acceso) {
         $this->db->trans_start();
@@ -360,13 +368,14 @@ class Model_evaluacion extends CI_Model {
     }
 
     function obtenerPreguntas($idCaracteristica, $idEvaluacion) {
-        $this->db->select('DISTINCT(p.pregunta), car.idCaracteristica, p.idPregunta as idPregunta');
+        $this->db->select('DISTINCT(p.pregunta), car.idCaracteristica, p.idPregunta as idPregunta, ep.respuesta');
         $this->db->from('pregunta as p');
         $this->db->join('criterio_pregunta as cp', 'cp.idPregunta=p.idPregunta');
         $this->db->join('criterio as c', 'cp.idCriterio=c.idCriterio');
         $this->db->join('subcaracteristica as s', 'c.idSubcaracteristica=s.idSubcaracteristica');
         $this->db->join('evaluacion_subcaracteristica as es', 's.idSubcaracteristica=es.idSubcaracteristica'); //AGREGUE ESTA LINEA
         $this->db->join('caracteristica as car', 's.idCaracteristica = car.idCaracteristica');
+        $this->db->join('evaluacion_pregunta as ep', 'ep.idEvaluacion = es.idEvaluacion AND ep.idPregunta = p.idPregunta', 'left');
         $this->db->where('car.idCaracteristica', $idCaracteristica);
         $this->db->where('es.idEvaluacion', $idEvaluacion);
         $this->db->order_by("p.idPregunta", "ASC");

@@ -438,11 +438,13 @@ class Evaluacion extends CI_Controller {
                         break;
                     case 1:
                         $preguntas = array();
+                        //$resp = array();
                         $cSeleccionada = '';
                         $valor=0;
                         if ($this->input->post()){
                             $valor = $this->input->post('valor');
                             $preguntas = $this->model_evaluacion->obtenerPreguntas($valor, $idEvaluacion);
+                            //$resp = $this->model_evaluacion->obtenerRespuestas($idEvaluacion);
                             $data = $this->model_evaluacion->getCaracteristica($valor);
                             foreach ($data->result_array() as $dato){
                                 $cSeleccionada = $dato['nombre'];

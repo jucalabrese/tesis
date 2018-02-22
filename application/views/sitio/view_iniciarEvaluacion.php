@@ -41,9 +41,9 @@
                 </div>
                 <a href="#item5" class="list-group-item color_menu menu_index" data-parent="#MainMenu" data-toggle="collapse" onclick="cargarVistaTareas_5_0()"><strong>5. Concluir la evaluación</strong></a>
                 <div class="collapse" id="item5">
-                    <a href="#" class="list-group-item" onclick="cargarVistaTareas_5_2()">- Informe de evaluación</a>
-                    <a href="#" class="list-group-item" onclick="cargarVistaTareas_5_3()">- Feedback de la evaluación</a>
-                    <a href="#" class="list-group-item" onclick="cargarVistaTareas_5_4()">- Tratamiento de datos</a>
+                    <a href="#" class="list-group-item" onclick="cargarVistaTareas_5_1()">- Informe de la evaluación</a>
+                    <a href="#" class="list-group-item" onclick="cargarVistaTareas_5_2()">- Feedback de la evaluación</a>
+                    <a href="#" class="list-group-item" onclick="cargarVistaTareas_5_3()">- Tratamiento de datos</a>
                 </div>
             </div>
         </div>
