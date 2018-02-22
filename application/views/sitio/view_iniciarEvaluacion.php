@@ -1,5 +1,18 @@
 <div class="col-lg-10 col-lg-offset-1 misEval_padding">
     <input type="hidden" id="baseurl" name="baseurl" value="<?php echo base_url(); ?>" />
+    <?php //Muestra cartel exito/error
+        if ($this->session->flashdata('ExitoInicio')){ ?>
+            <div class="alert alert-success">
+                <?php echo $this->session->flashdata('ExitoInicio'); ?>
+            </div>
+        <?php } else { 
+            if ($this->session->flashdata('ErrorInicio')){?>
+                <div class="alert alert-danger">
+                    <?php echo $this->session->flashdata('ErrorInicio'); ?>    
+                </div>
+        <?php } 
+        }
+    ?>  
     <div class="row">
         <div class="col-lg-12">
             <h1 class="page-header" id="nombre_producto">Nombre del producto

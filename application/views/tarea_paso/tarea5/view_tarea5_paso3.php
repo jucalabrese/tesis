@@ -19,20 +19,21 @@
 </div>
 <div class="form-group">
     <div class="form-group">
-        <span>Seleccione la opción deseada para el tratamiento de datos:</span>
+        <span>Seleccione la opción deseada para el tratamiento de los datos de la evaluación:</span>
     </div>
     <div class="form-group">
-        <select class="form-control" id="estado">
-            <option value="0">Seleccione un tratamiento de datos</option>
+        <select class="form-control" id="tratamiento">
+            <option value="0">Seleccione una opción</option>
     <?php   foreach ($estados->result_array() as $e){ 
-                if ($idEstado == $e['idEstadoEvaluacion']){ ?>
+                if (($idTratamiento == $e['idEstadoEvaluacion']) & ($e['idEstadoEvaluacion'] <> 1)){ ?>
                     <option value="<?php echo $e['idEstadoEvaluacion']?>" selected><?php echo $e['estado']?></option>   
-                <?php }else{ ?>
-                    <option value="<?php echo $e['idEstadoEvaluacion']?>"><?php echo $e['estado']?></option>   
-                <?php }   
-            } ?>
+                <?php }else{
+                    if (($e['idEstadoEvaluacion'] <> 1)){ ?>
+                        <option value="<?php echo $e['idEstadoEvaluacion']?>"><?php echo $e['estado']?></option>
+           <?php    }}} ?>
         </select>
     </div>
+    <hr>
     <div class="form-group">
         <div class="col-lg-6 col-lg-offset-4">
             <div class="btn-group">
@@ -41,5 +42,5 @@
             </div>
         </div>
     </div>
-    <hr>
+
 </div>

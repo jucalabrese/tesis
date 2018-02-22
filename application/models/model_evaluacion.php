@@ -577,4 +577,44 @@ class Model_evaluacion extends CI_Model {
         return true;
     }
 
+    function getEstados() {
+        $this->db->select('*');
+        $this->db->from('estado_evaluacion');
+        $consulta = $this->db->get();
+        return $consulta;
+    }
+    
+    function agregarTratamiento($idTratamiento, $idEvaluacion) {
+        $this->db->trans_start();
+        $data1 = array(
+            'idEstadoEvaluacion' => $idTratamiento,
+        );
+
+        $this->db->where('idEvaluacion', $idEvaluacion);
+        $this->db->update('evaluacion', $data1);
+        $this->db->trans_complete();
+
+        return $idEvaluacion;
+    }
+    
+    function agregarFeedback($feedback, $idEvaluacion) {
+        $this->db->trans_start();
+        $data1 = array(
+            'feedback' => $feedback,
+        );
+
+        $this->db->where('idEvaluacion', $idEvaluacion);
+        $this->db->update('evaluacion', $data1);
+        $this->db->trans_complete();
+
+        return $feedback;
+    }
+    
+    function getFeedback($idEvaluacion) {
+        $this->db->select('*');
+        $this->db->from('evaluacion');
+        $this->db->where('idEvaluacion', $idEvaluacion);
+        $consulta = $this->db->get();
+        return $consulta;
+    }
 }

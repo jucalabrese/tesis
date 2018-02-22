@@ -89,7 +89,6 @@ class Evaluacion extends CI_Controller {
         } else {
             $this->model_evaluacion->editarRespuesta($idEvaluacion, $idPregunta, $respuesta);
         }
-        
     }
     
     public function guardarSubcaracteristicas() {
@@ -464,13 +463,24 @@ class Evaluacion extends CI_Controller {
 
                         break;
                     case 2:
-
+                        $feedback = '';
+                        if ($this->input->post()){
+                            $feedback = $this->input->post('feedback');
+                            $this->model_evaluacion->agregarFeedback($feedback, $idEvaluacion);
+                        }
+                        $resul = $this->model_evaluacion->getFeedback($idEvaluacion);
+                        foreach ($resul->result_array() as $f) {
+                            $feedback = $f['feedback'];
+                        }
+                        $datos = array('feedback' => $feedback);
                         break;
                     case 3:
-
-                        break;
-                    case 4:
-
+                        $idTratamiento = '';
+                        if ($this->input->post()){
+                            $idTratamiento = $this->input->post('tratamiento');
+                        }
+                        $estados = $this->model_evaluacion->getEstados();
+                        $datos = array('estados' => $estados, 'idTratamiento' => $idTratamiento); 
                         break;
                 };
                 break;
@@ -774,10 +784,38 @@ class Evaluacion extends CI_Controller {
 
                         break;
                     case 2:
-
+                        unset($_SESSION['ExitoFeedback']);
+                        unset($_SESSION['ErrorFeedback']);
+                        if ($this->input->post()) {
+                            $f = $this->input->post('feedback');
+                            $existe = $this->model_evaluacion->getFeedback($idEvaluacion);
+                            foreach ($existe->result_array() as $e) {
+                                if ($e['feedback']<>null){ //SE FIJA SI ES UNA EDICIÓN O LA PRIMERA VEZ
+                                    $this->session->set_flashdata('ExitoFeedback', '¡Se editaron los datos exitosamente!');
+                                }else{
+                                    $this->session->set_flashdata('ExitoFeedback', '¡Se cargó el feedback exitosamente!');
+                                }
+                                $feedback = $this->model_evaluacion->agregarFeedback($f, $idEvaluacion);
+                            }
+                        }
+                        $datos = array('feedback' => $feedback);
                         break;
                     case 3:
-
+                        if ($this->input->post()){
+                            $idTratamiento = $this->input->post('tratamiento');
+                            $this->model_evaluacion->agregarTratamiento($idTratamiento, $idEvaluacion);
+                            switch ($idTratamiento){
+                                case 2:
+                                    $this->session->set_flashdata('ExitoTratamiento', '¡Se finalizó la evaluación exitosamente! Los datos seguirán disponibles para su modificación.');
+                                    break;
+                                case 3:
+                                    //BLOQUEAR TODAS LAS SECCIONES MENOS LA DEL INFORME
+                                    $this->session->set_flashdata('ExitoTratamiento', '¡Se archivó la evaluación exitosamente! Los datos no podrán modificarse.');
+                                    break;
+                            }
+                        }
+                        $estados = $this->model_evaluacion->getEstados();
+                        $datos = array('estados' => $estados, 'idTratamiento' => $idTratamiento); 
                         break;
                     case 4:
 

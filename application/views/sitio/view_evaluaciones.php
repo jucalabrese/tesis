@@ -30,7 +30,7 @@
                                 if ($e['estado'] == "Pendiente"){ ?>
                                     <tr class="warning css_centrarTabla">
                           <?php }else{
-                                    if ($e['estado'] == "Finalizada"){ ?>
+                                    if ($e['estado'] == "Finalizar"){ ?>
                                         <tr class="success css_centrarTabla">
                               <?php }else{ ?>
                                         <tr class="danger css_centrarTabla">

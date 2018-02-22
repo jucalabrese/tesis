@@ -513,6 +513,37 @@ function guardar_4_1() {
 }
 ;
 
+function guardar_5_2() {
+    var base_url = document.getElementById('baseurl').value;
+    var feedback = document.getElementById('feedback').value;
+
+    $.ajax({
+        type: 'POST',
+        url: base_url + 'evaluacion/guardado/5/2',
+        data: {feedback: feedback},
+        success: function (output_string){
+            $("#contenido").html(output_string);
+        }
+    });
+}
+;
+
+
+function guardar_5_3() {
+    var base_url = document.getElementById('baseurl').value;
+    var tratamiento = document.getElementById('tratamiento').value;
+
+    $.ajax({
+        type: 'POST',
+        url: base_url + 'evaluacion/guardado/5/3',
+        data: {tratamiento: tratamiento},
+        success: function (output_string){
+            $("#contenido").html(output_string);
+        }
+    });
+}
+;
+
 function cargarRespuesta(pregunta) {
     var base_url = document.getElementById('baseurl').value;
     var respuesta = $("#respuestas" + pregunta).val();
@@ -578,4 +609,14 @@ function cargarExcede(subcaracteristica) {
             $("#sin_excede" + subcaracteristica).remove();
         }
     });
+};
+
+function habilitarBoton() {
+    var texto = $("#feedback").val();
+    
+    if (texto != null){
+        $("#guardar").attr('disabled',false);
+    }else{
+        $("#guardar").attr('disabled',true); 
+    }
 };
