@@ -90,7 +90,21 @@ class Evaluacion extends CI_Controller {
             $this->model_evaluacion->editarRespuesta($idEvaluacion, $idPregunta, $respuesta);
         }
     }
-    
+	
+	public function generarInforme() {
+        $this->load->library('PDF');
+        $this->pdf = new PDF();
+        $this->pdf->AliasNbPages();
+        $this->pdf->AddPage('P', 'A4'); //Vertical, A4
+        $this->pdf->SetTitle('Informe');
+        $this->pdf->SetFont('Arial', 'B', 12); //Arial, negrita, 12 puntos
+//  FORMATO TABLA
+//  $cabecera = array("Apellido", "Nombre","Matrícula","Usuario","Mail");
+//  $pdf->FancyTableWithNItems($cabecera,$usuarios,$votos,38); //Método que integra a cabecera y datos
+        $this->pdf->Cell(40, 10, 'Hola, Mundo!');
+        $this->pdf->Output('informe.pdf','I');//Salida al navegador del pdf
+    }
+	
     public function guardarSubcaracteristicas() {
         $this->load->model('model_evaluacion');
         $idEvaluacion = $this->session->userdata('idEvaluacion');
