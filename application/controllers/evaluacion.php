@@ -784,11 +784,13 @@ class Evaluacion extends CI_Controller {
 
                         break;
                     case 2:
+                        $feedback = '';
                         unset($_SESSION['ExitoFeedback']);
                         unset($_SESSION['ErrorFeedback']);
                         if ($this->input->post()) {
                             $f = $this->input->post('feedback');
                             $existe = $this->model_evaluacion->getFeedback($idEvaluacion);
+                            if ($f<>null){
                             foreach ($existe->result_array() as $e) {
                                 if ($e['feedback']<>null){ //SE FIJA SI ES UNA EDICIÓN O LA PRIMERA VEZ
                                     $this->session->set_flashdata('ExitoFeedback', '¡Se editaron los datos exitosamente!');
@@ -796,6 +798,9 @@ class Evaluacion extends CI_Controller {
                                     $this->session->set_flashdata('ExitoFeedback', '¡Se cargó el feedback exitosamente!');
                                 }
                                 $feedback = $this->model_evaluacion->agregarFeedback($f, $idEvaluacion);
+                            }
+                            }else{
+                                $this->session->set_flashdata('ErrorFeedback', 'Debe ingresar el feedback');
                             }
                         }
                         $datos = array('feedback' => $feedback);

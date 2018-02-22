@@ -20,14 +20,14 @@
             <span>Ingrese el feedback de la evaluación:</span>
         </div>
         <div class="form-group">
-            <textarea class="form-control text_area" rows="12" id="feedback" placeholder="Tener en cuenta blablabla" onkeyup="habilitarBoton()"><?php echo $feedback?></textarea>      
+            <textarea class="form-control text_area" rows="12" id="feedback" placeholder="Tener en cuenta blablabla"><?php echo $feedback?></textarea>      
         </div>
 
       <div class="form-group">
         <div class="col-lg-7 col-lg-offset-4">
             <div class="btn-group">
                 <button type="button" class="btn btn-danger">Atrás</button>
-                <button type="button" class="btn btn-success" disabled id="guardar" onclick="guardar_5_2()" >Guardar</button>
+                <button type="button" class="btn btn-success" id="guardar" onclick="guardar_5_2()">Guardar</button>
             </div>
         </div>
       </div>

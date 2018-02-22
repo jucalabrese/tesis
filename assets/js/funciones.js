@@ -610,13 +610,3 @@ function cargarExcede(subcaracteristica) {
         }
     });
 };
-
-function habilitarBoton() {
-    var texto = $("#feedback").val();
-    
-    if (texto != null){
-        $("#guardar").attr('disabled',false);
-    }else{
-        $("#guardar").attr('disabled',true); 
-    }
-};
