@@ -53,7 +53,7 @@ class PDF extends FPDF {
          *     19 : Ancho de la imagen <span class="wp-smiley emoji emoji-wordpress" title="(w)">(w)</span>
          *     Nota: Al no especificar el alto de la imagen (h), éste se calcula automáticamente
          * */
-        $this->Cell(0, 25, 'Informe', 0, 0, 'C');
+        $this->Cell(0, 25, 'Evaluacion de producto: '.$GLOBALS['nombreProd'], 0, 0, 'C');
         //Se da un salto de línea de 25
         $this->Ln(25);
     }
