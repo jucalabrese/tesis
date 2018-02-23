@@ -288,6 +288,14 @@ class Model_evaluacion extends CI_Model {
         return $consulta;
     }
 
+    function getParte($idParte){
+        $this->db->select('*');
+        $this->db->from('parte');
+        $this->db->where('idParte', $idParte);
+        $consulta = $this->db->get();
+        return $consulta;
+    }
+    
     function getParteSeleccionada($idEvaluacion){
         $this->db->select('*');
         $this->db->from('evaluacion as e');

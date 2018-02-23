@@ -13,9 +13,9 @@ class PDF extends FPDF {
     }
 
     function Footer() {
-        // Posición: a 1,5 cm del final
+// Posición: a 1,5 cm del final
         $this->SetY(-15);
-        // Arial italic 8
+// Arial italic 8
         $this->SetFont('Arial', '', 8);
         /* Cell(ancho, alto, txt, border, ln, alineacion)
          * ancho=0, extiende el ancho de celda hasta el margen de la derecha
@@ -30,7 +30,7 @@ class PDF extends FPDF {
     }
 
     function Header() {
-        //Define tipo de letra a usar, Arial, Negrita, 15
+//Define tipo de letra a usar, Arial, Negrita, 15
         $this->SetFont('Arial', 'B', 18);
         /* Líneas paralelas
          * Line(x1,y1,x2,y2)
@@ -53,8 +53,8 @@ class PDF extends FPDF {
          *     19 : Ancho de la imagen <span class="wp-smiley emoji emoji-wordpress" title="(w)">(w)</span>
          *     Nota: Al no especificar el alto de la imagen (h), éste se calcula automáticamente
          * */
-        $this->Cell(0, 25, 'Evaluacion de producto: '.$GLOBALS['nombreProd'], 0, 0, 'C');
-        //Se da un salto de línea de 25
+        $this->Cell(0, 25, 'Evaluacion de producto: ' . $GLOBALS['nombreProd'], 0, 0, 'C');
+//Se da un salto de línea de 25
         $this->Ln(25);
     }
 
@@ -65,7 +65,7 @@ class PDF extends FPDF {
         $this->Cell(150, 10, 'Cantidad de votantes: ' . (count($users)), 0, 0, 'L');
         $this->SetX($this->lMargin * 3);
         $this->Cell(150, 10, 'Cantidad de votos contabilizados: ' . $votos, 0, 0, 'R');
-        //agregar cantidad de votos
+//agregar cantidad de votos
         foreach ($arregloPartido as $pagina) {
             $this->FancyTable($header, $pagina);
             $index++;
@@ -75,51 +75,81 @@ class PDF extends FPDF {
         }
     }
 
-    function FancyTable($header, $data) {
-        if ($this->PageNo() == 1) {
-            $this->SetXY(10, 45);
-        } else {
-            $this->SetXY(10, 40);
-        }
-
-        // Colores, ancho de línea y fuente en negrita
-        $this->SetFillColor(120, 120, 120);
+    function FancyTableRigor($header, $data) {
+// Colores, ancho de línea y fuente en negrita
+        $this->SetFillColor(255, 0, 0);
         $this->SetTextColor(255);
-        $this->SetDrawColor(120, 120, 120);
+        $this->SetDrawColor(128, 0, 0);
         $this->SetLineWidth(.3);
-        $this->SetFont('Arial', 'B', 10);
-        // Cabecera
-        $w = array(40, 40, 25, 30, 60);
+        $this->SetFont('', 'B');
+// Cabecera
+        $w = array(65,50,70);
         for ($i = 0; $i < count($header); $i++)
-            $this->CellFitSpace($w[$i], 7, utf8_decode($header[$i]), 1, 0, 'C', true);
+            $this->Cell($w[$i], 7, $header[$i], 1, 0, 'C', true);
         $this->Ln();
-        // Restauración de colores y fuentes
+// Restauración de colores y fuentes
         $this->SetFillColor(224, 235, 255);
         $this->SetTextColor(0);
-        $this->SetFont('Arial', '', 10);
-        // Datos
+        $this->SetFont('');
+// Datos
         $fill = false;
         foreach ($data as $row) {
-            $this->CellFitSpace($w[0], 6, utf8_decode($row['apellido']), 'LR', 0, 'C', $fill);
-            $this->CellFitSpace($w[1], 6, utf8_decode($row['nombre']), 'LR', 0, 'C', $fill);
-            $this->CellFitSpace($w[2], 6, utf8_decode($row['matricula']), 'LR', 0, 'C', $fill);
-            $this->CellFitSpace($w[3], 6, utf8_decode($row['usuario']), 'LR', 0, 'C', $fill);
-            $this->CellFitSpace($w[4], 6, utf8_decode($row['mail']), 'LR', 0, 'C', $fill);
+            $this->Cell($w[0], 10, $row[0], 'LR', 0, 'L', $fill);
+            $this->Cell($w[1], 10, $row[1], 'LR', 0, 'L', $fill);
+            $this->Cell($w[2], 10, $row[2], 'LR', 0, 'L', $fill);
             $this->Ln();
             $fill = !$fill;
         }
-        // Línea de cierre
+// Línea de cierre
         $this->Cell(array_sum($w), 0, '', 'T');
     }
 
-    //**************************************************************************************************************
+    /*   function FancyTable($header, $data) {
+      if ($this->PageNo() == 1) {
+      $this->SetXY(10, 45);
+      } else {
+      $this->SetXY(10, 40);
+      }
+
+      // Colores, ancho de línea y fuente en negrita
+      $this->SetFillColor(120, 120, 120);
+      $this->SetTextColor(255);
+      $this->SetDrawColor(120, 120, 120);
+      $this->SetLineWidth(.3);
+      $this->SetFont('Arial', 'B', 10);
+      // Cabecera
+      $w = array(40, 40, 25, 30, 60);
+      for ($i = 0; $i < count($header); $i++)
+      $this->CellFitSpace($w[$i], 7, utf8_decode($header[$i]), 1, 0, 'C', true);
+      $this->Ln();
+      // Restauración de colores y fuentes
+      $this->SetFillColor(224, 235, 255);
+      $this->SetTextColor(0);
+      $this->SetFont('Arial', '', 10);
+      // Datos
+      $fill = false;
+      foreach ($data as $row) {
+      $this->CellFitSpace($w[0], 6, utf8_decode($row['apellido']), 'LR', 0, 'C', $fill);
+      $this->CellFitSpace($w[1], 6, utf8_decode($row['nombre']), 'LR', 0, 'C', $fill);
+      $this->CellFitSpace($w[2], 6, utf8_decode($row['matricula']), 'LR', 0, 'C', $fill);
+      $this->CellFitSpace($w[3], 6, utf8_decode($row['usuario']), 'LR', 0, 'C', $fill);
+      $this->CellFitSpace($w[4], 6, utf8_decode($row['mail']), 'LR', 0, 'C', $fill);
+      $this->Ln();
+      $fill = !$fill;
+      }
+      // Línea de cierre
+      $this->Cell(array_sum($w), 0, '', 'T');
+      }
+     */
+
+//**************************************************************************************************************
     function CellFit($w, $h = 0, $txt = '', $border = 0, $ln = 0, $align = '', $fill = false, $link = '', $scale = false, $force = true) {
-        //Get string width
+//Get string width
         $str_width = $this->GetStringWidth($txt);
         if ($str_width == 0) {
             $str_width = 1;
         }
-        //Calculate ratio to fit cell
+//Calculate ratio to fit cell
         if ($w == 0)
             $w = $this->w - $this->rMargin - $this->x;
         $ratio = ($w - $this->cMargin * 2) / $str_width;
@@ -127,24 +157,24 @@ class PDF extends FPDF {
         $fit = ($ratio < 1 || ($ratio > 1 && $force));
         if ($fit) {
             if ($scale) {
-                //Calculate horizontal scaling
+//Calculate horizontal scaling
                 $horiz_scale = $ratio * 100.0;
-                //Set horizontal scaling
+//Set horizontal scaling
                 $this->_out(sprintf('BT %.2F Tz ET', $horiz_scale));
             } else {
-                //Calculate character spacing in points
+//Calculate character spacing in points
                 $char_space = ($w - $this->cMargin * 2 - $str_width) / max($this->MBGetStringLength($txt) - 1, 1) * $this->k;
-                //Set character spacing
+//Set character spacing
                 $this->_out(sprintf('BT %.2F Tc ET', $char_space));
             }
-            //Override user alignment (since text will fill up cell)
+//Override user alignment (since text will fill up cell)
             $align = '';
         }
 
-        //Pass on to Cell method
+//Pass on to Cell method
         $this->Cell($w, $h, $txt, $border, $ln, $align, $fill, $link);
 
-        //Reset character spacing/horizontal scaling
+//Reset character spacing/horizontal scaling
         if ($fit)
             $this->_out('BT ' . ($scale ? '100 Tz' : '0 Tc') . ' ET');
     }
@@ -153,7 +183,7 @@ class PDF extends FPDF {
         $this->CellFit($w, $h, $txt, $border, $ln, $align, $fill, $link, false, false);
     }
 
-    //Patch to also work with CJK double-byte text
+//Patch to also work with CJK double-byte text
     function MBGetStringLength($s) {
         if ($this->CurrentFont['type'] == 'Type0') {
             $len = 0;

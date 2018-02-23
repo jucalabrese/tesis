@@ -547,7 +547,6 @@ function guardar_5_3() {
 function cargarRespuesta(pregunta) {
     var base_url = document.getElementById('baseurl').value;
     var respuesta = $("#respuestas" + pregunta).val();
-    alert(respuesta);
     $.ajax({
         type: 'POST',
         url: base_url + 'evaluacion/guardarRespuesta',
@@ -568,6 +567,7 @@ function cargarInaceptable(subcaracteristica) {
         data: {idSubcaracteristica: subcaracteristica, nivel_inac: nivel},
         success: function (output_string) {
             $("#sin_inaceptable" + subcaracteristica).remove();
+            $("#i" + subcaracteristica).attr({'style': 'background-color: #dff0d8;', }); 
         }
     });
 };
@@ -581,6 +581,7 @@ function cargarMinAceptable(subcaracteristica) {
         data: {idSubcaracteristica: subcaracteristica, nivel_minac: nivel},
         success: function (output_string) {
             $("#sin_minaceptable" + subcaracteristica).remove();
+            $("#m" + subcaracteristica).attr({'style': 'background-color: #dff0d8;', });
         }
     });
 };
@@ -594,6 +595,7 @@ function cargarAceptable(subcaracteristica) {
         data: {idSubcaracteristica: subcaracteristica, nivel_acep: nivel},
         success: function (output_string) {
             $("#sin_aceptable" + subcaracteristica).remove();
+             $("#a" + subcaracteristica).attr({'style': 'background-color: #dff0d8;', });
         }
     });
 };
@@ -607,6 +609,7 @@ function cargarExcede(subcaracteristica) {
         data: {idSubcaracteristica: subcaracteristica, nivel_excede: nivel},
         success: function (output_string) {
             $("#sin_excede" + subcaracteristica).remove();
+             $("#e" + subcaracteristica).attr({'style': 'background-color: #dff0d8;', });
         }
     });
 };
