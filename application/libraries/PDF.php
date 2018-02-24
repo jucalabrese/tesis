@@ -25,7 +25,7 @@ class PDF extends FPDF {
          * ln=0 Indica dónde sigue el texto después de llamada a Cell(), en este caso con 0, enseguida de nuestro texto
          * alineación=C Texto alineado al centro
          */
-        $this->Cell(0, 10, utf8_decode('Desarrollado por Ro y Juli'), 'T', 0, 'C');
+        $this->Cell(0, 10, utf8_decode('SEP - Sistema de Evaluación de Producto'), 'T', 0, 'C');
         $this->Cell(0, 10, utf8_decode('Página ') . $this->PageNo() . '/{nb}', 0, 0, 'R');
     }
 
@@ -77,13 +77,13 @@ class PDF extends FPDF {
 
     function FancyTableRigor($header, $data) {
 // Colores, ancho de línea y fuente en negrita
-        $this->SetFillColor(255, 0, 0);
+        $this->SetFillColor(150);
         $this->SetTextColor(255);
-        $this->SetDrawColor(128, 0, 0);
+        $this->SetDrawColor(100);
         $this->SetLineWidth(.3);
         $this->SetFont('', 'B');
 // Cabecera
-        $w = array(65,50,70);
+        $w = array(65, 50, 70);
         for ($i = 0; $i < count($header); $i++)
             $this->Cell($w[$i], 7, $header[$i], 1, 0, 'C', true);
         $this->Ln();
@@ -94,10 +94,13 @@ class PDF extends FPDF {
 // Datos
         $fill = false;
         foreach ($data as $row) {
-            $this->Cell($w[0], 10, $row[0], 'LR', 0, 'L', $fill);
-            $this->Cell($w[1], 10, $row[1], 'LR', 0, 'L', $fill);
-            $this->Cell($w[2], 10, $row[2], 'LR', 0, 'L', $fill);
-            $this->Ln();
+            $x = $this->GetX();
+            $y = $this->GetY();
+            $this->MultiCell($w[0], 5, $row[0], 'LR', 'L', $fill);
+            $this->SetXY($x + $w[0], $y);
+            $this->MultiCell($w[1], 5, $row[1], 'LR', 'L', $fill);
+            $this->SetXY($x + $w[0] + $w[1], $y);
+            $this->MultiCell($w[2], 5, $row[2], 'LR', 'L', $fill);
             $fill = !$fill;
         }
 // Línea de cierre

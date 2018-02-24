@@ -116,50 +116,59 @@ class Evaluacion extends CI_Controller {
             }
         }
         $caracteristicas = $this->model_evaluacion->getCaracteristicasEvaluacion($idEvaluacion);
-        switch ($seguridad_fisica){
+        switch ($seguridad_fisica) {
             case 'A':
-                $seguridad_fisica= utf8_decode('A: Las personas pueden morir');
+                $seguridad_fisica = utf8_decode('A: Las personas pueden morir          ');
                 break;
             case 'B':
-                $seguridad_fisica= utf8_decode('B: Amenaza contra vidas humanas');
+                $seguridad_fisica = utf8_decode('B: Amenaza contra vidas humanas         ');
                 break;
             case 'C':
-                $seguridad_fisica= utf8_decode('C: Daños materiales. Amenaza de daño a personas');
+                $seguridad_fisica = utf8_decode('C: Daños materiales. Amenaza de daño a personas');
                 break;
             case 'D':
-                $seguridad_fisica= utf8_decode('D: Pequeños daños materiales. No hay riesgo para las personas');
+                $seguridad_fisica = utf8_decode('D: Pequeños daños materiales. No hay riesgo para las personas');
+                break;
+            case 'N/A':
+                $seguridad_fisica = 'N/A                                                    ';
                 break;
         }
-        switch ($economico){
+        switch ($economico) {
             case 'A':
-                $economico= utf8_decode('A: Desastre financiero (la compañía no puede seguir funcionando)');
+                $economico = utf8_decode('A: Desastre financiero              ');
                 break;
             case 'B':
-                $economico= utf8_decode('B: Pérdidas económicas importantes');
+                $economico = utf8_decode('B: Pérdidas económicas importantes');
                 break;
             case 'C':
-                $economico= utf8_decode('C: Pérdidas económicas significantes');
+                $economico = utf8_decode('C: Pérdidas económicas significantes');
                 break;
             case 'D':
-                $economico= utf8_decode('D: Pérdidas económicas insignificantes');
+                $economico = utf8_decode('D: Pérdidas económicas insignificantes');
+                break;
+            case 'N/A':
+                $economico = 'N/A                                                    ';
                 break;
         }
-        switch ($seguridad_acceso){
+        switch ($seguridad_acceso) {
             case 'A':
-                $seguridad_acceso= utf8_decode('A: Riesgo de protección de datos y servicios estratégicos');
+                $seguridad_acceso = utf8_decode('A: Riesgo de protección de datos y servicios estratégicos');
                 break;
             case 'B':
-                $seguridad_acceso= utf8_decode('B: Riesgo de protección de datos y servicios críticos');
+                $seguridad_acceso = utf8_decode('B: Riesgo de protección de datos y servicios críticos');
                 break;
             case 'C':
-                $seguridad_acceso= utf8_decode('C: Riesgo de protección de datos');
+                $seguridad_acceso = utf8_decode('C: Riesgo de protección de datos                    ');
                 break;
             case 'D':
-                $seguridad_acceso= utf8_decode('D: No se identifican riesgos');
+                $seguridad_acceso = utf8_decode('D: No se identifican riesgos                         ');
                 break;
-        }        
-        $datosRigor = array($seguridad_fisica,$economico,$seguridad_acceso);
-        
+            case 'N/A':
+                $seguridad_acceso = 'N/A                                                    ';
+                break;
+        }
+        $datosRigor = array($seguridad_fisica, $economico, $seguridad_acceso);
+
         $this->load->library('PDF');
         $this->pdf = new PDF();
 
@@ -209,7 +218,7 @@ class Evaluacion extends CI_Controller {
         $this->pdf->Ln(10);
         $cabecera = array(utf8_decode("Aspecto de seguridad física"), utf8_decode("Aspecto económico"), utf8_decode("Aspecto de seguridad de acceso"));
         $cuerpo = array($datosRigor);
-        $this->pdf->FancyTableRigor($cabecera,$cuerpo);
+        $this->pdf->FancyTableRigor($cabecera, $cuerpo);
 //  FORMATO TABLA
 //  $cabecera = array("Apellido", "Nombre","Matrícula","Usuario","Mail");
 //  $pdf->FancyTableWithNItems($cabecera,$usuarios,$votos,38); //Método que integra a cabecera y datos
@@ -585,7 +594,7 @@ class Evaluacion extends CI_Controller {
 
                         break;
                     case 1:
-
+                        $this->cargarResultadosCriterios();
                         break;
                     case 2:
                         $feedback = '';
@@ -615,6 +624,18 @@ class Evaluacion extends CI_Controller {
             $this->load->view('tarea_paso/tarea' . $tarea . '/view_tarea' . $tarea . '_paso' . $paso, $datos2);
         } else {
             $this->load->view('tarea_paso/tarea' . $tarea . '/view_tarea' . $tarea . '_paso' . $paso, $datos);
+        }
+    }
+
+    public function cargarResultadosCriterios() {
+        $this->load->model('model_evaluacion');
+        $idEvaluacion = $this->session->userdata('idEvaluacion');
+        $subcaracteristicas = $this->model_evaluacion->getSubcaracteristicasEvaluacion($idEvaluacion);
+        foreach ($subcaracteristicas->result_array() as $s) {
+            $criterios = $this->model_evaluacion->getCriterios($s['idSubcaracteristica']);
+            foreach ($criterios->result_array() as $c) {
+                //SEGUIR ACA               
+            }
         }
     }
 
