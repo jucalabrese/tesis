@@ -47,6 +47,38 @@ class Model_evaluacion extends CI_Model {
         return $consulta;
     }
     
+    function getPreguntasCriterio($idCriterio){
+        $this->db->select('p.*');
+        $this->db->from('criterio_pregunta as cp, pregunta as p');
+        $this->db->where('cp.idCriterio', $idCriterio);
+        $this->db->where('cp.idPregunta = p.idPregunta');
+        $consulta = $this->db->get();
+        return $consulta;
+    }
+    
+    function getRespuestaPregunta($idEvaluacion, $idPregunta){
+        $this->db->select('*');
+        $this->db->from('evaluacion_pregunta');
+        $this->db->where('idEvaluacion', $idEvaluacion);
+        $this->db->where('idPregunta',$idPregunta);
+        $consulta = $this->db->get();
+        return $consulta;
+    }
+    
+    function asignarValorSubcaracteristica($idSubcaracteristica,$idEvaluacion,$valorTotal){
+        $this->db->trans_start();
+        $data = array(
+            'puntajeObtenido' => $valorTotal,
+        );
+
+        $this->db->where('idEvaluacion', $idEvaluacion);
+        $this->db->where('idSubcaracteristica', $idSubcaracteristica);
+        $this->db->update('evaluacion_subcaracteristica', $data);
+        $this->db->trans_complete();
+
+        return $idEvaluacion;
+    }
+    
     function getSubcaracteristicasEvaluacionCaracteristica($idEvaluacion,$idCaracteristica) {
         $this->db->select('s.*');
         $this->db->from('evaluacion_subcaracteristica as es, subcaracteristica as s');
