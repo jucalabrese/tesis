@@ -86,7 +86,7 @@ class Model_evaluacion extends CI_Model {
         );
         $this->db->where('idEvaluacion', $idEvaluacion);
         $this->db->where('idCriterio', $idCriterio);
-        $this->db->insert('evaluacion_criterio', $data);
+        $this->db->update('evaluacion_criterio', $data);
         $this->db->trans_complete();
     }
     
@@ -330,6 +330,14 @@ class Model_evaluacion extends CI_Model {
         DELETE  es.* FROM evaluacion_subcaracteristica as es
         INNER JOIN subcaracteristica as s ON (s.idSubcaracteristica = es.idSubcaracteristica)
         WHERE es.idEvaluacion = $idEvaluacion AND s.idCaracteristica = $idCaracteristica");   
+    }
+    
+    function eliminarCriterios($idEvaluacion, $idCaracteristica){ 
+       $this->db->query("
+        DELETE  ec.* FROM evaluacion_criterio as ec
+        INNER JOIN criterio as c ON (ec.idCriterio = c.idCriterio)
+        INNER JOIN subcaracteristica as s ON (s.idSubcaracteristica = c.idSubcaracteristica)
+        WHERE ec.idEvaluacion = $idEvaluacion AND s.idCaracteristica = $idCaracteristica");   
     }
     
     function getPartes() {

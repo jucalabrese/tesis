@@ -619,19 +619,20 @@ class Evaluacion extends CI_Controller {
                         $idEvaluacion = $this->session->userdata('idEvaluacion');
                         $idCaracteristica = $this->input->post('car');
                         $subcaracteristicas = $this->input->post('subcar');
-                        if ($subcaracteristicas<>null){
-                            $existe = $this->model_evaluacion->existe_2_1($idEvaluacion); //SI EXISTE AL MENOS UNA CARACTERISTICA EN LA BASE
+                        if ($subcaracteristicas <> null) {
+                            $existe = $this->model_evaluacion->existe_2_1($idEvaluacion); //SI EXISTE AL MENOS UNA SUBCARACTERISTICA EN LA BASE
                             if ($existe) { //SI EXISTE, ES UNA EDICIÓN
                                 $this->model_evaluacion->eliminarSubcaracteristicas($idEvaluacion, $idCaracteristica);
+                                $this->model_evaluacion->eliminarCriterios($idEvaluacion, $idCaracteristica);
                             }
                             foreach ($subcaracteristicas as $c) { //POR CADA CARACTERISTICA SELECCIONADA POR EL USUARIO
                                 $this->model_evaluacion->guardarSubcaracteristicas($c, $idEvaluacion); //LOS ACTUALIZA
                                 $criterios = $this->model_evaluacion->getCriterios($c);
-                                foreach($criterios->result_array() as $cri){
+                                foreach ($criterios->result_array() as $cri) {
                                     $this->model_evaluacion->altaCriterios($idEvaluacion, $cri['idCriterio']);
                                 }
                             }
-                        }else{
+                        } else {
                             $this->session->set_flashdata('ErrorSubcar', 'Debe seleccionar al menos una subcaracterística');
                         }
                         $caracteristicas = $this->model_evaluacion->getCaracteristicasEvaluacion($idEvaluacion); //TRAE LAS CARACTERISTICAS DE LA EVALUACIÓN
@@ -642,7 +643,7 @@ class Evaluacion extends CI_Controller {
                             $cant++;
                         };
                         $datos = array('caracteristicas' => $caracteristicas, 'idCaracteristica' => $idCaracteristica, 'subcaracteristicas' => $subcaracteristicas, 'scseleccionadas' => $scseleccionadas);
-                        
+
                         break;
                     case 2:
                         if ($this->input->post()) { //SE RECIBEN DATOS
