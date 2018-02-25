@@ -79,6 +79,17 @@ class Model_evaluacion extends CI_Model {
         return $idEvaluacion;
     }
     
+    function cargarValorCriterio($idEvaluacion, $idCriterio, $puntaje){
+        $this->db->trans_start();
+        $data = array(
+            'puntaje' => $puntaje,
+        );
+        $this->db->where('idEvaluacion', $idEvaluacion);
+        $this->db->where('idCriterio', $idCriterio);
+        $this->db->insert('evaluacion_criterio', $data);
+        $this->db->trans_complete();
+    }
+    
     function getSubcaracteristicasEvaluacionCaracteristica($idEvaluacion,$idCaracteristica) {
         $this->db->select('s.*');
         $this->db->from('evaluacion_subcaracteristica as es, subcaracteristica as s');
