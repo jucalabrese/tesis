@@ -20,7 +20,7 @@
             <span>Ingrese el plan de actividades de la evaluación:</span>
         </div>
         <div class="form-group">
-            <textarea class="form-control text_area" rows="15" id="actividades" placeholder="Tener en cuenta blablabla"><?php //echo $proposito?></textarea>      
+            <textarea class="form-control text_area" rows="15" id="actividades" placeholder="Tener en cuenta blablabla"><?php echo $actividades?></textarea>      
         </div>
 
       <div class="form-group">

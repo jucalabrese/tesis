@@ -500,6 +500,21 @@ function guardar_2_1(caracteristica) {
 }
 ;
 
+function guardar_3_1() {
+    var base_url = document.getElementById('baseurl').value;
+    var actividades = document.getElementById('actividades').value;
+
+    $.ajax({
+        type: 'POST',
+        url: base_url + 'evaluacion/guardado/3/1',
+        data: {actividades: actividades},
+        success: function (output_string){
+            $("#contenido").html(output_string);
+        }
+    });
+}
+;
+
 function guardar_4_1() {
     var base_url = document.getElementById('baseurl').value;
 

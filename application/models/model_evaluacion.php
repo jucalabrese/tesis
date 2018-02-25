@@ -665,4 +665,25 @@ class Model_evaluacion extends CI_Model {
         $consulta = $this->db->get();
         return $consulta;
     }
+    
+    function agregarActividades($actividades, $idEvaluacion) {
+        $this->db->trans_start();
+        $data1 = array(
+            'actividades' => $actividades,
+        );
+
+        $this->db->where('idEvaluacion', $idEvaluacion);
+        $this->db->update('evaluacion', $data1);
+        $this->db->trans_complete();
+
+        return $actividades;
+    }
+    
+    function getActividades($idEvaluacion) {
+        $this->db->select('*');
+        $this->db->from('evaluacion');
+        $this->db->where('idEvaluacion', $idEvaluacion);
+        $consulta = $this->db->get();
+        return $consulta;
+    }
 }

@@ -561,7 +561,12 @@ class Evaluacion extends CI_Controller {
 
                         break;
                     case 1:
-
+                        $actividades = '';
+                        $resul = $this->model_evaluacion->getActividades($idEvaluacion);
+                        foreach ($resul->result_array() as $a) {
+                            $actividades = $a['actividades'];
+                        }
+                        $datos = array('actividades' => $actividades);
                         break;
                 };
                 break;
@@ -598,10 +603,10 @@ class Evaluacion extends CI_Controller {
                         break;
                     case 2:
                         $feedback = '';
-                        if ($this->input->post()) {
-                            $feedback = $this->input->post('feedback');
-                            $this->model_evaluacion->agregarFeedback($feedback, $idEvaluacion);
-                        }
+//                        if ($this->input->post()) {
+//                            $feedback = $this->input->post('feedback');
+//                            $this->model_evaluacion->agregarFeedback($feedback, $idEvaluacion);
+//                        }
                         $resul = $this->model_evaluacion->getFeedback($idEvaluacion);
                         foreach ($resul->result_array() as $f) {
                             $feedback = $f['feedback'];
@@ -1120,7 +1125,30 @@ class Evaluacion extends CI_Controller {
 
                         break;
                     case 1:
-
+                        $actividades = '';
+                        unset($_SESSION['ExitoActividades']);
+                        unset($_SESSION['ErrorActividades']);
+                        if ($this->input->post()) {
+                            $a = $this->input->post('actividades');
+                            $existe = $this->model_evaluacion->getActividades($idEvaluacion);
+                            if ($a <> null) {
+                                foreach ($existe->result_array() as $e) {
+                                    if ($e['actividades'] <> null) { //SE FIJA SI ES UNA EDICIÓN O LA PRIMERA VEZ
+                                        $this->session->set_flashdata('ExitoActividades', '¡Se editaron los datos exitosamente!');
+                                    } else {
+                                        $this->session->set_flashdata('ExitoActividades', '¡Se cargó el plan de actividades exitosamente!');
+                                    }
+                                    $actividades = $this->model_evaluacion->agregarActividades($a, $idEvaluacion);
+                                }
+                            } else {
+                                $this->session->set_flashdata('ErrorActividades', 'Debe ingresar el plan de actividades');
+                                $existe = $this->model_evaluacion->getActividades($idEvaluacion);
+                                foreach ($existe->result_array() as $e) {
+                                    $actividades = $e['actividades'];
+                                }
+                            }
+                        }
+                        $datos = array('actividades' => $actividades);
                         break;
                 };
                 break;
