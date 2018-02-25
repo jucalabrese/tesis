@@ -37,7 +37,7 @@
     <div class="form-group">
         <div class="col-lg-6 col-lg-offset-4">
             <div class="btn-group">
-                <button type="button" class="btn btn-danger">Atrás</button>
+                <button type="button" class="btn btn-danger" onclick="cargarVistaTareas_5_2()">Atrás</button>
                 <button type="button" class="btn btn-success" id="guardar" onclick="guardar_5_3()">Guardar</button>
             </div>
         </div>
