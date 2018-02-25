@@ -285,15 +285,115 @@ class Calculo_criterios extends CI_Controller{
                         }
                     }
                     break;
-                case 19:
+                case 19: //SUBCARACTERÍSTICA "CONFIDENCIALIDAD" (SEGURIDAD)
+                    
+                    //CRITERIO 1
+                    if (($respuestas[5] == "SI") && ($respuestas[12] == "NO")){ 
+                        $valorSubcaracteristica += 1;
+                        $this->model_evaluacion->cargarValorCriterio($idEvaluacion, 1, 1);
+                    }
+                    
+                    //CRITERIO 2
+                    if (($respuestas[7] == "NO") && ($respuestas[8] == "NO") && ($respuestas[9] == "NO") && ($respuestas[10] == "NO") && ($respuestas[11] == "NO")) { 
+                        $valorSubcaracteristica += 1;
+                        $this->model_evaluacion->cargarValorCriterio($idEvaluacion, 2, 1);
+                    }
+                    
+                    //CRITERIO 3
+                    if ($respuestas[6] == "SI") { 
+                        $valorSubcaracteristica += 1;
+                        $this->model_evaluacion->cargarValorCriterio($idEvaluacion, 3, 1);
+                    }
+
+                    //CRITERIO 4
+                    if (($respuestas[1] == "SI") && ($respuestas[2] == "SI") && ($respuestas[3] == "SI") && ($respuestas[4] == "SI")){ 
+                        $valorSubcaracteristica += 1;
+                        $this->model_evaluacion->cargarValorCriterio($idEvaluacion, 4, 1);
+                    } else {
+                        if (($respuestas[1] == "SI") || ($respuestas[2] == "SI") || ($respuestas[3] == "SI") || ($respuestas[4] == "SI")){
+                            $valorSubcaracteristica += 0.5;
+                            $this->model_evaluacion->cargarValorCriterio($idEvaluacion, 4, 0.5);
+                        }
+                    }
                     break;
-                case 20:
+                
+                case 20: //SUBCARACTERÍSTICA "INTEGRIDAD" (SEGURIDAD)
+                     
+                    //CRITERIO 5
+                    if (($respuestas[7] == "NO") && ($respuestas[8] == "NO") && ($respuestas[9] == "NO") && ($respuestas[16] == "NO")){ 
+                        $valorSubcaracteristica += 1;
+                        $this->model_evaluacion->cargarValorCriterio($idEvaluacion,5, 1);
+                    }
+                    
+                    //CRITERIO 6
+                    if (($respuestas[14] == "NO") && ($respuestas[15] == "NO")) { 
+                        $valorSubcaracteristica += 1;
+                        $this->model_evaluacion->cargarValorCriterio($idEvaluacion, 6, 1);
+                    }
+                    
+                    //CRITERIO 7
+                    if ($respuestas[13] == "SI") { 
+                        $valorSubcaracteristica += 1;
+                        $this->model_evaluacion->cargarValorCriterio($idEvaluacion, 7, 1);
+                    }
                     break;
-                case 21:
+                    
+                case 21: //SUBCARACTERÍSTICA "NO-REPUDIO" (SEGURIDAD)
+                    
+                    //CRITERIO 8
+                    if (($respuestas[17] == "SI") || ($respuestas[23] == "SI")){ 
+                        $valorSubcaracteristica += 1;
+                        $this->model_evaluacion->cargarValorCriterio($idEvaluacion,8, 1);
+                    }
+                    
+                    //CRITERIO 9
+                    if (($respuestas[18] == "SI") || ($respuestas[19] == "SI") || ($respuestas[21] == "SI")) { 
+                        $valorSubcaracteristica += 1;
+                        $this->model_evaluacion->cargarValorCriterio($idEvaluacion, 9, 1);
+                    }
+                    
+                    //CRITERIO 10
+                    if ($respuestas[20] == "SI") { 
+                        $valorSubcaracteristica += 1;
+                        $this->model_evaluacion->cargarValorCriterio($idEvaluacion, 10, 1);
+                    }
+                    
+                    //CRITERIO 11
+                    if ($respuestas[22] == "SI") { 
+                        $valorSubcaracteristica += 1;
+                        $this->model_evaluacion->cargarValorCriterio($idEvaluacion, 11, 1);
+                    }
                     break;
-                case 22:
+                    
+                case 22: //SUBCARACTERÍSTICA "RESPONSABILIDAD" (SEGURIDAD)
+                    
+                    //CRITERIO 12
+                    if (($respuestas[17] == "SI") || ($respuestas[24] == "SI") || ($respuestas[25] == "SI") || ($respuestas[26] == "SI")){ 
+                        $valorSubcaracteristica += 1;
+                        $this->model_evaluacion->cargarValorCriterio($idEvaluacion,12, 1);
+                    }
+                    
+                    //CRITERIO 13
+                    if ($respuestas[22] == "SI") { 
+                        $valorSubcaracteristica += 1;
+                        $this->model_evaluacion->cargarValorCriterio($idEvaluacion, 13, 1);
+                    }
+                    
                     break;
-                case 23:
+                
+                case 23: //SUBCARACTERÍSTICA "AUTENTICIDAD" (SEGURIDAD)
+                    
+                    //CRITERIO 14
+                    if (($respuestas[27] == "SI") || ($respuestas[30] == "SI") || ($respuestas[31] == "SI") || ($respuestas[32] == "SI") || ($respuestas[33] == "SI")){ 
+                        $valorSubcaracteristica += 1;
+                        $this->model_evaluacion->cargarValorCriterio($idEvaluacion,14, 1);
+                    }
+                     
+                    //CRITERIO 15
+                    if (($respuestas[28] == "SI") || ($respuestas[29] == "SI") || ($respuestas[13] == "SI")){ 
+                        $valorSubcaracteristica += 1;
+                        $this->model_evaluacion->cargarValorCriterio($idEvaluacion,15, 1);
+                    }
                     break;
             }
             $valorTotal = $valorSubcaracteristica / $s['puntajeTotal'];
