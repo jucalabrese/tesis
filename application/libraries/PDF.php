@@ -55,25 +55,25 @@ class PDF extends FPDF {
          * */
         $this->Cell(0, 25, 'Evaluacion de producto: ' . $GLOBALS['nombreProd'], 0, 0, 'C');
 //Se da un salto de línea de 25
-        $this->Ln(25);
+        $this->Ln(35);
     }
 
-    function FancyTableWithNItems($header, $users, $votos, $n) {
-        $this->SetAutoPageBreak(false, 0);
-        $arregloPartido = array_chunk($users, $n);
-        $index = 0;
-        $this->Cell(150, 10, 'Cantidad de votantes: ' . (count($users)), 0, 0, 'L');
-        $this->SetX($this->lMargin * 3);
-        $this->Cell(150, 10, 'Cantidad de votos contabilizados: ' . $votos, 0, 0, 'R');
-//agregar cantidad de votos
-        foreach ($arregloPartido as $pagina) {
-            $this->FancyTable($header, $pagina);
-            $index++;
-            if (count($arregloPartido) != $index) {
-                $this->AddPage('P', 'A4');
-            }
-        }
-    }
+    /* function FancyTableWithNItems($header, $users, $votos, $n) {
+      $this->SetAutoPageBreak(false, 0);
+      $arregloPartido = array_chunk($users, $n);
+      $index = 0;
+      $this->Cell(150, 10, 'Cantidad de votantes: ' . (count($users)), 0, 0, 'L');
+      $this->SetX($this->lMargin * 3);
+      $this->Cell(150, 10, 'Cantidad de votos contabilizados: ' . $votos, 0, 0, 'R');
+      //agregar cantidad de votos
+      foreach ($arregloPartido as $pagina) {
+      $this->FancyTable($header, $pagina);
+      $index++;
+      if (count($arregloPartido) != $index) {
+      $this->AddPage('P', 'A4');
+      }
+      }
+      } */
 
     function FancyTableRigor($header, $data) {
 // Colores, ancho de línea y fuente en negrita
@@ -101,6 +101,37 @@ class PDF extends FPDF {
             $this->MultiCell($w[1], 5, $row[1], 'LR', 'L', $fill);
             $this->SetXY($x + $w[0] + $w[1], $y);
             $this->MultiCell($w[2], 5, $row[2], 'LR', 'L', $fill);
+            $fill = !$fill;
+        }
+// Línea de cierre
+        $this->Cell(array_sum($w), 0, '', 'T');
+    }
+
+    function FancyTableNivelesSubcaracteristicas($header, $data) {
+        // Colores, ancho de línea y fuente en negrita
+        $this->SetFillColor(150);
+        $this->SetTextColor(255);
+        $this->SetDrawColor(100);
+        $this->SetLineWidth(.3);
+        $this->SetFont('', 'B');
+// Cabecera
+        $w = array(70,25,30,32,32);
+        for ($i = 0; $i < count($header); $i++)
+            $this->Cell($w[$i], 7, $header[$i], 1, 0, 'C', true);
+        $this->Ln();
+// Restauración de colores y fuentes
+        $this->SetFillColor(224, 235, 255);
+        $this->SetTextColor(0);
+        $this->SetFont('');
+// Datos
+        $fill = false;
+        foreach ($data as $row) {
+            $this->CellFitSpace($w[0], 5, $row[0], 'LR',0, 'C', $fill);
+            $this->Cell($w[1], 5, $row[1], 'LR',0, 'C', $fill);
+            $this->Cell($w[2], 5, $row[2], 'LR',0, 'C', $fill);
+            $this->Cell($w[3], 5, $row[3], 'LR',0, 'C', $fill);
+            $this->Cell($w[4], 5, $row[4], 'LR',0, 'C', $fill);
+            $this->Ln();
             $fill = !$fill;
         }
 // Línea de cierre

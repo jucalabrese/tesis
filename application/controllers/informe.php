@@ -82,26 +82,30 @@ class Informe extends CI_Controller {
 
         $this->load->library('PDF');
         $this->pdf = new PDF();
-
+        //GENERO PDF
         $this->pdf->AliasNbPages();
         $this->pdf->AddPage('P', 'A4'); //Vertical, A4
         $this->pdf->SetTitle('Informe');
-        $this->pdf->Ln(10);
+        //IMPRIMO DESCRIPCION
         if ($descripcionProd != '') {
-            $this->pdf->SetFont('Arial', 'B', 12); //Arial,negrita, 12 puntos
-            $this->pdf->Write(5, utf8_decode('Descripción: '));
+            $this->pdf->SetFont('Arial', 'UB', 12); //Arial,negrita, 12 puntos
+            $this->pdf->Write(5, utf8_decode('Descripción:'));
+            $this->pdf->Ln(10);
             $this->pdf->SetFont('Arial', '', 12); //Arial, 12 puntos
             $this->pdf->Write(5, $descripcionProd);
-            $this->pdf->Ln(10);
+            $this->pdf->Ln(15);
         }
-        $this->pdf->SetFont('Arial', 'B', 12); //Arial,negrita, 12 puntos
-        $this->pdf->Write(5, utf8_decode('Propósito: '));
+        //IMPRIMO PROPOSITO
+        $this->pdf->SetFont('Arial', 'UB', 12); //Arial,negrita, 12 puntos
+        $this->pdf->Write(5, utf8_decode('Propósito:'));
+        $this->pdf->Ln(10);
         $this->pdf->SetFont('Arial', '', 12); //Arial, 12 puntos
         $this->pdf->Write(5, $proposito);
+        $this->pdf->Ln(15);
+        //IMPRIMO CARACTERISTICAS
+        $this->pdf->SetFont('Arial', 'UB', 12); //Arial,negrita, 12 puntos
+        $this->pdf->Write(5, utf8_decode('Características:'));
         $this->pdf->Ln(10);
-
-        $this->pdf->SetFont('Arial', 'B', 12); //Arial,negrita, 12 puntos
-        $this->pdf->Write(5, utf8_decode('Características: '));
         $this->pdf->SetFont('Arial', '', 12); //Arial, 12 puntos
         if ($caracteristicas->num_rows() == 1) {
             $this->pdf->Write(5, utf8_decode('Se evaluará la característica '));
@@ -118,18 +122,78 @@ class Informe extends CI_Controller {
                 $this->pdf->Write(5, '.');
             }
         }
+        $this->pdf->Ln(15);
+        //IMPRIMO FASE
+        $this->pdf->SetFont('Arial', 'UB', 12); //Arial,negrita, 12 puntos
+        $this->pdf->Write(5, 'Fase en la que se encuentra el producto:');
         $this->pdf->Ln(10);
-        $this->pdf->SetFont('Arial', 'B', 12); //Arial,negrita, 12 puntos
-        $this->pdf->Write(5, 'Fase en la que se encuentra el producto: ');
         $this->pdf->SetFont('Arial', '', 12); //Arial, 12 puntos
         $this->pdf->Write(5, utf8_decode($fase));
-        $this->pdf->Ln(10);
-        $this->pdf->SetFont('Arial', 'B', 12); //Arial,negrita, 12 puntos
-        $this->pdf->Write(5, utf8_decode('Rigor de la evaluación: '));
+        $this->pdf->Ln(15);
+        //IMPRIMO RIGOR
+        $this->pdf->SetFont('Arial', 'UB', 12); //Arial,negrita, 12 puntos
+        $this->pdf->Write(5, utf8_decode('Rigor de la evaluación:'));
         $this->pdf->Ln(10);
         $cabecera = array(utf8_decode("Aspecto de seguridad física"), utf8_decode("Aspecto económico"), utf8_decode("Aspecto de seguridad de acceso"));
         $cuerpo = array($datosRigor);
         $this->pdf->FancyTableRigor($cabecera, $cuerpo);
+        $this->pdf->Ln(15);
+        //IMPRIMO SUBCARACTERISTICAS (CON LAS TABLAS DE LAS METRICAS)
+        $this->pdf->SetFont('Arial', 'UB', 12); //Arial,negrita, 12 puntos
+        $this->pdf->Write(5, utf8_decode('Métricas (subcaracterísticas) elegidas:'));
+        $this->pdf->Ln(10);
+        foreach ($caracteristicas->result_array() as $c) {
+            $this->pdf->SetFont('Arial', 'UI', 12); //Arial, italica, subrayada, 12 puntos
+            $this->pdf->Write(5, utf8_decode('Característica ' . $c['nombre']));
+            $this->pdf->Ln(10);
+            $subcaracteristicas = $this->model_evaluacion->getSubcaracteristicasEvaluacionCaracteristica($idEvaluacion, $c['idCaracteristica']);
+            foreach ($subcaracteristicas->result_array() as $s) {
+                $this->pdf->SetFont('Arial', 'U', 12);
+                $this->pdf->Write(5, utf8_decode('Métrica'));
+                $this->pdf->SetFont('Arial', '', 12);
+                $this->pdf->Write(5, utf8_decode(': ' . $s['nombre']));
+                $this->pdf->Ln(5);
+                $this->pdf->SetFont('Arial', 'U', 12);
+                $this->pdf->Write(5, utf8_decode('Propósito'));
+                $this->pdf->SetFont('Arial', '', 12);
+                $this->pdf->Write(5, utf8_decode(': ' . $s['proposito']));
+                $this->pdf->Ln(5);
+                $this->pdf->SetFont('Arial', 'U', 12);
+                $this->pdf->Write(5, utf8_decode('Método de aplicación'));
+                $this->pdf->SetFont('Arial', '', 12);
+                $this->pdf->Write(5, utf8_decode(': ' . $s['metodo']));
+                $this->pdf->Ln(5);
+                $this->pdf->SetFont('Arial', 'U', 12);
+                $this->pdf->Write(5, utf8_decode('Entradas'));
+                $this->pdf->SetFont('Arial', '', 12);
+                $this->pdf->Write(5, utf8_decode(': ' . $s['entradas']));
+                $this->pdf->Ln(5);
+                $this->pdf->SetFont('Arial', 'U', 12);
+                $this->pdf->Write(5, utf8_decode('Fórmula'));
+                $this->pdf->SetFont('Arial', '', 12);
+                $this->pdf->Write(5, utf8_decode(': ' . $s['formula']));
+                $this->pdf->Ln(10);
+            }
+            $this->pdf->Ln(5);
+        }
+        //IMPRIMO NIVELES DE ACEPTACION DE SUBCARACTERISTICAS
+        $this->pdf->SetFont('Arial', 'UB', 12); //Arial,negrita, 12 puntos
+        $this->pdf->Write(5, utf8_decode('Criterios de decisión de las subcaracterísticas:'));
+        $this->pdf->Ln(10);
+        foreach ($caracteristicas->result_array() as $c) {
+            $this->pdf->SetFont('Arial', 'UI', 12); //Arial, italica, subrayada, 12 puntos
+            $this->pdf->Write(5, utf8_decode('Característica ' . $c['nombre']));
+            $this->pdf->Ln(10);
+            $subcaracteristicas = $this->model_evaluacion->getSubcaracteristicasEvaluacionCaracteristica($idEvaluacion, $c['idCaracteristica']);
+            $cabecera = array(utf8_decode("Subcaracterística"), "Inaceptable", utf8_decode("Mín. aceptable"), "Rango objetivo", "Excede los req.");
+            $cuerpo=array();
+            foreach ($subcaracteristicas->result_array() as $s) {
+                $cuerpo[] = array(utf8_decode($s['nombre']),'0.00 - 0.30','0.31 - 0.50','0.51 - 0.70','0.71 - 1.00');
+            }
+            $this->pdf->FancyTableNivelesSubcaracteristicas($cabecera, $cuerpo);
+            $this->pdf->Ln(10);
+        }
+
 //  FORMATO TABLA
 //  $cabecera = array("Apellido", "Nombre","Matrícula","Usuario","Mail");
 //  $pdf->FancyTableWithNItems($cabecera,$usuarios,$votos,38); //Método que integra a cabecera y datos
