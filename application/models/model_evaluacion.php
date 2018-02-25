@@ -686,4 +686,19 @@ class Model_evaluacion extends CI_Model {
         $consulta = $this->db->get();
         return $consulta;
     }
+    
+     function altaCriterios($idEvaluacion, $idCriterio) {
+        $this->db->trans_start();
+
+        $data1 = array(
+            'idEvaluacion' => $idEvaluacion,
+            'idCriterio' => $idCriterio,
+            'puntaje' => 0,
+        );
+
+        $this->db->insert('evaluacion_criterio', $data1);
+        $this->db->trans_complete();
+
+        return $idEvaluacion;
+    }
 }

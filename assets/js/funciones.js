@@ -482,7 +482,7 @@ function mostrarPreguntas(value) {
 function guardar_2_1(caracteristica) {
     var base_url = document.getElementById('baseurl').value;
     var subcaracteristicas = [];
-
+    
     $("#subcaracteristicas:checked").each(function () {
         if (this.checked) {
             subcaracteristicas.push($(this).val());
@@ -491,14 +491,23 @@ function guardar_2_1(caracteristica) {
 
     $.ajax({
         type: 'POST',
-        url: base_url + 'evaluacion/guardarSubcaracteristicas',
+        url: base_url + 'evaluacion/guardado/2/1',
         data: {subcar: subcaracteristicas, car: caracteristica},
 
         success: function (output_string){
+            $("#subcaracteristicas:checked").each(function(){
+                if (this.checked){
+                    sub = $(this).val();
+                    $("#ok"+sub).attr({'style': 'display:block;'});
+                }
+            });
+            $("#contenido").html(output_string);
+            $("#subcaracteristicas").fadeOut(800, function(){
+                $("#subcaracteristicas").fadeIn().delay(10); //MI PC ES LENTA, VER COMO SE VE EN LA DEL LIDI
+            });
         }
     });
-}
-;
+};
 
 function guardar_3_1() {
     var base_url = document.getElementById('baseurl').value;

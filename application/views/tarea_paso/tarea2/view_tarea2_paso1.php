@@ -3,20 +3,6 @@
 </div>
 <hr>
 <div>
-    <?php //Muestra cartel exito/error
-
-        if ($this->session->flashdata('ExitoSubcar')){ ?>
-            <div class="alert alert-success">
-                <?php echo $this->session->flashdata('ExitoSubcar'); ?>
-            </div>
-        <?php } else { 
-            if ($this->session->flashdata('ErrorSubcar')){?>
-                <div class="alert alert-danger">
-                    <?php echo $this->session->flashdata('ErrorSubcar'); ?>    
-                </div>
-        <?php } 
-        }
-    ?>  
 </div>
 <div class="form-group">
     <div class="form-group">
@@ -36,6 +22,12 @@
     </div>
     <hr>
     <div class="form-group" id="subcaracteristicas" style="display: none;">
+        <?php //Muestra cartel exito/error
+        if ($this->session->flashdata('ErrorSubcar')){ ?>
+            <div class="alert alert-danger">
+                <?php echo $this->session->flashdata('ErrorSubcar'); ?>
+            </div>
+        <?php } ?>  
         <div class="form-group">
                 <span>Seleccione una o más subcaracterísticas a evaluar: </span>
         </div>
@@ -47,7 +39,7 @@
                             <div class="checkbox col-md-12">
                                 <label> <!-- MARCARLA COMO SELECCIONADA -->
                                     <input type="checkbox" checked value="<?php echo $sub['idSubcaracteristica']?>" id="subcaracteristicas" name="subcaracteristicas">
-                                    <?php echo $sub['nombre']?>
+                                    <?php echo $sub['nombre'] ?> &nbsp <span id="ok+<?php echo $sub['idSubcaracteristica']?>" class='glyphicon glyphicon-ok' aria-hidden='true' style='color: green' style="display: none;"></span>
                                 </label>   
                             </div>
                     </div>
