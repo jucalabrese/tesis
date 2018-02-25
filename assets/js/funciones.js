@@ -226,7 +226,7 @@ function cargarVistaTareas_5_0() {
 function cargarVistaTareas_5_1() {
     var base_url = document.getElementById('baseurl').value;
     $.ajax({
-        url: base_url + '/evaluacion/tarea_paso/5/1',
+        url: base_url + '/calculo_criterios/cargarResultadosCriterios',
         type: 'POST',
         success: function (output_string) {
             $('#contenido').html(output_string);
