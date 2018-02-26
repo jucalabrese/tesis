@@ -115,7 +115,7 @@ class PDF extends FPDF {
         $this->SetLineWidth(.3);
         $this->SetFont('', 'B');
 // Cabecera
-        $w = array(70,25,30,32,32);
+        $w = array(70, 25, 30, 32, 32);
         for ($i = 0; $i < count($header); $i++)
             $this->Cell($w[$i], 7, $header[$i], 1, 0, 'C', true);
         $this->Ln();
@@ -126,11 +126,55 @@ class PDF extends FPDF {
 // Datos
         $fill = false;
         foreach ($data as $row) {
-            $this->CellFitSpace($w[0], 5, $row[0], 'LR',0, 'C', $fill);
-            $this->Cell($w[1], 5, $row[1], 'LR',0, 'C', $fill);
-            $this->Cell($w[2], 5, $row[2], 'LR',0, 'C', $fill);
-            $this->Cell($w[3], 5, $row[3], 'LR',0, 'C', $fill);
-            $this->Cell($w[4], 5, $row[4], 'LR',0, 'C', $fill);
+            $this->CellFitSpace($w[0], 5, $row[0], 'LR', 0, 'C', $fill);
+            $this->Cell($w[1], 5, $row[1], 'LR', 0, 'C', $fill);
+            $this->Cell($w[2], 5, $row[2], 'LR', 0, 'C', $fill);
+            $this->Cell($w[3], 5, $row[3], 'LR', 0, 'C', $fill);
+            $this->Cell($w[4], 5, $row[4], 'LR', 0, 'C', $fill);
+            $this->Ln();
+            $fill = !$fill;
+        }
+// Línea de cierre
+        $this->Cell(array_sum($w), 0, '', 'T');
+    }
+
+    function FancyTableNivelesCaracteristicas($header, $data) {
+        // Colores, ancho de línea y fuente en negrita
+        $this->SetFillColor(150);
+        $this->SetTextColor(255);
+        $this->SetDrawColor(100);
+        $this->SetLineWidth(.3);
+        $this->SetFont('', 'B');
+// Cabecera
+        switch (count($header)) {
+            case 3:
+                $w = array(60, 65, 65); //190
+                break;
+            case 4:
+                $w = array(30, 50, 50, 60); //190
+                break;
+            case 5:
+                $w = array(40, 30, 30, 35, 55); //190
+                break;
+            case 6:
+                $w = array(30, 32, 30, 30, 34, 34); //190
+                break;
+            case 7:
+                $w = array(30, 25, 25, 25, 35, 25, 25); //190
+                break;
+        }
+        for ($i = 0; $i < count($header); $i++)
+            $this->CellFitSpace($w[$i], 7, $header[$i], 1, 0, 'C', true);
+        $this->Ln();
+// Restauración de colores y fuentes
+        $this->SetFillColor(224, 235, 255);
+        $this->SetTextColor(0);
+        $this->SetFont('');
+// Datos
+        $fill = false;
+        foreach ($data as $row) {
+            for ($i = 0; $i < count($header); $i++)
+                $this->Cell($w[$i], 5, $row[$i], 'LR', 0, 'C', $fill);
             $this->Ln();
             $fill = !$fill;
         }

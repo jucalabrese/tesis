@@ -180,11 +180,55 @@ class Informe extends CI_Controller {
         $this->pdf->SetFont('Arial', 'UB', 12); //Arial,negrita, 12 puntos
         $this->pdf->Write(5, utf8_decode('Criterios de decisión de las subcaracterísticas:'));
         $this->pdf->Ln(10);
+        $caracteristicasCompletas = array();
         foreach ($caracteristicas->result_array() as $c) {
             $this->pdf->SetFont('Arial', 'UI', 12); //Arial, italica, subrayada, 12 puntos
             $this->pdf->Write(5, utf8_decode('Característica ' . $c['nombre']));
             $this->pdf->Ln(10);
             $subcaracteristicas = $this->model_evaluacion->getSubcaracteristicasEvaluacionCaracteristica($idEvaluacion, $c['idCaracteristica']);
+            $cantSubcaracteristicas = $subcaracteristicas->num_rows();
+            switch ($c['idCaracteristica']) {
+                case 1:
+                    if ($cantSubcaracteristicas == 3) {
+                        $caracteristicasCompletas[] = $c;
+                    }
+                    break;
+                case 2:
+                    if ($cantSubcaracteristicas == 3) {
+                        $caracteristicasCompletas[] = $c;
+                    }
+                    break;
+                case 3:
+                    if ($cantSubcaracteristicas == 2) {
+                        $caracteristicasCompletas[] = $c;
+                    }
+                    break;
+                case 4:
+                    if ($cantSubcaracteristicas == 6) {
+                        $caracteristicasCompletas[] = $c;
+                    }
+                    break;
+                case 5:
+                    if ($cantSubcaracteristicas == 4) {
+                        $caracteristicasCompletas[] = $c;
+                    }
+                    break;
+                case 6:
+                    if ($cantSubcaracteristicas == 5) {
+                        $caracteristicasCompletas[] = $c;
+                    }
+                    break;
+                case 7:
+                    if ($cantSubcaracteristicas == 5) {
+                        $caracteristicasCompletas[] = $c;
+                    }
+                    break;
+                case 8:
+                    if ($cantSubcaracteristicas == 3) {
+                        $caracteristicasCompletas[] = $c;
+                    }
+                    break;
+            }
             $cabecera = array(utf8_decode("Subcaracterística"), "Inaceptable", utf8_decode("Mín. aceptable"), "Rango objetivo", "Excede los req.");
             $cuerpo = array();
             foreach ($subcaracteristicas->result_array() as $s) {
@@ -208,13 +252,52 @@ class Informe extends CI_Controller {
                             break;
                     }
                 }
-                $cuerpo[] = array(utf8_decode($s['nombre']),'0.00 - '.$inaceptable.'0',$inaceptable+0.01.' - '.$min_aceptable.'0',$min_aceptable+0.01.' - '.$aceptable.'0',$aceptable+0.01.' - '.$excede.'.00');
-               }
+                $cuerpo[] = array(utf8_decode($s['nombre']), '0.00 - ' . $inaceptable . '0', $inaceptable + 0.01 . ' - ' . $min_aceptable . '0', $min_aceptable + 0.01 . ' - ' . $aceptable . '0', $aceptable + 0.01 . ' - ' . $excede . '.00');
+            }
             $this->pdf->FancyTableNivelesSubcaracteristicas($cabecera, $cuerpo);
             $this->pdf->Ln(10);
         }
+        $this->pdf->Ln(5);
         //IMPRIMO NIVELES DE ACEPTACION DE CARACTERISTICAS (SI HAY!)
-
+        if (!empty($caracteristicasCompletas)) {
+            $this->pdf->SetFont('Arial', 'UB', 12); //Arial,negrita, 12 puntos
+            $this->pdf->Write(5, utf8_decode('Criterios de decisión de las características:'));
+            $this->pdf->Ln(10);
+            foreach ($caracteristicasCompletas as $c) {
+                $this->pdf->SetFont('Arial', 'UI', 12); //Arial, italica, subrayada, 12 puntos
+                $this->pdf->Write(5, utf8_decode('Característica ' . $c['nombre']));
+                $this->pdf->Ln(10);
+                $subcaracteristicas = $this->model_evaluacion->getSubcaracteristicasEvaluacionCaracteristica($idEvaluacion, $c['idCaracteristica']);
+                $cabecera = array();
+                $inac = array();
+                $minac = array();
+                $acep = array();
+                $excede = array();
+                $cabecera[] = "";
+                $inac[] = "Inaceptable";
+                $minac[] = utf8_decode("Mín. Aceptable");
+                $acep[] = "Aceptable";
+                $excede[] = "Excede los req.";
+                foreach ($subcaracteristicas->result_array() as $s) {
+                    $cabecera[] = utf8_decode($s['nombre']);
+                    $subcar = $this->model_evaluacion->getEvaluacionSubcaracteristica($idEvaluacion, $s['idSubcaracteristica']);
+                    foreach ($subcar->result_array() as $sub) {
+                        $inac[] = $sub['nivel_inac'];
+                        $minac[] = $sub['nivel_minac'];
+                        $acep[] = $sub['nivel_acep'];
+                        $excede[] = $sub['nivel_excede'];
+                    }
+                }
+                $cuerpo = array($inac, $minac, $acep, $excede);
+                $this->pdf->FancyTableNivelesCaracteristicas($cabecera, $cuerpo);
+                // PONER LA PRIMERA COLUMNA EN NEGRITA/OTRO COLOR
+                // EN VEZ DE NUMEROS TIENEN QUE SER LOS NOMBRES DE LOS NIVELES
+                
+                // MANTENIBILIDAD QUEDAN MUY CHICOS LOS ULTIMOS 2
+                // USABILIDAD QUEDA MAL EL DE PROTECCION
+                $this->pdf->Ln(10);
+            }
+        }
 //  FORMATO TABLA
 //  $cabecera = array("Apellido", "Nombre","Matrícula","Usuario","Mail");
 //  $pdf->FancyTableWithNItems($cabecera,$usuarios,$votos,38); //Método que integra a cabecera y datos
