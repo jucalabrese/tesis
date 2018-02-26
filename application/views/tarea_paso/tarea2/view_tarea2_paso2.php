@@ -8,18 +8,26 @@
     </div>
     <div class="form-group">
         <select class="form-control" id="partes" onchange="cargarCriteriosSubcaracteristicas(value)">
-            <option value="0">Seleccione una característica</option>
-            <?php foreach ($caracteristicas->result_array() as $c) { ?>
-                <option value="<?php echo $c['idCaracteristica'] ?>"><?php echo $c['nombre'] ?></option>      
-<?php } ?>       
+            <option value="0" onclick="cargarVistaTareas_2_2(0)">Seleccione una característica</option>
+            <?php
+            foreach ($caracteristicas->result_array() as $c) {
+                if ($caracteristica['idCaracteristica'] == $c['idCaracteristica']) {
+                    ?>
+                    <option value="<?php echo $c['idCaracteristica'] ?>" selected><?php echo $c['nombre'] ?></option>   
+                <?php } else { ?>
+                    <option value="<?php echo $c['idCaracteristica'] ?>"><?php echo $c['nombre'] ?></option>      
+                <?php
+                }
+            }
+            ?>       
         </select>
     </div>
     <hr> 
-  
+
     <div id="criterios" style="display: none;">
-        <div class="form-group"> <?php if ($caracteristica != '') {?> 
-            <span>Establezca los criterios de decisión para las subcaracterísticas de <strong><?php echo $caracteristica['nombre'] ?></strong>:</span>
-        <?php } ?></div> 
+        <div class="form-group"> <?php if ($caracteristica != '') { ?> 
+                <span>Establezca los criterios de decisión para las subcaracterísticas de <strong><?php echo $caracteristica['nombre'] ?></strong>:</span>
+<?php } ?></div> 
         <table class="table table-bordered">
             <thead class="color_panel4">
                 <tr align="center">
@@ -36,34 +44,34 @@
                         <select class="form-control tamaño_criterio_select" id="inaceptable"> 
                             <?php for ($i = 1; $i <= 7; $i++) { ?> 
                                 <option value="0.<?php echo $i; ?>" <?php
-                                        if ("0." . ($i) == $inaceptable) {
-                                            echo "selected";
-                                        }
-                                        ?>>0.<?php echo $i; ?></option> 
+                                if ("0." . ($i) == $inaceptable) {
+                                    echo "selected";
+                                }
+                                ?>>0.<?php echo $i; ?></option> 
 <?php } ?>
                         </select>
                     </td>
                     <td align="center">
                         Valor máximo: 
                         <select class="form-control tamaño_criterio_select" id="min_aceptable"> 
-                                    <?php for ($i = 2; $i <= 8; $i++) { ?> 
+                            <?php for ($i = 2; $i <= 8; $i++) { ?> 
                                 <option value="0.<?php echo $i; ?>" <?php
-                                    if ("0." . ($i) == $min_aceptable) {
-                                        echo "selected";
-                                    }
-                                    ?>>0.<?php echo $i; ?></option> 
-                            <?php } ?>
+                                if ("0." . ($i) == $min_aceptable) {
+                                    echo "selected";
+                                }
+                                ?>>0.<?php echo $i; ?></option> 
+<?php } ?>
                         </select>
                     </td>
                     <td align="center">
                         Valor máximo: 
                         <select class="form-control tamaño_criterio_select" id="aceptable"> 
-<?php for ($i = 3; $i <= 9; $i++) { ?> 
+                            <?php for ($i = 3; $i <= 9; $i++) { ?> 
                                 <option value="0.<?php echo $i; ?>" <?php
-    if ("0." . ($i) == $aceptable) {
-        echo "selected";
-    }
-    ?>>0.<?php echo $i; ?></option> 
+                                if ("0." . ($i) == $aceptable) {
+                                    echo "selected";
+                                }
+                                ?>>0.<?php echo $i; ?></option> 
 <?php } ?>
                         </select>
                     </td>
@@ -77,28 +85,31 @@
             </tbody>		
         </table>
         <br>
-          <?php
-//Muestra cartel exito/error
-if ($this->session->flashdata('ExitoNiveles')) {
-    ?>
-    <div class="alert alert-success">
-        <?php echo $this->session->flashdata('ExitoNiveles'); ?>
-    </div>
-<?php
-} else {
-    if ($this->session->flashdata('ErrorNiveles')) {
-        ?>
-        <div class="alert alert-danger">
-        <?php echo $this->session->flashdata('ErrorNiveles'); ?>    
-        </div>
         <?php
-    }
-}
-?>
+//Muestra cartel exito/error
+        if ($this->session->flashdata('ExitoNiveles')) {
+            ?>
+            <div class="alert alert-success">
+            <?php echo $this->session->flashdata('ExitoNiveles'); ?>
+            </div>
+            <?php
+        } else {
+            if ($this->session->flashdata('ErrorNiveles')) {
+                ?>
+                <div class="alert alert-danger">
+                <?php echo $this->session->flashdata('ErrorNiveles'); ?>    
+                </div>
+                <?php
+            }
+        }
+        ?> 
+        <div class="form-group"> 
+            <span>Seleccione en la tabla superior los valores máximos deseados para cada uno de los niveles y haga click en el botón "Asignar" para asignarle los mismos a la subcaracterística</span>
+        </div> 
         <table class="table table-bordered">
             <thead class="color_panel4">
                 <tr align="center">
-                    <td rowspan="2" style="vertical-align: middle;" >Subcaracterística</td>
+                    <td rowspan="2" style="vertical-align: middle; width: 30%" >Subcaracterística</td>
                     <td colspan="4">Niveles</td>
                     <td rowspan="2" style="width: 15%"></td>
                 </tr>
@@ -110,43 +121,42 @@ if ($this->session->flashdata('ExitoNiveles')) {
                 </tr>
             </thead>
             <tbody>
-                    <?php if (!empty($subcaracteristicas)) { foreach ($subcaracteristicas->result_array() as $s) { ?>
-                    <tr>				
-                        <td align="center" style="vertical-align: middle;"><?php echo $s['nombre'] ?></td>
-                        <?php
-                        foreach ($asignado as $a) {
-                            if ($a['id'] == $s['idSubcaracteristica']) {
-                                $sub = $a;
-                            }
-                        }
+                <?php
+                if (!empty($subcaracteristicas)) {
+                    foreach ($subcaracteristicas->result_array() as $s) {
                         ?>
-                        <?php if ($sub['asignado']) { ?>
-                            <td align="center" style="vertical-align: middle;"> 0.00 - <?php echo $sub['inaceptable'] ?>0</td>
-                            <td align="center" style="vertical-align: middle;"> <?php echo ($sub['inaceptable'] + 0.01) ?> - <?php echo $sub['min_aceptable'] ?>0 </td>
-                            <td align="center" style="vertical-align: middle;"> <?php echo ($sub['min_aceptable'] + 0.01) ?> - <?php echo $sub['aceptable'] ?>0 </td>
-                            <td align="center" style="vertical-align: middle;"> <?php echo ($sub['aceptable'] + 0.01) ?> - <?php echo $sub['excede'] ?>.00 </td>
-                            <td align="center" style="vertical-align: middle;">
-                                <button type="button" class="btn btn-warning btn-sm" id="guardar" onclick="guardar_niveles(<?php echo $s['idSubcaracteristica'] ?>,<?php echo $caracteristica['idCaracteristica'] ?>)">Modificar</button>
-                            </td>
-                        <?php } else { ?>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td align="center" style="vertical-align: middle;">
-                                <button type="button" class="btn btn-success btn-sm" id="guardar" onclick="guardar_niveles(<?php echo $s['idSubcaracteristica'] ?>,<?php echo $caracteristica['idCaracteristica'] ?>)">Asignar</button>
-                            </td>
-    <?php } ?>	
-                    </tr>	
-<?php }}  ?>				
+                        <tr>				
+                            <td align="center" style="vertical-align: middle;"><?php echo $s['nombre'] ?></td>
+                            <?php
+                            foreach ($asignado as $a) {
+                                if ($a['id'] == $s['idSubcaracteristica']) {
+                                    $sub = $a;
+                                }
+                            }
+                            ?>
+        <?php if ($sub['asignado']) { ?>
+                                <td align="center" style="vertical-align: middle;"> 0.00 - <?php echo $sub['inaceptable'] ?>0</td>
+                                <td align="center" style="vertical-align: middle;"> <?php echo ($sub['inaceptable'] + 0.01) ?> - <?php echo $sub['min_aceptable'] ?>0 </td>
+                                <td align="center" style="vertical-align: middle;"> <?php echo ($sub['min_aceptable'] + 0.01) ?> - <?php echo $sub['aceptable'] ?>0 </td>
+                                <td align="center" style="vertical-align: middle;"> <?php echo ($sub['aceptable'] + 0.01) ?> - <?php echo $sub['excede'] ?>.00 </td>
+                                <td align="center" style="vertical-align: middle;">
+                                    <button type="button" class="btn btn-warning btn-sm" id="guardar" onclick="guardar_niveles(<?php echo $s['idSubcaracteristica'] ?>,<?php echo $caracteristica['idCaracteristica'] ?>)">Modificar</button>
+                                </td>
+        <?php } else { ?>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td align="center" style="vertical-align: middle;">
+                                    <button type="button" class="btn btn-success btn-sm" id="guardar" onclick="guardar_niveles(<?php echo $s['idSubcaracteristica'] ?>,<?php echo $caracteristica['idCaracteristica'] ?>)">Asignar</button>
+                                </td>
+                        <?php } ?>	
+                        </tr>	
+                    <?php
+                    }
+                }
+                ?>				
             </tbody>		
         </table>	
-    </div>
-    <div class="form-group">
-        <div class="col-lg-6 col-lg-offset-5">
-                <div class="btn-group">
-                        <button type="button" class="btn btn-danger" onclick="cargarVistaTareas_2_1()">Atrás</button>
-                </div>
-        </div>
     </div>
 </div>

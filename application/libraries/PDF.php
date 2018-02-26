@@ -145,6 +145,7 @@ class PDF extends FPDF {
         $this->SetDrawColor(100);
         $this->SetLineWidth(.3);
         $this->SetFont('', 'B');
+        $this->SetFontSize(11);
 // Cabecera
         switch (count($header)) {
             case 3:
@@ -166,15 +167,22 @@ class PDF extends FPDF {
         for ($i = 0; $i < count($header); $i++)
             $this->CellFitSpace($w[$i], 7, $header[$i], 1, 0, 'C', true);
         $this->Ln();
-// Restauración de colores y fuentes
-        $this->SetFillColor(224, 235, 255);
-        $this->SetTextColor(0);
-        $this->SetFont('');
 // Datos
         $fill = false;
         foreach ($data as $row) {
-            for ($i = 0; $i < count($header); $i++)
-                $this->Cell($w[$i], 5, $row[$i], 'LR', 0, 'C', $fill);
+            $this->SetFillColor(150);
+            $this->SetTextColor(255);
+            $this->SetDrawColor(100);
+            $this->SetLineWidth(.3);
+            $this->SetFont('', 'B');
+            $this->SetFontSize(11);
+            $this->CellFitSpace($w[0], 5, $row[0], 'LR', 0, 'C', true);
+            $this->SetFillColor(224, 235, 255);
+            $this->SetTextColor(0);
+            $this->SetFont('');
+            $this->SetFontSize(9);
+            for ($i = 1; $i < count($header); $i++)
+                $this->CellFitSpace($w[$i], 5, $row[$i], 'LR', 0, 'C', $fill);
             $this->Ln();
             $fill = !$fill;
         }
