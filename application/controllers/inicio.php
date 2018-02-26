@@ -46,7 +46,7 @@ class Inicio extends CI_Controller {
                       $this->session->set_userdata($usuario_data);
                       redirect(base_url("evaluacion/evaluaciones")); 
                     }else{
-                        $existeUser = $this->model_inicio->getUsuario($email);
+                        $existeUser = $this->model_usuario->getUsuario($email);
                         if ($existeUser){
                             $this->session->set_flashdata('Error', 'La clave es incorrecta'); 
                             $this->login_datos($email);
