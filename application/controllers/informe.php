@@ -143,7 +143,7 @@ class Informe extends CI_Controller {
         //IMPRIMO RIGOR
         $this->pdf->SetFont('Arial', 'B', 11); //Arial,negrita, 12 puntos
         $this->pdf->Write(5, utf8_decode('Rigor de la evaluación: '));
-         $this->pdf->SetFont('Arial', '', 11); //Arial,negrita, 12 puntos
+        $this->pdf->SetFont('Arial', '', 11); //Arial,negrita, 12 puntos
         $this->pdf->Write(5, utf8_decode('La siguiente tabla indica el rigor de la evaluación bajo diferentes aspectos.'));
         $this->pdf->Ln(11);
         
@@ -284,6 +284,7 @@ class Informe extends CI_Controller {
             $this->pdf->Ln(5);
         }
         $this->pdf->Ln(5);
+        
         //IMPRIMO NIVELES DE ACEPTACION DE CARACTERISTICAS (SI HAY!)
         if (!empty($caracteristicasCompletas)) {
             $this->pdf->SetFont('Arial', 'UB', 12); //Arial,negrita, 12 puntos
@@ -360,7 +361,34 @@ class Informe extends CI_Controller {
         $this->pdf->SetFont('Arial', 'B', 11); //Arial,negrita, 12 puntos
         $this->pdf->Write(5, utf8_decode('Resultados: '));
         $this->pdf->SetFont('Arial', '', 11); //Arial, 12 puntos
-        $this->pdf->Write(5, "Los resultados obtenidos son bla bla");
+        $this->pdf->Write(5, utf8_decode("Se llevó a cabo la ejecución de la evaluación, en la cual se respondieron las diferentes preguntas presentadas por el sistema. Las respuestas fueron analizadas, obteniendo los siguientes resultados: "));
+        $this->pdf->Ln(11);
+        foreach ($caracteristicas->result_array() as $c) {
+            $this->pdf->SetFont('Arial', 'U', 11); //Arial, italica, subrayada, 12 puntos
+            $this->pdf->Write(5, utf8_decode("Característica"));
+            $this->pdf->SetFont('Arial', 'B', 11); //Arial, italica, subrayada, 12 puntos
+            $this->pdf->Write(5, utf8_decode(': ' . $c['nombre']));
+            $this->pdf->Ln(11);
+            $subcaracteristicas = $this->model_evaluacion->getSubcaracteristicasEvaluacionCaracteristica($idEvaluacion, $c['idCaracteristica']);
+            foreach ($subcaracteristicas->result_array() as $s) {
+                $this->pdf->SetFont('Arial', 'I', 11); //Arial, italica, subrayada, 12 puntos
+                $this->pdf->Write(5, utf8_decode("Subcaracterística"));
+                $this->pdf->SetFont('Arial', 'I', 11); //Arial, italica, subrayada, 12 puntos
+                $this->pdf->Write(5, utf8_decode(': ' . $s['nombre']));
+                $this->pdf->Ln(11);
+                $criterios = $this->model_evaluacion->getCriterios($s['idSubcaracteristica']);
+                $cabecera = array(utf8_decode("Criterio"), utf8_decode("Valor obtenido"), utf8_decode("Valor máximo"), utf8_decode("Nivel"));
+                $cuerpo = array();
+                foreach ($criterios->result_array() as $c){
+                    $cuerpo[] = array("Hola", "Hola", "Hola", "Hola");
+                }
+                $this->pdf->FancyTableNivelesCaracteristicas($cabecera, $cuerpo);
+            }
+            
+        }
+
+        
+        
         $this->pdf->Ln(13);
         
         //IMPRIMO ETAPA DE LA EVALUACIÓN
@@ -369,6 +397,20 @@ class Informe extends CI_Controller {
         $this->pdf->Write(5, utf8_decode('CONCLUSIONES DE LA EVALUACIÓN'));
         $this->pdf->Ln(13);
         
+        //IMPRIMO FEEDBACK (SI HAY)
+        if ($feedback != '') {
+            $this->pdf->SetFont('Arial', 'B', 11); //Arial,negrita, 12 puntos
+            $this->pdf->Write(5, utf8_decode('Feedback de la evaluación: '));
+            $this->pdf->SetFont('Arial', '', 11); //Arial, 12 puntos
+            $this->pdf->Write(5, $feedback);
+            $this->pdf->Ln(13);
+        }else{
+            $this->pdf->SetFont('Arial', '', 11); //Arial, 12 puntos
+            $this->pdf->Write(5, utf8_decode("NOTA: Dicho informe se encuentra en modo de revisión por el evaluador. No se ha ingresado ningún feedback sobre los resultados obtenidos."));
+            $this->pdf->Ln(13);
+        }
+        
+            
 //  FORMATO TABLA
 //  $cabecera = array("Apellido", "Nombre","Matrícula","Usuario","Mail");
 //  $pdf->FancyTableWithNItems($cabecera,$usuarios,$votos,38); //Método que integra a cabecera y datos

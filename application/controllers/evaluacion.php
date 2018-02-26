@@ -798,19 +798,16 @@ class Evaluacion extends CI_Controller {
                         if ($this->input->post()) {
                             $f = $this->input->post('feedback');
                             $existe = $this->model_evaluacion->getFeedback($idEvaluacion);
-                            if ($f <> null) {
                                 foreach ($existe->result_array() as $e) {
                                     if ($e['feedback'] <> null) { //SE FIJA SI ES UNA EDICIÓN O LA PRIMERA VEZ
                                         $this->session->set_flashdata('ExitoFeedback', '¡Se editaron los datos exitosamente!');
                                     } else {
                                         $this->session->set_flashdata('ExitoFeedback', '¡Se cargó el feedback exitosamente!');
-                                    }
-                                    $feedback = $this->model_evaluacion->agregarFeedback($f, $idEvaluacion);
+                                    }    
                                 }
-                            } else {
-                                $this->session->set_flashdata('ErrorFeedback', 'Debe ingresar el feedback');
-                            }
+                                $feedback = $this->model_evaluacion->agregarFeedback($f, $idEvaluacion);
                         }
+                        
                         $datos = array('feedback' => $feedback);
                         break;
                     case 3:
