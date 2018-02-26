@@ -435,8 +435,6 @@ class Informe extends CI_Controller {
             }
             
         }
-
-        
         
         $this->pdf->Ln(13);
         
