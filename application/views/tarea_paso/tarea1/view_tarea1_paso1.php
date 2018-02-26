@@ -20,7 +20,7 @@
             <span>Ingrese el propósito por el cual la organización quiere evaluar la calidad de su producto de software:</span>
         </div>
         <div class="form-group">
-            <textarea class="form-control text_area" rows="10" id="proposito" placeholder="Tener en cuenta blablabla"><?php echo $proposito?></textarea>      
+            <textarea class="form-control text_area" rows="10" id="proposito" placeholder="Ejemplo: asegurar la calidad del producto, decidir si se acepta un producto, determinar la viabilidad del proyecto en desarrollo, comparar la calidad del producto con productos de la competencia, etc."><?php echo $proposito?></textarea>      
         </div>
 
       <div class="form-group">
