@@ -25,18 +25,16 @@ class Informe extends CI_Controller {
                 $economico = $r['economico'];
                 $seguridad_acceso = $r['seguridad_acceso'];
             }
-            $plan_actividades = $this->model_evaluacion->getActividades($idEvaluacion);
-            foreach ($plan_actividades->result_array() as $pa) {
-                $actividades = $pa['actividades'];
-            }
+            $actividades = $e['actividades'];
+            $feedback = $e['feedback'];
         }
         $caracteristicas = $this->model_evaluacion->getCaracteristicasEvaluacion($idEvaluacion);
         switch ($seguridad_fisica) {
             case 'A':
-                $seguridad_fisica = utf8_decode('A: Las personas pueden morir          ');
+                $seguridad_fisica = utf8_decode('A: Las personas pueden morir                 ');
                 break;
             case 'B':
-                $seguridad_fisica = utf8_decode('B: Amenaza contra vidas humanas         ');
+                $seguridad_fisica = utf8_decode('B: Amenaza contra vidas humanas               ');
                 break;
             case 'C':
                 $seguridad_fisica = utf8_decode('C: Daños materiales. Amenaza de daño a personas');
@@ -45,13 +43,13 @@ class Informe extends CI_Controller {
                 $seguridad_fisica = utf8_decode('D: Pequeños daños materiales. No hay riesgo para las personas');
                 break;
             case 'N/A':
-                $seguridad_fisica = 'N/A                                                    ';
+                $seguridad_fisica = 'N/A                                                               ';
                 break;
         }
         switch ($economico) {
             case 'A':
-                $economico = utf8_decode('A: Desastre financiero              ');
-                break;
+                $economico = utf8_decode('A: Desastre financiero                    ');
+                break; 
             case 'B':
                 $economico = utf8_decode('B: Pérdidas económicas importantes');
                 break;
@@ -62,7 +60,7 @@ class Informe extends CI_Controller {
                 $economico = utf8_decode('D: Pérdidas económicas insignificantes');
                 break;
             case 'N/A':
-                $economico = 'N/A                                                    ';
+                $economico = 'N/A                                                            ';
                 break;
         }
         switch ($seguridad_acceso) {
@@ -73,14 +71,14 @@ class Informe extends CI_Controller {
                 $seguridad_acceso = utf8_decode('B: Riesgo de protección de datos y servicios críticos');
                 break;
             case 'C':
-                $seguridad_acceso = utf8_decode('C: Riesgo de protección de datos                    ');
+                $seguridad_acceso = utf8_decode('C: Riesgo de protección de datos                        ');
                 break;
             case 'D':
-                $seguridad_acceso = utf8_decode('D: No se identifican riesgos                         ');
+                $seguridad_acceso = utf8_decode('D: No se identifican riesgos                             ');
                 break;
             case 'N/A':
-                $seguridad_acceso = 'N/A                                                    ';
-                break;
+                $seguridad_acceso = 'N/A                                                              ';
+                break; 
         }
         $datosRigor = array($seguridad_fisica, $economico, $seguridad_acceso);
 
@@ -307,7 +305,19 @@ class Informe extends CI_Controller {
                 $acep[] = "Aceptable";
                 $excede[] = "Excede los req.";
                 foreach ($subcaracteristicas->result_array() as $s) {
-                    $cabecera[] = utf8_decode($s['nombre']);
+                    $nombre = $s['nombre'];
+                    switch ($s['idSubcaracteristica']){
+                        case 12:
+                            $nombre = "Prot. errores usuario";
+                            break;
+                        case 27:
+                            $nombre = "Cap. de ser mod.";
+                            break;
+                        case 28:
+                            $nombre = "Cap. de ser prob.";
+                            break;
+                    }
+                    $cabecera[] = utf8_decode($nombre);
                     $subcar = $this->model_evaluacion->getEvaluacionSubcaracteristica($idEvaluacion, $s['idSubcaracteristica']);
                     foreach ($subcar->result_array() as $sub) {
                         $inac[] = $sub['nivel_inac'];
