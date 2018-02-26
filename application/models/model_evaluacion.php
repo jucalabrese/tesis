@@ -578,9 +578,9 @@ class Model_evaluacion extends CI_Model {
         $data = array(
             'respuesta' => $respuesta,
         );
-        $this->db->update('evaluacion_pregunta', $data);
         $this->db->where('idEvaluacion', $idEvaluacion);
         $this->db->where('idPregunta', $idPregunta);
+        $this->db->update('evaluacion_pregunta', $data);
         $this->db->trans_complete();
 
         return $idEvaluacion;
