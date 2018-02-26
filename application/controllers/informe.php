@@ -86,7 +86,7 @@ class Informe extends CI_Controller {
         $this->pdf->AliasNbPages();
         $this->pdf->AddPage('P', 'A4'); //Vertical, A4
         $this->pdf->SetTitle('Informe');
-        //IMPRIMO DESCRIPCION
+        //IMPRIMO DESCRIPCION (SI EXISTE!)
         if ($descripcionProd != '') {
             $this->pdf->SetFont('Arial', 'UB', 12); //Arial,negrita, 12 puntos
             $this->pdf->Write(5, utf8_decode('Descripción:'));
@@ -186,13 +186,34 @@ class Informe extends CI_Controller {
             $this->pdf->Ln(10);
             $subcaracteristicas = $this->model_evaluacion->getSubcaracteristicasEvaluacionCaracteristica($idEvaluacion, $c['idCaracteristica']);
             $cabecera = array(utf8_decode("Subcaracterística"), "Inaceptable", utf8_decode("Mín. aceptable"), "Rango objetivo", "Excede los req.");
-            $cuerpo=array();
+            $cuerpo = array();
             foreach ($subcaracteristicas->result_array() as $s) {
-                $cuerpo[] = array(utf8_decode($s['nombre']),'0.00 - 0.30','0.31 - 0.50','0.51 - 0.70','0.71 - 1.00');
-            }
+                $subcar = $this->model_evaluacion->getEvaluacionSubcaracteristica($idEvaluacion, $s['idSubcaracteristica']);
+                foreach ($subcar->result_array() as $sub) {
+                    $subc_nivel = $this->model_evaluacion->getSubcaracteristicaNivel($sub['idEvaluacionSubcaracteristica']);
+                }
+                foreach ($subc_nivel->result_array() as $sn) {
+                    switch ($sn['idNivel']) {
+                        case 1:
+                            $inaceptable = $sn['valorMaximo'];
+                            break;
+                        case 2:
+                            $min_aceptable = $sn['valorMaximo'];
+                            break;
+                        case 3:
+                            $aceptable = $sn['valorMaximo'];
+                            break;
+                        case 4:
+                            $excede = $sn['valorMaximo'];
+                            break;
+                    }
+                }
+                $cuerpo[] = array(utf8_decode($s['nombre']),'0.00 - '.$inaceptable.'0',$inaceptable+0.01.' - '.$min_aceptable.'0',$min_aceptable+0.01.' - '.$aceptable.'0',$aceptable+0.01.' - '.$excede.'.00');
+               }
             $this->pdf->FancyTableNivelesSubcaracteristicas($cabecera, $cuerpo);
             $this->pdf->Ln(10);
         }
+        //IMPRIMO NIVELES DE ACEPTACION DE CARACTERISTICAS (SI HAY!)
 
 //  FORMATO TABLA
 //  $cabecera = array("Apellido", "Nombre","Matrícula","Usuario","Mail");
