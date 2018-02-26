@@ -91,11 +91,4 @@
             </table>
         </div>
     </div>
-    <div class="form-group">
-        <div class="col-lg-6 col-lg-offset-5">
-                <div class="btn-group">
-                        <button type="button" class="btn btn-danger" onclick="cargarVistaTareas_3_1()">Atrás</button>
-                </div>
-        </div>
-    </div>
 </div>

@@ -321,19 +321,68 @@ class Informe extends CI_Controller {
                     $cabecera[] = utf8_decode($nombre);
                     $subcar = $this->model_evaluacion->getEvaluacionSubcaracteristica($idEvaluacion, $s['idSubcaracteristica']);
                     foreach ($subcar->result_array() as $sub) {
-                        $inac[] = $sub['nivel_inac'];
-                        $minac[] = $sub['nivel_minac'];
-                        $acep[] = $sub['nivel_acep'];
-                        $excede[] = $sub['nivel_excede'];
+                        switch ($sub['nivel_inac']){
+                            case 1:
+                                $inac[] = "Inaceptable";
+                                break;
+                            case 2:
+                                $inac[] = utf8_decode("Mín. Aceptable");
+                                break;
+                            case 3:
+                                $inac[] = "Rango objetivo";
+                                break;
+                            case 4:
+                                $inac[] = "Excede los req.";
+                                break;
+                        }
+                        switch ($sub['nivel_minac']){
+                            case 1:
+                                $minac[] = "Inaceptable";
+                                break;
+                            case 2:
+                                $minac[] = utf8_decode("Mín. Aceptable");
+                                break;
+                            case 3:
+                                $minac[] = "Rango objetivo";
+                                break;
+                            case 4:
+                                $minac[] = "Excede los req.";
+                                break;
+                        }
+                        switch ($sub['nivel_acep']){
+                            case 1:
+                                $acep[] = "Inaceptable";
+                                break;
+                            case 2:
+                                $acep[] = utf8_decode("Mín. Aceptable");
+                                break;
+                            case 3:
+                                $acep[] = "Rango objetivo";
+                                break;
+                            case 4:
+                                $acep[] = "Excede los req.";
+                                break;
+                        }
+                        switch ($sub['nivel_excede']){
+                            case 1:
+                                $excede[] = "Inaceptable";
+                                break;
+                            case 2:
+                                $excede[] = utf8_decode("Mín. Aceptable");
+                                break;
+                            case 3:
+                                $excede[] = "Rango objetivo";
+                                break;
+                            case 4:
+                                $excede[] = "Excede los req.";
+                                break;
+                        }
                     }
                 }
                 $cuerpo = array($inac, $minac, $acep, $excede);
                 $this->pdf->FancyTableNivelesCaracteristicas($cabecera, $cuerpo);
-                // PONER LA PRIMERA COLUMNA EN NEGRITA/OTRO COLOR
-                // EN VEZ DE NUMEROS TIENEN QUE SER LOS NOMBRES DE LOS NIVELES
+               // EN VEZ DE NUMEROS TIENEN QUE SER LOS NOMBRES DE LOS NIVELES
                 
-                // MANTENIBILIDAD QUEDAN MUY CHICOS LOS ULTIMOS 2
-                // USABILIDAD QUEDA MAL EL DE PROTECCION
                 $this->pdf->Ln(10);
             }
         }
