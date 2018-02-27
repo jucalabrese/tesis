@@ -420,20 +420,32 @@ class Informe extends CI_Controller {
             $this->pdf->Ln(11);
             $subcaracteristicas = $this->model_evaluacion->getSubcaracteristicasEvaluacionCaracteristica($idEvaluacion, $c['idCaracteristica']);
             foreach ($subcaracteristicas->result_array() as $s) {
+                $total = 0;
+                $cantCriterios = 0;
+                $nivel_total = '';
+                $cuerpo = array();
+                $nivel = $this->model_evaluacion->getNivel($idEvaluacion, $s['idSubcaracteristica']);
+                foreach ($nivel->result_array() as $n){
+                    $totalSubcaracteristica = $n['puntajeObtenido'];
+                    if ($totalSubcaracteristica <= $n['valorMaximo']){
+                        $nivel_total = $n['nivel'];
+                    };
+                };
                 $this->pdf->SetFont('Arial', 'I', 11); //Arial, italica, subrayada, 12 puntos
                 $this->pdf->Write(5, utf8_decode("Subcaracterística"));
                 $this->pdf->SetFont('Arial', 'I', 11); //Arial, italica, subrayada, 12 puntos
                 $this->pdf->Write(5, utf8_decode(': ' . $s['nombre']));
                 $this->pdf->Ln(11);
-                $criterios = $this->model_evaluacion->getCriterios($s['idSubcaracteristica']);
-                $cabecera = array(utf8_decode("Criterio"), utf8_decode("Valor obtenido"), utf8_decode("Valor máximo"), utf8_decode("Nivel"));
-                $cuerpo = array();
-                foreach ($criterios->result_array() as $c){
-                    $cuerpo[] = array("Hola", "Hola", "Hola", "Hola");
+                $criterios = $this->model_evaluacion->getCriteriosEvaluacion($idEvaluacion,$s['idSubcaracteristica']);
+                $cabecera = array(utf8_decode("Criterio"), utf8_decode("Valor obtenido"), utf8_decode("Valor máximo"), utf8_decode("Subcaracterística"));
+                foreach ($criterios->result_array() as $cri){
+                    $cuerpo[] = array(utf8_decode($cri['nombre']), utf8_decode($cri['puntaje']), 1, '-');
+                    $total = $total + $cri['puntaje'];
+                    $cantCriterios++;
                 }
+                $cuerpo[] = array(utf8_decode('Total'),$total, $cantCriterios, $totalSubcaracteristica . " (Nivel: " . $nivel_total . ")");
                 $this->pdf->FancyTableNivelesCaracteristicas($cabecera, $cuerpo);
             }
-            
         }
         
         $this->pdf->Ln(13);

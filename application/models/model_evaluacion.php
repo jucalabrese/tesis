@@ -720,4 +720,27 @@ class Model_evaluacion extends CI_Model {
 
         return $idEvaluacion;
     }
+    
+    function getNivel($idEvaluacion, $idSubcaracteristica) {
+        $this->db->select('*');
+        $this->db->from('evaluacion_subcaracteristica as es, subcaracteristica_nivel as sn, nivel as n');
+        $this->db->where('es.idEvaluacion', $idEvaluacion);
+        $this->db->where('sn.idEvaluacionSubcaracteristica = es.idEvaluacionSubcaracteristica');
+        $this->db->where('sn.idNivel = n.idNivel');
+        $this->db->where('es.idSubcaracteristica', $idSubcaracteristica);
+        $this->db->order_by("sn.valorMaximo", "desc");
+        $consulta = $this->db->get();
+        return $consulta;
+    }
+    
+    function getCriteriosEvaluacion($idEvaluacion, $idSubcaracteristica) {
+        $this->db->select('DISTINCT(c.nombre), ec.puntaje');
+        $this->db->from('evaluacion_criterio as ec, criterio as c, evaluacion_subcaracteristica as es');
+        $this->db->where('ec.idEvaluacion', $idEvaluacion);
+        $this->db->where('ec.idCriterio = c.idCriterio');
+        $this->db->where('es.idSubcaracteristica', $idSubcaracteristica);
+        $this->db->where('es.idSubcaracteristica = c.idSubcaracteristica');
+        $consulta = $this->db->get();
+        return $consulta;
+    }
 }
