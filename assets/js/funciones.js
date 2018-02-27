@@ -65,7 +65,7 @@ function cargarVistaTareas_2_0() {
 
 function cargarVistaTareas_2_1() {
     var base_url = document.getElementById('baseurl').value;
-    
+
     $.ajax({
         url: base_url + '/evaluacion/tarea_paso/2/1',
         type: 'POST',
@@ -180,7 +180,8 @@ function cargarPreguntas(value) {
             }
         }
     });
-};
+}
+;
 
 function cargarSubcaracteristicas(value) {
     var base_url = document.getElementById('baseurl').value;
@@ -197,7 +198,8 @@ function cargarSubcaracteristicas(value) {
             }
         }
     });
-};
+}
+;
 
 function cargarVistaTareas_1_1() {
     var base_url = document.getElementById('baseurl').value;
@@ -331,7 +333,6 @@ function guardarProducto() {
     var base_url = document.getElementById('baseurl').value;
     var nombre = document.getElementById('nombre').value;
     var descripcion = document.getElementById('descripcion').value;
-
     $.ajax({
         type: 'POST',
         url: base_url + 'evaluacion/guardarProducto',
@@ -407,7 +408,7 @@ function guardar_1_2() {
 }
 ;
 
-function guardar_1_3(){
+function guardar_1_3() {
     var base_url = document.getElementById('baseurl').value;
     var parte = document.getElementById('parte').value;
 
@@ -426,7 +427,8 @@ function guardar_1_3(){
             $("#contenido").html(output_string);
         }
     });
-};
+}
+;
 
 function guardar_1_4() {
     var base_url = document.getElementById('baseurl').value;
@@ -449,7 +451,7 @@ function guardar_1_4() {
 }
 ;
 
-function guardar_niveles(subcaracteristica,caracteristica) {
+function guardar_niveles(subcaracteristica, caracteristica) {
     var base_url = document.getElementById('baseurl').value;
     var inaceptable = document.getElementById('inaceptable').value;
     var min_aceptable = document.getElementById('min_aceptable').value;
@@ -458,7 +460,7 @@ function guardar_niveles(subcaracteristica,caracteristica) {
     $.ajax({
         type: 'POST',
         url: base_url + 'evaluacion/guardado/2/2',
-        data: {subcaracteristica: subcaracteristica, caracteristica:caracteristica, inaceptable: inaceptable, min_aceptable: min_aceptable, aceptable: aceptable, excede: excede},
+        data: {subcaracteristica: subcaracteristica, caracteristica: caracteristica, inaceptable: inaceptable, min_aceptable: min_aceptable, aceptable: aceptable, excede: excede},
         success: function (output_string) {
             $('#22').attr({
                 'class': 'list-group-item list-group-item-success',
@@ -482,7 +484,7 @@ function mostrarPreguntas(value) {
 function guardar_2_1(caracteristica) {
     var base_url = document.getElementById('baseurl').value;
     var subcaracteristicas = [];
-    
+
     $("#subcaracteristicas:checked").each(function () {
         if (this.checked) {
             subcaracteristicas.push($(this).val());
@@ -494,20 +496,21 @@ function guardar_2_1(caracteristica) {
         url: base_url + 'evaluacion/guardado/2/1',
         data: {subcar: subcaracteristicas, car: caracteristica},
 
-        success: function (output_string){
-            $("#subcaracteristicas:checked").each(function(){
-                if (this.checked){
+        success: function (output_string) {
+            $("#subcaracteristicas:checked").each(function () {
+                if (this.checked) {
                     sub = $(this).val();
-                    $("#ok"+sub).attr({'style': 'display:block;'});
+                    $("#ok" + sub).attr({'style': 'display:block;'});
                 }
             });
             $("#contenido").html(output_string);
-            $("#subcaracteristicas").fadeOut(800, function(){
+            $("#subcaracteristicas").fadeOut(800, function () {
                 $("#subcaracteristicas").fadeIn().delay(10); //MI PC ES LENTA, VER COMO SE VE EN LA DEL LIDI
             });
         }
     });
-};
+}
+;
 
 function guardar_3_1() {
     var base_url = document.getElementById('baseurl').value;
@@ -517,7 +520,7 @@ function guardar_3_1() {
         type: 'POST',
         url: base_url + 'evaluacion/guardado/3/1',
         data: {actividades: actividades},
-        success: function (output_string){
+        success: function (output_string) {
             $("#contenido").html(output_string);
         }
     });
@@ -545,7 +548,7 @@ function guardar_5_2() {
         type: 'POST',
         url: base_url + 'evaluacion/guardado/5/2',
         data: {feedback: feedback},
-        success: function (output_string){
+        success: function (output_string) {
             $("#contenido").html(output_string);
         }
     });
@@ -561,7 +564,7 @@ function guardar_5_3() {
         type: 'POST',
         url: base_url + 'evaluacion/guardado/5/3',
         data: {tratamiento: tratamiento},
-        success: function (output_string){
+        success: function (output_string) {
             $("#contenido").html(output_string);
         }
     });
@@ -580,7 +583,8 @@ function cargarRespuesta(pregunta) {
             $("#respuesta" + pregunta).html("<span class='glyphicon glyphicon-ok' aria-hidden='true' style='color: green'></span>");
         }
     });
-};
+}
+;
 
 function cargarInaceptable(subcaracteristica) {
     var base_url = document.getElementById('baseurl').value;
@@ -591,10 +595,11 @@ function cargarInaceptable(subcaracteristica) {
         data: {idSubcaracteristica: subcaracteristica, nivel_inac: nivel},
         success: function (output_string) {
             $("#sin_inaceptable" + subcaracteristica).remove();
-            $("#i" + subcaracteristica).attr({'style': 'background-color: #dff0d8;', }); 
+            $("#i" + subcaracteristica).attr({'style': 'background-color: #dff0d8;', });
         }
     });
-};
+}
+;
 
 function cargarMinAceptable(subcaracteristica) {
     var base_url = document.getElementById('baseurl').value;
@@ -608,7 +613,8 @@ function cargarMinAceptable(subcaracteristica) {
             $("#m" + subcaracteristica).attr({'style': 'background-color: #dff0d8;', });
         }
     });
-};
+}
+;
 
 function cargarAceptable(subcaracteristica) {
     var base_url = document.getElementById('baseurl').value;
@@ -619,10 +625,11 @@ function cargarAceptable(subcaracteristica) {
         data: {idSubcaracteristica: subcaracteristica, nivel_acep: nivel},
         success: function (output_string) {
             $("#sin_aceptable" + subcaracteristica).remove();
-             $("#a" + subcaracteristica).attr({'style': 'background-color: #dff0d8;', });
+            $("#a" + subcaracteristica).attr({'style': 'background-color: #dff0d8;', });
         }
     });
-};
+}
+;
 
 function cargarExcede(subcaracteristica) {
     var base_url = document.getElementById('baseurl').value;
@@ -633,7 +640,8 @@ function cargarExcede(subcaracteristica) {
         data: {idSubcaracteristica: subcaracteristica, nivel_excede: nivel},
         success: function (output_string) {
             $("#sin_excede" + subcaracteristica).remove();
-             $("#e" + subcaracteristica).attr({'style': 'background-color: #dff0d8;', });
+            $("#e" + subcaracteristica).attr({'style': 'background-color: #dff0d8;', });
         }
     });
-};
+}
+;

@@ -39,7 +39,7 @@
                               <td class="css_tabla_numProd"><?php echo $e['idEvaluacion']?></td>
                               <td class="css_tabla_producto"><?php echo $e['nombre']?></td>
                               <td class="css_tabla_estadoVer"><?php echo $e['estado']?></td>
-                              <td class="css_tabla_estadoVer"><a href="#">Ver</a></td>
+                              <td class="css_tabla_estadoVer"><a href=# onclick="window.location.href='<?php echo base_url()?>evaluacion/ver_evaluacion/<?php echo $e['idEvaluacion']?>'">Ver</a></td>
                             </tr>
                             <?php }
                         } ?>
