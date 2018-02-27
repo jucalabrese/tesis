@@ -501,11 +501,24 @@ class Informe extends CI_Controller {
                     $this->pdf->Write(5, utf8_decode(', el nivel obtenido para dicha característica es '));
                     $this->pdf->SetFont('Arial', 'B', 11); //Arial, italica, subrayada, 12 puntos
                     $this->pdf->Write(5, utf8_decode($nivel_total_car));
+                    $this->pdf->Ln(13);
+                    $this->pdf->Cell(190, 0, '', 'T');
+                    $this->pdf->Ln(5);
+                }else{
+                    $this->pdf->SetFont('Arial', '', 11); //Arial, italica, subrayada, 12 puntos
+                    $this->pdf->Write(5, utf8_decode('- Al no haber seleccionado todas las subcaracterísticas de '));
+                    $this->pdf->SetFont('Arial', 'B', 11); //Arial, italica, subrayada, 12 puntos
+                    $this->pdf->Write(5, utf8_decode($c['nombre']));
+                    $this->pdf->SetFont('Arial', '', 11); //Arial, italica, subrayada, 12 puntos
+                    $this->pdf->Write(5, utf8_decode(', no es posible obtener un nivel para la característica completa.'));
+                    $this->pdf->Ln(13);
+                    $this->pdf->Cell(190, 0, '', 'T');
+                    $this->pdf->Ln(5);
                 }
             }
         }
 
-        $this->pdf->Ln(13);
+        $this->pdf->Ln(5);
 
         //IMPRIMO ETAPA DE LA EVALUACIÓN
         $this->pdf->SetFont('Arial', 'UB', 14); //Arial,negrita, 12 puntos
