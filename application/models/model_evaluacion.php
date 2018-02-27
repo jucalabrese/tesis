@@ -743,4 +743,14 @@ class Model_evaluacion extends CI_Model {
         $consulta = $this->db->get();
         return $consulta;
     }
+    
+     function getSubcaracteristicasEvaluacionCaracteristicaII($idEvaluacion,$idCaracteristica) {
+        $this->db->select('es.*');
+        $this->db->from('evaluacion_subcaracteristica as es, subcaracteristica as s');
+        $this->db->where('es.idEvaluacion', $idEvaluacion);
+        $this->db->where('s.idCaracteristica', $idCaracteristica);
+        $this->db->where('es.idSubcaracteristica = s.idSubcaracteristica');
+        $consulta = $this->db->get();
+        return $consulta;
+    }
 }

@@ -189,6 +189,45 @@ class PDF extends FPDF {
 // Línea de cierre
         $this->Cell(array_sum($w), 0, '', 'T');
     }
+    
+     function FancyTableCriteriosSubcaracteristicas($header, $data) {
+        // Colores, ancho de línea y fuente en negrita
+        $this->SetFillColor(150);
+        $this->SetTextColor(255);
+        $this->SetDrawColor(100);
+        $this->SetLineWidth(.3);
+        $this->SetFont('', 'B');
+        $this->SetFontSize(11);
+// Cabecera
+        $w = array(70, 30, 30, 60);
+        for ($i = 0; $i < count($header); $i++)
+            $this->CellFitSpace($w[$i], 7, $header[$i], 1, 0, 'C', true);
+        $this->Ln();
+// Datos
+        $fill = false;
+        foreach ($data as $row) {
+//            $this->SetFillColor(150);
+//            $this->SetTextColor(255);
+//            $this->SetDrawColor(100);
+//            $this->SetLineWidth(.3);
+//            $this->SetFont('', 'B');
+//            $this->SetFontSize(11);
+           // $this->CellFitSpace($w[0], 5, $row[0], 'LR', 0, 'C', true);
+            $this->SetFillColor(224, 235, 255);
+            $this->SetTextColor(0);
+            $this->SetFont('');
+            $this->SetFontSize(9);
+            if ($row === end($data)){
+                $this->SetFont('', 'B');   
+            }
+            for ($i = 0; $i < count($header); $i++)
+                $this->CellFitSpace($w[$i], 5, $row[$i], 'LR', 0, 'C', $fill);
+            $this->Ln();
+            $fill = !$fill;
+        }
+// Línea de cierre
+        $this->Cell(array_sum($w), 0, '', 'T');
+    }
 
     /*   function FancyTable($header, $data) {
       if ($this->PageNo() == 1) {

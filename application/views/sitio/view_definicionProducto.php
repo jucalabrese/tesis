@@ -3,7 +3,8 @@
 if ($this->session->flashdata('ExitoVer')) {
     ?>
     <div class="alert alert-success">
-        <?php echo $this->session->flashdata('ExitoVer'); ?>
+        <?php unset($_SESSION['Exito']);
+        echo $this->session->flashdata('ExitoVer'); ?>
     </div>
     <?php
 } else {
