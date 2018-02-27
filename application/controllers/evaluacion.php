@@ -3,15 +3,33 @@
 class Evaluacion extends CI_Controller {
 
     public function iniciar_evaluacion() {
-        $evaluacion_data = array(
-            'idEvaluacion' => null,
-            'creada' => false,
-        );
-        $datos = array('nombre' => '', 'descripcion' => '');
-        $this->session->set_userdata($evaluacion_data);
+        if (($this->session->userdata('idEvaluacion')) == null) {
+            $nombre = '';
+            $descripcion = '';
+            $existe = false;
+        } else {
+            $idEvaluacion = $this->session->userdata('idEvaluacion');
+            $this->load->model('model_evaluacion');
+            $producto = $this->model_evaluacion->cargarProducto($idEvaluacion);
+            foreach ($producto->result_array() as $p) {
+                $nombre = $p['nombre'];
+                $descripcion = $p['descripcion'];
+            }
+            $existe = true;
+        }
+        $datos = array('nombre' => $nombre, 'descripcion' => $descripcion, 'existe' => $existe);
         $contenido = array('contenido' => $this->load->view('sitio/view_definicionProducto', $datos, true));
         $datos["cuerpo"] = $this->load->view('sitio/view_iniciarEvaluacion', $contenido, true);
         $this->load->view('sitio/view_index', $datos);
+    }
+
+    public function ver_evaluacion($idEvaluacion) {
+        $evaluacion_data = array(
+            'idEvaluacion' => $idEvaluacion,
+            'creada' => true,
+        );
+        $this->session->set_userdata($evaluacion_data);
+        $this->iniciar_evaluacion();
     }
 
     public function introduccion_evaluacion() {
@@ -20,6 +38,11 @@ class Evaluacion extends CI_Controller {
 
     public function evaluaciones() {
 
+        $evaluacion_data = array(
+            'idEvaluacion' => null,
+            'creada' => false,
+        );
+        $this->session->set_userdata($evaluacion_data);
         $this->load->model('model_evaluacion');
         $this->load->library('pagination');
 
@@ -66,6 +89,7 @@ class Evaluacion extends CI_Controller {
         $this->load->model('model_evaluacion');
         $nombre = '';
         $descripcion = '';
+        $existe = false;
         if ($this->session->userdata('idEvaluacion') <> null) {
             $idEvaluacion = $this->session->userdata('idEvaluacion');
             $data = $this->model_evaluacion->cargarProducto($idEvaluacion);
@@ -74,7 +98,7 @@ class Evaluacion extends CI_Controller {
                 $descripcion = $dato['descripcion'];
             }
         }
-        $datos = array('nombre' => $nombre, 'descripcion' => $descripcion);
+        $datos = array('nombre' => $nombre, 'descripcion' => $descripcion, 'existe' => $existe);
         $this->load->view('sitio/view_definicionProducto', $datos);
     }
 
@@ -144,7 +168,6 @@ class Evaluacion extends CI_Controller {
         if ($this->input->post()) {
             $nombre = $this->input->post('nombre');
             $descripcion = $this->input->post('descripcion');
-
             if ($nombre == '') {
                 unset($_SESSION['Exito']);
                 $this->session->set_flashdata('Error', 'El nombre del producto no puede estar vacío');
@@ -171,8 +194,8 @@ class Evaluacion extends CI_Controller {
                     }
                 }
             }
-
-            $datos = array('nombre' => $nombre, 'descripcion' => $descripcion);
+            $existe = false;
+            $datos = array('nombre' => $nombre, 'descripcion' => $descripcion, 'existe' => $existe);
             $this->load->view('sitio/view_definicionProducto', $datos);
         }
     }
@@ -798,16 +821,16 @@ class Evaluacion extends CI_Controller {
                         if ($this->input->post()) {
                             $f = $this->input->post('feedback');
                             $existe = $this->model_evaluacion->getFeedback($idEvaluacion);
-                                foreach ($existe->result_array() as $e) {
-                                    if ($e['feedback'] <> null) { //SE FIJA SI ES UNA EDICIÓN O LA PRIMERA VEZ
-                                        $this->session->set_flashdata('ExitoFeedback', '¡Se editaron los datos exitosamente!');
-                                    } else {
-                                        $this->session->set_flashdata('ExitoFeedback', '¡Se cargó el feedback exitosamente!');
-                                    }    
+                            foreach ($existe->result_array() as $e) {
+                                if ($e['feedback'] <> null) { //SE FIJA SI ES UNA EDICIÓN O LA PRIMERA VEZ
+                                    $this->session->set_flashdata('ExitoFeedback', '¡Se editaron los datos exitosamente!');
+                                } else {
+                                    $this->session->set_flashdata('ExitoFeedback', '¡Se cargó el feedback exitosamente!');
                                 }
-                                $feedback = $this->model_evaluacion->agregarFeedback($f, $idEvaluacion);
+                            }
+                            $feedback = $this->model_evaluacion->agregarFeedback($f, $idEvaluacion);
                         }
-                        
+
                         $datos = array('feedback' => $feedback);
                         break;
                     case 3:
