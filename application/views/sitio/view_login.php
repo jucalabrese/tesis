@@ -25,8 +25,7 @@
         <h3>Iniciar Sesión</h3>
     </div>
     <hr>
-<div id="loginbox" style="margin-top: 3%" class="mainbox col-md-10 col-md-offset-1 col-sm-8 col-sm-offset-2">                    
-    <div style="float:right; font-size: 80%; position: relative; top:-10px"><a href="#">Olvidé mi contraseña</a></div>
+<div id="loginbox" style="margin-top: 3%" class="mainbox col-md-10 col-md-offset-1 col-sm-8 col-sm-offset-2">          
         <div style="padding-top:30px"  >
             <div style="display:none" id="login-alert" class="alert alert-danger col-sm-12"></div>
             <form method="post" action="<?php echo base_url() ?>inicio/iniciar_sesion" id="loginform" class="form-horizontal" role="form">

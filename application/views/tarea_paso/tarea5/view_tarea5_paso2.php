@@ -20,7 +20,7 @@
             <span>Ingrese el feedback de la evaluación:</span>
         </div>
         <div class="form-group">
-            <textarea class="form-control text_area" rows="12" id="feedback" placeholder="El feedback debe servir para mejorar el proceso de evaluación de la organización y las técnicas de evaluación utilizadas."><?php echo $feedback?></textarea>      
+            <textarea class="form-control text_area" rows="12" id="feedback" placeholder="El feedback de la revisión debe servir para mejorar el proceso de evaluación de la organización para evaluaciones futuras."><?php echo $feedback?></textarea>      
         </div>
 
       <div class="form-group">

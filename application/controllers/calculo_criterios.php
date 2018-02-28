@@ -438,7 +438,7 @@ class Calculo_criterios extends CI_Controller {
                     }
                     break;
 
-                case 22: //SUBCARACTERÍSTICA "RESPONSABILIDAD" (SEGURIDAD)
+                case 23: //SUBCARACTERÍSTICA "RESPONSABILIDAD" (SEGURIDAD)
                     //CRITERIO 12
                     if (($respuestas[17] == "SI") || ($respuestas[24] == "SI") || ($respuestas[25] == "SI") || ($respuestas[26] == "SI")) {
                         $valorSubcaracteristica += 1;
@@ -457,7 +457,7 @@ class Calculo_criterios extends CI_Controller {
 
                     break;
 
-                case 23: //SUBCARACTERÍSTICA "AUTENTICIDAD" (SEGURIDAD)
+                case 22: //SUBCARACTERÍSTICA "AUTENTICIDAD" (SEGURIDAD)
                     //CRITERIO 14
                     if (($respuestas[27] == "SI") || ($respuestas[30] == "SI") || ($respuestas[31] == "SI") || ($respuestas[32] == "SI") || ($respuestas[33] == "SI")) {
                         $valorSubcaracteristica += 1;
