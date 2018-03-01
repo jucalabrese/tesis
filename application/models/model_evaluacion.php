@@ -177,11 +177,12 @@ class Model_evaluacion extends CI_Model {
         return $consulta->num_rows();
     }
 
-    function getEvaluacionesPaginadas($limite, $start) {
+    function getEvaluacionesPaginadas($limite, $start, $idUsuario) {
         $this->db->select('*');
         $this->db->from('producto as p, evaluacion as e, estado_evaluacion as es');
         $this->db->where('e.idProducto = p.idProducto');
         $this->db->where('e.idEstadoEvaluacion = es.idEstadoEvaluacion');
+        $this->db->where('e.idUsuario', $idUsuario);
         $this->db->limit($limite, $start);
         $this->db->order_by("idEvaluacion", "desc");
         $query = $this->db->get();
@@ -753,4 +754,6 @@ class Model_evaluacion extends CI_Model {
         $consulta = $this->db->get();
         return $consulta;
     }
+    
+ 
 }

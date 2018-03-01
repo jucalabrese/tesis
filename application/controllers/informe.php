@@ -2,10 +2,17 @@
 
 class Informe extends CI_Controller {
 
-    public function generarInforme() {
-
+    public function generarInforme($eval='') {
+        
+        
         $this->load->model('model_evaluacion');
-        $idEvaluacion = $this->session->userdata('idEvaluacion');
+        if ($eval==''){
+            $idEvaluacion = $this->session->userdata('idEvaluacion');
+        }else{
+            $idEvaluacion = $eval;
+        }
+        
+        $this->model_evaluacion->agregarTratamiento(2, $idEvaluacion);
         global $nombreProd;
         $producto = $this->model_evaluacion->cargarProducto($idEvaluacion);
         foreach ($producto->result_array() as $p) {
@@ -87,7 +94,7 @@ class Informe extends CI_Controller {
         //GENERO PDF
         $this->pdf->AliasNbPages();
         $this->pdf->AddPage('P', 'A4'); //Vertical, A4
-        $this->pdf->SetTitle('Informe');
+        $this->pdf->SetTitle('Informe ' . $nombreProd);
 
         //IMPRIMO DESCRIPCION (SI EXISTE!)
         if ($descripcionProd != '') {

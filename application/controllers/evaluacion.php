@@ -45,7 +45,9 @@ class Evaluacion extends CI_Controller {
         $this->session->set_userdata($evaluacion_data);
         $this->load->model('model_evaluacion');
         $this->load->library('pagination');
-
+        
+        $idUsuario = $this->session->userdata('id');
+        
         $opciones = array();
         $desde = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
 
@@ -77,7 +79,7 @@ class Evaluacion extends CI_Controller {
 
         $this->pagination->initialize($opciones);
 
-        $datos_listado['evaluaciones'] = $this->model_evaluacion->getEvaluacionesPaginadas($opciones['per_page'], $desde);
+        $datos_listado['evaluaciones'] = $this->model_evaluacion->getEvaluacionesPaginadas($opciones['per_page'], $desde, $idUsuario);
         $str_links = $this->pagination->create_links();
         $datos_listado['links'] = explode('&nbsp;', $str_links);
 
@@ -834,21 +836,12 @@ class Evaluacion extends CI_Controller {
                         $datos = array('feedback' => $feedback);
                         break;
                     case 3:
-                        if ($this->input->post()) {
-                            $idTratamiento = $this->input->post('tratamiento');
-                            $this->model_evaluacion->agregarTratamiento($idTratamiento, $idEvaluacion);
-                            switch ($idTratamiento) {
-                                case 2:
-                                    $this->session->set_flashdata('ExitoTratamiento', '¡Se finalizó la evaluación exitosamente! Los datos seguirán disponibles para su modificación.');
-                                    break;
-                                case 3:
-//BLOQUEAR TODAS LAS SECCIONES MENOS LA DEL INFORME
-                                    $this->session->set_flashdata('ExitoTratamiento', '¡Se archivó la evaluación exitosamente! Los datos no podrán modificarse.');
-                                    break;
-                            }
-                        }
-                        $estados = $this->model_evaluacion->getEstados();
-                        $datos = array('estados' => $estados, 'idTratamiento' => $idTratamiento);
+                        //if ($this->input->post()) {
+                            //$idTratamiento = $this->input->post('tratamiento');
+                            $this->model_evaluacion->agregarTratamiento(3, $idEvaluacion);
+                            
+                        $datos = array();
+                        redirect(base_url("evaluacion/evaluaciones")); 
                         break;
                     case 4:
 

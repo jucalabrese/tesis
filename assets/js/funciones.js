@@ -558,7 +558,7 @@ function guardar_5_2() {
 
 function guardar_5_3() {
     var base_url = document.getElementById('baseurl').value;
-    var tratamiento = document.getElementById('tratamiento').value;
+    var tratamiento = document.getElementById('archivar').value;
 
     $.ajax({
         type: 'POST',
