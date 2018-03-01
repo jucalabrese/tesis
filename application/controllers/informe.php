@@ -12,7 +12,13 @@ class Informe extends CI_Controller {
             $idEvaluacion = $eval;
         }
         
-        $this->model_evaluacion->agregarTratamiento(2, $idEvaluacion);
+        $tratamiento = $this->model_evaluacion->cargarProposito($idEvaluacion);
+        foreach ($tratamiento->result_array() as $t){
+            if ($t['idEstadoEvaluacion'] == 1){
+                 $this->model_evaluacion->agregarTratamiento(2, $idEvaluacion);
+            }
+        }
+        
         global $nombreProd;
         $producto = $this->model_evaluacion->cargarProducto($idEvaluacion);
         foreach ($producto->result_array() as $p) {

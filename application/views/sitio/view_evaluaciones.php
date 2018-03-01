@@ -40,7 +40,7 @@
                               <td class="css_tabla_producto"><?php echo $e['nombre']?></td>
                               <td class="css_tabla_estadoVer"><?php echo $e['estado']?></td>
                               <?php if ($e['estado'] == "Archivada"){ ?>
-                                <td class="css_tabla_estadoVer"><a href=# onclick="window.location.href='<?php echo base_url()?>informe/generarInforme/<?php echo $e['idEvaluacion']?>'">Ver</a></td>
+                                <td class="css_tabla_estadoVer"><a href='<?php echo base_url()?>informe/generarInforme/<?php echo $e['idEvaluacion']?>' target="_blank">Ver Informe</a></td>
                               <?php }else{ ?>
                                 <td class="css_tabla_estadoVer"><a href=# onclick="window.location.href='<?php echo base_url()?>evaluacion/ver_evaluacion/<?php echo $e['idEvaluacion']?>'">Ver</a></td>
                               <?php } ?>

@@ -23,7 +23,7 @@
     </div>
      <div class="col-lg-6 col-lg-offset-4">
         <div class="btn-group">
-            <a class="btn btn-danger" id="archivar" href="guardado/5/3/" onclick="alert('¡La evaluación se ha archivado exitosamente!')">Archivar evaluación</a>
+            <a class="btn btn-danger" id="archivar" href="<?php echo base_url() ?>evaluacion/guardado/5/3/" onclick="alert('¡La evaluación se ha archivado exitosamente!')">Archivar evaluación</a>
         </div>
     </div>
 
