@@ -20,6 +20,7 @@ class Calculo_criterios extends CI_Controller {
                 }
             }
             switch ($s['idSubcaracteristica']) {
+                                
                 case 9:
                     if ($respuestas[66] == "SI") {
                         $valorSubcaracteristica += 1;
