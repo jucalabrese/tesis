@@ -410,7 +410,7 @@ class Informe extends CI_Controller {
         $this->pdf->SetFont('Arial', 'B', 11); //Arial,negrita, 12 puntos
         $this->pdf->Write(5, utf8_decode('Plan de actividades: '));
         $this->pdf->SetFont('Arial', '', 11); //Arial, 12 puntos
-        $this->pdf->Write(5, $actividades);
+        $this->pdf->Write(5, utf8_decode($actividades));
         $this->pdf->Ln(13);
 
         //IMPRIMO ETAPA DE LA EVALUACIÓN

@@ -20,7 +20,62 @@ class Calculo_criterios extends CI_Controller {
                 }
             }
             switch ($s['idSubcaracteristica']) {
-                                
+                
+                case 7: //SUBCARACTERÍSTICA "COEXISTENCIA" (COMPATIBILIDAD)
+                    if ($respuestas[74] == "SI") { //CRITERIO 1
+                        $valorSubcaracteristica += 1;
+                        $this->model_evaluacion->cargarValorCriterio($idEvaluacion, 47, 1);
+                    } else {
+                        $this->model_evaluacion->cargarValorCriterio($idEvaluacion, 47, 0);
+                    }
+                    
+                    if (($respuestas[75] == "SI") && ($respuestas[81] == "NO")) { //CRITERIO 2
+                        $valorSubcaracteristica += 1;
+                        $this->model_evaluacion->cargarValorCriterio($idEvaluacion, 48, 1);
+                    } else {
+                        if (($respuestas[75] == "SI") && ($respuestas[81] == "SI")) {
+                            $valorSubcaracteristica += 0.25;
+                            $this->model_evaluacion->cargarValorCriterio($idEvaluacion, 48, 0.25);
+                        }else{
+                            $this->model_evaluacion->cargarValorCriterio($idEvaluacion, 48, 0);
+                        }
+                    }
+                    
+                    if ($respuestas[76] == "SI") { //CRITERIO 3
+                        $valorSubcaracteristica += 1;
+                        $this->model_evaluacion->cargarValorCriterio($idEvaluacion, 49, 1);
+                    } else {
+                        $this->model_evaluacion->cargarValorCriterio($idEvaluacion, 49, 0);
+                    }
+                    break;
+                
+                case 8: //SUBCARACTERÍSTICA "INTEROPERABILIDAD" (COMPATIBILIDAD)
+                    
+                    if ($respuestas[77] == "NO") { //CRITERIO 1
+                        $this->model_evaluacion->cargarValorCriterio($idEvaluacion, 50, 0);
+                    }else{
+                        if (($respuestas[77] == "SI") && ($respuestas[78] == "SI") && ($respuestas[79] == "SI")) { //CRITERIO 1
+                            $valorSubcaracteristica += 1;
+                            $this->model_evaluacion->cargarValorCriterio($idEvaluacion, 50, 1);
+                        }else{
+                            if ((($respuestas[77] == "SI") && ($respuestas[78] == "SI")) || (($respuestas[77] == "SI") && ($respuestas[79] == "SI"))){
+                                $valorSubcaracteristica += 0.75;
+                                $this->model_evaluacion->cargarValorCriterio($idEvaluacion, 50, 0.75);
+                            }else{
+                                $this->model_evaluacion->cargarValorCriterio($idEvaluacion, 50, 0);
+                            }
+                        }
+                    }
+                    
+                    if ($respuestas[80] == "NO") { //CRITERIO 2
+                        $valorSubcaracteristica += 1;
+                        $this->model_evaluacion->cargarValorCriterio($idEvaluacion, 51, 1);
+                    } else {
+                        $this->model_evaluacion->cargarValorCriterio($idEvaluacion, 51, 0);
+                    }
+                    
+                    break;
+                    
                 case 9:
                     if ($respuestas[66] == "SI") {
                         $valorSubcaracteristica += 1;
@@ -474,6 +529,47 @@ class Calculo_criterios extends CI_Controller {
                     } else {
                         $this->model_evaluacion->cargarValorCriterio($idEvaluacion, 15, 0);
                     }
+                    break;
+                    
+                case 29: //SUBCARACTERÍSTICA "ADAPTABILIDAD" (PORTABILIDAD)
+                    
+                    if (($respuestas[69] == "SI") && ($respuestas[73] == "SI")) { //CRITERIO 1
+                        $valorSubcaracteristica += 1;
+                        $this->model_evaluacion->cargarValorCriterio($idEvaluacion, 43, 1);
+                    } else {
+                        if (($respuestas[69] == "SI") || ($respuestas[73] == "SI")){
+                            $valorSubcaracteristica += 0.5;
+                            $this->model_evaluacion->cargarValorCriterio($idEvaluacion, 43, 0.5);
+                        }
+                            $this->model_evaluacion->cargarValorCriterio($idEvaluacion, 43, 0);
+                    }
+                    
+                    if ($respuestas[67] == "SI") { //CRITERIO 2
+                        $valorSubcaracteristica += 1;
+                        $this->model_evaluacion->cargarValorCriterio($idEvaluacion, 44, 1);
+                    } else {
+                        $this->model_evaluacion->cargarValorCriterio($idEvaluacion, 44, 0);
+                    }
+                    
+                    
+                    if ($respuestas[68] == "SI") { //CRITERIO 3
+                        $valorSubcaracteristica += 1;
+                        $this->model_evaluacion->cargarValorCriterio($idEvaluacion, 45, 1);
+                    } else {
+                        $this->model_evaluacion->cargarValorCriterio($idEvaluacion, 45, 0);
+                    }
+                    
+                    if (($respuestas[70] == "SI") && ($respuestas[71] == "SI")) { //CRITERIO 4
+                        $valorSubcaracteristica += 1;
+                        $this->model_evaluacion->cargarValorCriterio($idEvaluacion, 46, 1);
+                    } else {
+                        if (($respuestas[70] == "SI") || ($respuestas[71] == "SI")){
+                            $valorSubcaracteristica += 0.75;
+                            $this->model_evaluacion->cargarValorCriterio($idEvaluacion, 46, 0.75);
+                        }
+                            $this->model_evaluacion->cargarValorCriterio($idEvaluacion, 46, 0);
+                    }
+                    
                     break;
             }
             $valorTotal = $valorSubcaracteristica / $s['puntajeTotal'];
