@@ -533,14 +533,13 @@ class Informe extends CI_Controller {
 
         $this->pdf->Ln(5);
 
-        //IMPRIMO ETAPA DE LA EVALUACIÓN
-        $this->pdf->SetFont('Arial', 'UB', 14); //Arial,negrita, 12 puntos
-        $this->pdf->Cell(44);
-        $this->pdf->Write(5, utf8_decode('CONCLUSIONES DE LA EVALUACIÓN'));
-        $this->pdf->Ln(13);
 
         //IMPRIMO FEEDBACK (SI HAY)
         if ($feedback != '') {
+            $this->pdf->SetFont('Arial', 'UB', 14); //Arial,negrita, 12 puntos
+            $this->pdf->Cell(44);
+            $this->pdf->Write(5, utf8_decode('CONCLUSIONES DE LA EVALUACIÓN'));
+            $this->pdf->Ln(13);
             $this->pdf->SetFont('Arial', 'B', 11); //Arial,negrita, 12 puntos
             $this->pdf->Write(5, utf8_decode('Feedback de la evaluación: '));
             $this->pdf->SetFont('Arial', '', 11); //Arial, 12 puntos
