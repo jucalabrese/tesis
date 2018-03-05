@@ -38,7 +38,7 @@ class Model_evaluacion extends CI_Model {
         $consulta = $this->db->get();
         return $consulta;
     }
-    
+
     function getCriterios($idSubcaracteristica) {
         $this->db->select('*');
         $this->db->from('criterio');
@@ -46,8 +46,8 @@ class Model_evaluacion extends CI_Model {
         $consulta = $this->db->get();
         return $consulta;
     }
-    
-    function getPreguntasCriterio($idCriterio){
+
+    function getPreguntasCriterio($idCriterio) {
         $this->db->select('p.*');
         $this->db->from('criterio_pregunta as cp, pregunta as p');
         $this->db->where('cp.idCriterio', $idCriterio);
@@ -55,17 +55,17 @@ class Model_evaluacion extends CI_Model {
         $consulta = $this->db->get();
         return $consulta;
     }
-    
-    function getRespuestaPregunta($idEvaluacion, $idPregunta){
+
+    function getRespuestaPregunta($idEvaluacion, $idPregunta) {
         $this->db->select('*');
         $this->db->from('evaluacion_pregunta');
         $this->db->where('idEvaluacion', $idEvaluacion);
-        $this->db->where('idPregunta',$idPregunta);
+        $this->db->where('idPregunta', $idPregunta);
         $consulta = $this->db->get();
         return $consulta;
     }
-    
-    function asignarValorSubcaracteristica($idSubcaracteristica,$idEvaluacion,$valorTotal){
+
+    function asignarValorSubcaracteristica($idSubcaracteristica, $idEvaluacion, $valorTotal) {
         $this->db->trans_start();
         $data = array(
             'puntajeObtenido' => $valorTotal,
@@ -78,8 +78,8 @@ class Model_evaluacion extends CI_Model {
 
         return $idEvaluacion;
     }
-    
-    function cargarValorCriterio($idEvaluacion, $idCriterio, $puntaje){
+
+    function cargarValorCriterio($idEvaluacion, $idCriterio, $puntaje) {
         $this->db->trans_start();
         $data = array(
             'puntaje' => $puntaje,
@@ -89,8 +89,8 @@ class Model_evaluacion extends CI_Model {
         $this->db->update('evaluacion_criterio', $data);
         $this->db->trans_complete();
     }
-    
-    function getSubcaracteristicasEvaluacionCaracteristica($idEvaluacion,$idCaracteristica) {
+
+    function getSubcaracteristicasEvaluacionCaracteristica($idEvaluacion, $idCaracteristica) {
         $this->db->select('s.*');
         $this->db->from('evaluacion_subcaracteristica as es, subcaracteristica as s');
         $this->db->where('es.idEvaluacion', $idEvaluacion);
@@ -251,7 +251,7 @@ class Model_evaluacion extends CI_Model {
         $consulta = $this->db->get();
         return $consulta;
     }
-    
+
     function cargar_2_1($idEvaluacion) {
         $this->db->select('*');
         $this->db->from('evaluacion_subcaracteristica as es');
@@ -272,7 +272,7 @@ class Model_evaluacion extends CI_Model {
             return true;
         }
     }
-    
+
     function existe_2_1($idEvaluacion) {
         $this->db->select('*');
         $this->db->from('evaluacion_subcaracteristica as es');
@@ -298,7 +298,7 @@ class Model_evaluacion extends CI_Model {
 
         return $idEvaluacion;
     }
-    
+
     function guardarSubcaracteristicas($idSubcaracteristica, $idEvaluacion) {
         $this->db->trans_start();
 
@@ -326,21 +326,21 @@ class Model_evaluacion extends CI_Model {
         $this->db->delete('evaluacion_caracteristica');
     }
 
-    function eliminarSubcaracteristicas($idEvaluacion, $idCaracteristica){ 
-       $this->db->query("
+    function eliminarSubcaracteristicas($idEvaluacion, $idCaracteristica) {
+        $this->db->query("
         DELETE  es.* FROM evaluacion_subcaracteristica as es
         INNER JOIN subcaracteristica as s ON (s.idSubcaracteristica = es.idSubcaracteristica)
-        WHERE es.idEvaluacion = $idEvaluacion AND s.idCaracteristica = $idCaracteristica");   
+        WHERE es.idEvaluacion = $idEvaluacion AND s.idCaracteristica = $idCaracteristica");
     }
-    
-    function eliminarCriterios($idEvaluacion, $idCaracteristica){ 
-       $this->db->query("
+
+    function eliminarCriterios($idEvaluacion, $idCaracteristica) {
+        $this->db->query("
         DELETE  ec.* FROM evaluacion_criterio as ec
         INNER JOIN criterio as c ON (ec.idCriterio = c.idCriterio)
         INNER JOIN subcaracteristica as s ON (s.idSubcaracteristica = c.idSubcaracteristica)
-        WHERE ec.idEvaluacion = $idEvaluacion AND s.idCaracteristica = $idCaracteristica");   
+        WHERE ec.idEvaluacion = $idEvaluacion AND s.idCaracteristica = $idCaracteristica");
     }
-    
+
     function getPartes() {
         $this->db->select('*');
         $this->db->from('parte');
@@ -348,15 +348,15 @@ class Model_evaluacion extends CI_Model {
         return $consulta;
     }
 
-    function getParte($idParte){
+    function getParte($idParte) {
         $this->db->select('*');
         $this->db->from('parte');
         $this->db->where('idParte', $idParte);
         $consulta = $this->db->get();
         return $consulta;
     }
-    
-    function getParteSeleccionada($idEvaluacion){
+
+    function getParteSeleccionada($idEvaluacion) {
         $this->db->select('*');
         $this->db->from('evaluacion as e');
         $this->db->where('e.idEvaluacion', $idEvaluacion);
@@ -393,7 +393,7 @@ class Model_evaluacion extends CI_Model {
         $consulta = $this->db->get();
         return $consulta;
     }
-    
+
     function obtenerRespuestas($idEvaluacion) {
         $this->db->select('*');
         $this->db->from('evaluacion_pregunta as ep');
@@ -600,7 +600,7 @@ class Model_evaluacion extends CI_Model {
             return true;
         }
     }
-    
+
     function cargarInaceptable($subcaracteristica, $nivel_inac) {
         $this->db->trans_start();
         $data = array(
@@ -611,7 +611,7 @@ class Model_evaluacion extends CI_Model {
         $this->db->trans_complete();
         return true;
     }
-    
+
     function cargarMinAceptable($subcaracteristica, $nivel_minac) {
         $this->db->trans_start();
         $data = array(
@@ -622,7 +622,7 @@ class Model_evaluacion extends CI_Model {
         $this->db->trans_complete();
         return true;
     }
-    
+
     function cargarAceptable($subcaracteristica, $nivel_acep) {
         $this->db->trans_start();
         $data = array(
@@ -633,7 +633,7 @@ class Model_evaluacion extends CI_Model {
         $this->db->trans_complete();
         return true;
     }
-    
+
     function cargarExcede($subcaracteristica, $nivel_excede) {
         $this->db->trans_start();
         $data = array(
@@ -651,7 +651,7 @@ class Model_evaluacion extends CI_Model {
         $consulta = $this->db->get();
         return $consulta;
     }
-    
+
     function agregarTratamiento($idTratamiento, $idEvaluacion) {
         $this->db->trans_start();
         $data1 = array(
@@ -664,7 +664,7 @@ class Model_evaluacion extends CI_Model {
 
         return $idEvaluacion;
     }
-    
+
     function agregarFeedback($feedback, $idEvaluacion) {
         $this->db->trans_start();
         $data1 = array(
@@ -677,7 +677,7 @@ class Model_evaluacion extends CI_Model {
 
         return $feedback;
     }
-    
+
     function getFeedback($idEvaluacion) {
         $this->db->select('*');
         $this->db->from('evaluacion');
@@ -685,7 +685,7 @@ class Model_evaluacion extends CI_Model {
         $consulta = $this->db->get();
         return $consulta;
     }
-    
+
     function agregarActividades($actividades, $idEvaluacion) {
         $this->db->trans_start();
         $data1 = array(
@@ -698,7 +698,7 @@ class Model_evaluacion extends CI_Model {
 
         return $actividades;
     }
-    
+
     function getActividades($idEvaluacion) {
         $this->db->select('*');
         $this->db->from('evaluacion');
@@ -706,8 +706,8 @@ class Model_evaluacion extends CI_Model {
         $consulta = $this->db->get();
         return $consulta;
     }
-    
-     function altaCriterios($idEvaluacion, $idCriterio) {
+
+    function altaCriterios($idEvaluacion, $idCriterio) {
         $this->db->trans_start();
 
         $data1 = array(
@@ -721,7 +721,7 @@ class Model_evaluacion extends CI_Model {
 
         return $idEvaluacion;
     }
-    
+
     function getNivel($idEvaluacion, $idSubcaracteristica) {
         $this->db->select('*');
         $this->db->from('evaluacion_subcaracteristica as es, subcaracteristica_nivel as sn, nivel as n');
@@ -733,7 +733,7 @@ class Model_evaluacion extends CI_Model {
         $consulta = $this->db->get();
         return $consulta;
     }
-    
+
     function getCriteriosEvaluacion($idEvaluacion, $idSubcaracteristica) {
         $this->db->select('DISTINCT(c.nombre), ec.puntaje');
         $this->db->from('evaluacion_criterio as ec, criterio as c, evaluacion_subcaracteristica as es');
@@ -744,8 +744,8 @@ class Model_evaluacion extends CI_Model {
         $consulta = $this->db->get();
         return $consulta;
     }
-    
-     function getSubcaracteristicasEvaluacionCaracteristicaII($idEvaluacion,$idCaracteristica) {
+
+    function getSubcaracteristicasEvaluacionCaracteristicaII($idEvaluacion, $idCaracteristica) {
         $this->db->select('es.*');
         $this->db->from('evaluacion_subcaracteristica as es, subcaracteristica as s');
         $this->db->where('es.idEvaluacion', $idEvaluacion);
@@ -754,6 +754,19 @@ class Model_evaluacion extends CI_Model {
         $consulta = $this->db->get();
         return $consulta;
     }
-    
- 
+
+    function esPropietario($idUsuario, $idEvaluacion) {
+        $this->db->select('*');
+        $this->db->from('evaluacion as e');
+        $this->db->where('e.idEvaluacion', $idEvaluacion);
+        $this->db->where('e.idUsuario', $idUsuario);
+        $query = $this->db->get();
+
+        if ($query->result_array() <> null) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
 }

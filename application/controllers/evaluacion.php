@@ -10,6 +10,11 @@ class Evaluacion extends CI_Controller {
         } else {
             $idEvaluacion = $this->session->userdata('idEvaluacion');
             $this->load->model('model_evaluacion');
+            $idUsuario = $this->session->userdata('id');
+            if (!$this->model_evaluacion->esPropietario($idUsuario,$idEvaluacion)){
+                $this->session->set_flashdata('ErrorPermisos', 'Usted no tiene permisos para realizar esta acción');
+                redirect(base_url("evaluacion/evaluaciones"));
+            }
             $producto = $this->model_evaluacion->cargarProducto($idEvaluacion);
             foreach ($producto->result_array() as $p) {
                 $nombre = $p['nombre'];

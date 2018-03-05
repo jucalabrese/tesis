@@ -10,6 +10,11 @@ class Informe extends CI_Controller {
             $idEvaluacion = $this->session->userdata('idEvaluacion');
         }else{
             $idEvaluacion = $eval;
+            $idUsuario = $this->session->userdata('id');
+            if (!$this->model_evaluacion->esPropietario($idUsuario,$idEvaluacion)){
+                $this->session->set_flashdata('ErrorPermisos', 'Usted no tiene permisos para realizar esta acción');
+                redirect(base_url("evaluacion/evaluaciones"));
+            }
         }
         
         $tratamiento = $this->model_evaluacion->cargarProposito($idEvaluacion);
@@ -543,7 +548,7 @@ class Informe extends CI_Controller {
             $this->pdf->SetFont('Arial', 'B', 11); //Arial,negrita, 12 puntos
             $this->pdf->Write(5, utf8_decode('Feedback de la evaluación: '));
             $this->pdf->SetFont('Arial', '', 11); //Arial, 12 puntos
-            $this->pdf->Write(5, $feedback);
+            $this->pdf->Write(5, utf8_decode($feedback));
             $this->pdf->Ln(13);
         } else {
             $this->pdf->SetFont('Arial', '', 11); //Arial, 12 puntos

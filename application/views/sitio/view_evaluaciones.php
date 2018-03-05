@@ -8,6 +8,14 @@
             </ol>
         </div>
     </div>
+     <?php
+        if ($this->session->flashdata('ErrorPermisos')) {
+            ?>
+            <div class="alert alert-danger">
+                <?php echo $this->session->flashdata('ErrorPermisos'); ?>    
+            </div>
+            <?php
+    }?> 
     <div class="row"> 
         <div class="col-md-10 col-md-offset-1">
             <div class="table-responsive">

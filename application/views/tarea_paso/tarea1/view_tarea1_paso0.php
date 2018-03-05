@@ -18,6 +18,6 @@
     </p>
     <p class="texto_justificado">
         <strong>Tarea 4: Definir el rigor de la evaluación</strong><br>
-        Se debe definir el rigor de la evaluación en función del propósito y el uso previsto del producto de software, basándose en aspectos como el riesgo para la seguridad, el riesgo económico y el riesgo ambiental (Anexo A - Norma ISO/IEC 25040? REVISAR). En función del rigor se podrá establecer qué técnicas se aplican y qué resultados se esperan de la evaluación.
+        Se debe definir el rigor de la evaluación en función del propósito y el uso previsto del producto de software, basándose en aspectos como el riesgo para la seguridad física, el riesgo económico y el riesgo para la seguridad de acceso. En función del rigor se podrá establecer qué técnicas se aplican y qué resultados se esperan de la evaluación.
     </p>
 </div>
