@@ -3,6 +3,10 @@
 class Evaluacion extends CI_Controller {
 
     public function iniciar_evaluacion() {
+        if ($this->session->userdata('logueado') == false){
+            $this->session->set_flashdata('Error', 'Debe iniciar sesión en el sitio para realizar esta acción');
+            redirect(base_url("inicio/login"));
+        }
         if (($this->session->userdata('idEvaluacion')) == null) {
             $nombre = '';
             $descripcion = '';
@@ -37,12 +41,11 @@ class Evaluacion extends CI_Controller {
         $this->iniciar_evaluacion();
     }
 
-    public function introduccion_evaluacion() {
-        $this->load->view('sitio/view_introduccionEvaluacion', '');
-    }
-
     public function evaluaciones() {
-
+        if ($this->session->userdata('logueado') == false){
+            $this->session->set_flashdata('Error', 'Debe iniciar sesión en el sitio para realizar esta acción');
+            redirect(base_url("inicio/login"));
+        }
         $evaluacion_data = array(
             'idEvaluacion' => null,
             'creada' => false,

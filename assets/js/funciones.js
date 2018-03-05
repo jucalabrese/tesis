@@ -273,18 +273,6 @@ function cargarVistaTareas_5_4() {
 }
 ;
 
-function cargarVistaIntroducción() {
-    var base_url = document.getElementById('baseurl').value;
-    $.ajax({
-        url: base_url + '/evaluacion/introduccion_evaluacion',
-        type: 'POST',
-        success: function (output_string) {
-            $('#contenido').html(output_string);
-        }
-    });
-}
-;
-
 function cargarVistaDefinicion(nombre, descripcion) {
     var base_url = document.getElementById('baseurl').value;
     //CREAR SESION SI NO EXISTE CON ID DE EVALUACION Y SI EXISTE DESTRUIRLA Y TMB CREAR NUEVA
@@ -344,9 +332,9 @@ function guardarProducto() {
                     'class': 'list-group-item list-group-item-success',
                 });
 
-//                $('.menu_index').attr({
-//                    'data-toggle': 'collapse',
-//                });  
+                $('.paso_1').attr({
+                    'data-toggle': 'collapse',
+                });  
 
                 document.getElementById('nombre_producto').innerHTML = nombre + '<small> Evaluación</small>';
             }
@@ -368,12 +356,6 @@ function guardar_1_1() {
         data: {proposito: proposito},
 
         success: function (output_string) {
-            if (proposito != '') {
-                $('#11').attr({
-                    'class': 'list-group-item list-group-item-success',
-                });
-            }
-            ;
             $("#contenido").html(output_string);
         }
     });
@@ -396,12 +378,10 @@ function guardar_1_2() {
         data: {car: caracteristicas},
 
         success: function (output_string) {
-            if (caracteristicas != '') {
-                $('#12').attr({
-                    'class': 'list-group-item list-group-item-success',
-                });
-            }
-            ;
+            $('.paso_2').attr({
+                    'data-toggle': 'collapse',
+                });  
+
             $("#contenido").html(output_string);
         }
     });
@@ -418,12 +398,6 @@ function guardar_1_3() {
         data: {parte: parte},
 
         success: function (output_string) {
-            if (parte != 0) {
-                $('#13').attr({
-                    'class': 'list-group-item list-group-item-success',
-                });
-            }
-            ;
             $("#contenido").html(output_string);
         }
     });
@@ -442,9 +416,6 @@ function guardar_1_4() {
         data: {seguridad_fisica: seguridad_fisica, economico: economico, seguridad_acceso: seguridad_acceso},
 
         success: function (output_string) {
-            $('#14').attr({
-                'class': 'list-group-item list-group-item-success',
-            });
             $("#contenido").html(output_string);
         }
     });
@@ -462,9 +433,6 @@ function guardar_niveles(subcaracteristica, caracteristica) {
         url: base_url + 'evaluacion/guardado/2/2',
         data: {subcaracteristica: subcaracteristica, caracteristica: caracteristica, inaceptable: inaceptable, min_aceptable: min_aceptable, aceptable: aceptable, excede: excede},
         success: function (output_string) {
-            $('#22').attr({
-                'class': 'list-group-item list-group-item-success',
-            });
             $("#contenido").html(output_string);
             $("#criterios").show();
         }
@@ -503,9 +471,12 @@ function guardar_2_1(caracteristica) {
                     $("#ok" + sub).attr({'style': 'display:block;'});
                 }
             });
+            $('.paso_3').attr({
+                    'data-toggle': 'collapse',
+                });  
             $("#contenido").html(output_string);
             $("#subcaracteristicas").fadeOut(800, function () {
-                $("#subcaracteristicas").fadeIn().delay(10); //MI PC ES LENTA, VER COMO SE VE EN LA DEL LIDI
+                $("#subcaracteristicas").fadeIn().delay(10); 
             });
         }
     });
@@ -521,6 +492,9 @@ function guardar_3_1() {
         url: base_url + 'evaluacion/guardado/3/1',
         data: {actividades: actividades},
         success: function (output_string) {
+            $('.paso_4').attr({
+                    'data-toggle': 'collapse',
+                }); 
             $("#contenido").html(output_string);
         }
     });

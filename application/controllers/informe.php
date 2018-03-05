@@ -3,7 +3,10 @@
 class Informe extends CI_Controller {
 
     public function generarInforme($eval='') {
-        
+        if ($this->session->userdata('logueado') == false){
+            $this->session->set_flashdata('Error', 'Debe iniciar sesión en el sitio para realizar esta acción');
+            redirect(base_url("inicio/login"));
+        }
         
         $this->load->model('model_evaluacion');
         if ($eval==''){
