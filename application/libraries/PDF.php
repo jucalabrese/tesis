@@ -58,23 +58,6 @@ class PDF extends FPDF {
         $this->Ln(35);
     }
 
-    /* function FancyTableWithNItems($header, $users, $votos, $n) {
-      $this->SetAutoPageBreak(false, 0);
-      $arregloPartido = array_chunk($users, $n);
-      $index = 0;
-      $this->Cell(150, 10, 'Cantidad de votantes: ' . (count($users)), 0, 0, 'L');
-      $this->SetX($this->lMargin * 3);
-      $this->Cell(150, 10, 'Cantidad de votos contabilizados: ' . $votos, 0, 0, 'R');
-      //agregar cantidad de votos
-      foreach ($arregloPartido as $pagina) {
-      $this->FancyTable($header, $pagina);
-      $index++;
-      if (count($arregloPartido) != $index) {
-      $this->AddPage('P', 'A4');
-      }
-      }
-      } */
-
     function FancyTableRigor($header, $data) {
 // Colores, ancho de línea y fuente en negrita
         $this->SetFillColor(150);
@@ -123,6 +106,7 @@ class PDF extends FPDF {
         $this->SetFillColor(224, 235, 255);
         $this->SetTextColor(0);
         $this->SetFont('');
+        $this->SetFontSize(9);
 // Datos
         $fill = false;
         foreach ($data as $row) {
@@ -206,13 +190,6 @@ class PDF extends FPDF {
 // Datos
         $fill = false;
         foreach ($data as $row) {
-//            $this->SetFillColor(150);
-//            $this->SetTextColor(255);
-//            $this->SetDrawColor(100);
-//            $this->SetLineWidth(.3);
-//            $this->SetFont('', 'B');
-//            $this->SetFontSize(11);
-           // $this->CellFitSpace($w[0], 5, $row[0], 'LR', 0, 'C', true);
             $this->SetFillColor(224, 235, 255);
             $this->SetTextColor(0);
             $this->SetFont('');
@@ -229,44 +206,7 @@ class PDF extends FPDF {
         $this->Cell(array_sum($w), 0, '', 'T');
     }
 
-    /*   function FancyTable($header, $data) {
-      if ($this->PageNo() == 1) {
-      $this->SetXY(10, 45);
-      } else {
-      $this->SetXY(10, 40);
-      }
-
-      // Colores, ancho de línea y fuente en negrita
-      $this->SetFillColor(120, 120, 120);
-      $this->SetTextColor(255);
-      $this->SetDrawColor(120, 120, 120);
-      $this->SetLineWidth(.3);
-      $this->SetFont('Arial', 'B', 10);
-      // Cabecera
-      $w = array(40, 40, 25, 30, 60);
-      for ($i = 0; $i < count($header); $i++)
-      $this->CellFitSpace($w[$i], 7, utf8_decode($header[$i]), 1, 0, 'C', true);
-      $this->Ln();
-      // Restauración de colores y fuentes
-      $this->SetFillColor(224, 235, 255);
-      $this->SetTextColor(0);
-      $this->SetFont('Arial', '', 10);
-      // Datos
-      $fill = false;
-      foreach ($data as $row) {
-      $this->CellFitSpace($w[0], 6, utf8_decode($row['apellido']), 'LR', 0, 'C', $fill);
-      $this->CellFitSpace($w[1], 6, utf8_decode($row['nombre']), 'LR', 0, 'C', $fill);
-      $this->CellFitSpace($w[2], 6, utf8_decode($row['matricula']), 'LR', 0, 'C', $fill);
-      $this->CellFitSpace($w[3], 6, utf8_decode($row['usuario']), 'LR', 0, 'C', $fill);
-      $this->CellFitSpace($w[4], 6, utf8_decode($row['mail']), 'LR', 0, 'C', $fill);
-      $this->Ln();
-      $fill = !$fill;
-      }
-      // Línea de cierre
-      $this->Cell(array_sum($w), 0, '', 'T');
-      }
-     */
-
+   
 //**************************************************************************************************************
     function CellFit($w, $h = 0, $txt = '', $border = 0, $ln = 0, $align = '', $fill = false, $link = '', $scale = false, $force = true) {
 //Get string width
