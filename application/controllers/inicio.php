@@ -27,7 +27,7 @@ class Inicio extends CI_Controller {
             redirect(base_url("inicio/index"));
 	}        
                 
-        public function iniciar_sesion() { //CAMBIAR ESTA FUNCION PARA QUE NO DIGA SI ES INVALIDA LA CLAVE O USUARIO, SINO EN GENERAL
+        public function iniciar_sesion() {
             $this->load->model('model_usuario');
             if ($this->input->post()){
                 $email = $this->input->post('email');

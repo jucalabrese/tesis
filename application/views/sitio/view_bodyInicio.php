@@ -26,9 +26,6 @@
     </div>
 </div>
 <div class="row" style="padding-top: 2%">
-<!--    <div class="col-md-offset-3 col-md-3">
-        <a href="http://weblidi.info.unlp.edu.ar/wp/" target="_blank"><img src="<?php //echo base_url('assets/images/LogoLIDI.png')?>" class="img-thumbnail" alt="LIDI"></a>
-    </div>   -->
     <div class="col-md-12" align="center">
         <a href="http://info.unlp.edu.ar/" target="_blank"><img src="<?php echo base_url('assets/images/LogoINFO.png')?>" class="img-thumbnail" alt="INFO"></a>
     </div>

@@ -100,7 +100,7 @@ class Model_evaluacion extends CI_Model {
         return $consulta;
     }
 
-    function getSubcaracteristicas_Caracteristica($idCaracteristica) { //ACA CAMBIE UNA MAYUSCULA
+    function getSubcaracteristicas_Caracteristica($idCaracteristica) { 
         $this->db->select('*');
         $this->db->from('subcaracteristica');
         $this->db->where('idCaracteristica', $idCaracteristica);
@@ -441,7 +441,7 @@ class Model_evaluacion extends CI_Model {
         $this->db->join('criterio_pregunta as cp', 'cp.idPregunta=p.idPregunta');
         $this->db->join('criterio as c', 'cp.idCriterio=c.idCriterio');
         $this->db->join('subcaracteristica as s', 'c.idSubcaracteristica=s.idSubcaracteristica');
-        $this->db->join('evaluacion_subcaracteristica as es', 's.idSubcaracteristica=es.idSubcaracteristica'); //AGREGUE ESTA LINEA
+        $this->db->join('evaluacion_subcaracteristica as es', 's.idSubcaracteristica=es.idSubcaracteristica'); 
         $this->db->join('caracteristica as car', 's.idCaracteristica = car.idCaracteristica');
         $this->db->join('evaluacion_pregunta as ep', 'ep.idEvaluacion = es.idEvaluacion AND ep.idPregunta = p.idPregunta', 'left');
         $this->db->where('car.idCaracteristica', $idCaracteristica);

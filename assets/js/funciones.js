@@ -275,7 +275,6 @@ function cargarVistaTareas_5_4() {
 
 function cargarVistaDefinicion(nombre, descripcion) {
     var base_url = document.getElementById('baseurl').value;
-    //CREAR SESION SI NO EXISTE CON ID DE EVALUACION Y SI EXISTE DESTRUIRLA Y TMB CREAR NUEVA
     $.ajax({
         url: base_url + '/evaluacion/definicion_producto',
         type: 'POST',

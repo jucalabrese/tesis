@@ -408,7 +408,6 @@ class Informe extends CI_Controller {
                 }
                 $cuerpo = array($inac, $minac, $acep, $excede);
                 $this->pdf->FancyTableNivelesCaracteristicas($cabecera, $cuerpo);
-                // EN VEZ DE NUMEROS TIENEN QUE SER LOS NOMBRES DE LOS NIVELES
 
                 $this->pdf->Ln(10);
             }

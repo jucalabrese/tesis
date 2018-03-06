@@ -24,7 +24,6 @@
                 </div>
             </div>
             <?php foreach ($caracteristicas->result_array() as $atr){
-                //if ($caracteristicasSeleccionadas <> null){
                     if (in_array($atr['idCaracteristica'], $caracteristicas_seleccionadas)){?> <!-- SI LA CARACTERISTICA FUE UNA DE LAS ELEGIDAS POR EL USUARIO -->          
                         <div class="form-group">
                                 <div class="checkbox col-md-12">

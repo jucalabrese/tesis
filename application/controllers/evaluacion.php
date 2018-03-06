@@ -61,7 +61,6 @@ class Evaluacion extends CI_Controller {
 
         $opciones['per_page'] = 10;
         $opciones['base_url'] = base_url() . 'evaluacion/evaluaciones/';
-//$opciones['use_page_numbers'] = true;
         $opciones['total_rows'] = $this->model_evaluacion->cantEvaluaciones();
         $opciones['num_links'] = 3;
         $opciones['uri_segment'] = 3;
@@ -456,13 +455,11 @@ class Evaluacion extends CI_Controller {
                         break;
                     case 1:
                         $preguntas = array();
-//$resp = array();
                         $cSeleccionada = '';
                         $valor = 0;
                         if ($this->input->post()) {
                             $valor = $this->input->post('valor');
                             $preguntas = $this->model_evaluacion->obtenerPreguntas($valor, $idEvaluacion);
-//$resp = $this->model_evaluacion->obtenerRespuestas($idEvaluacion);
                             $data = $this->model_evaluacion->getCaracteristica($valor);
                             foreach ($data->result_array() as $dato) {
                                 $cSeleccionada = $dato['nombre'];
@@ -482,10 +479,6 @@ class Evaluacion extends CI_Controller {
                         break;
                     case 2:
                         $feedback = '';
-//                        if ($this->input->post()) {
-//                            $feedback = $this->input->post('feedback');
-//                            $this->model_evaluacion->agregarFeedback($feedback, $idEvaluacion);
-//                        }
                         $resul = $this->model_evaluacion->getFeedback($idEvaluacion);
                         foreach ($resul->result_array() as $f) {
                             $feedback = $f['feedback'];
@@ -844,8 +837,6 @@ class Evaluacion extends CI_Controller {
                         $datos = array('feedback' => $feedback);
                         break;
                     case 3:
-                        //if ($this->input->post()) {
-                            //$idTratamiento = $this->input->post('tratamiento');
                             $this->model_evaluacion->agregarTratamiento(3, $idEvaluacion);
                             
                         $datos = array();
