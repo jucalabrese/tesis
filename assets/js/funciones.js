@@ -332,10 +332,6 @@ function guardarProducto() {
                     'class': 'list-group-item list-group-item-success',
                 });
 
-                $('.paso_1').attr({
-                    'data-toggle': 'collapse',
-                });  
-
                 document.getElementById('nombre_producto').innerHTML = nombre + '<small> Evaluación</small>';
             }
             ;
@@ -378,10 +374,7 @@ function guardar_1_2() {
         data: {car: caracteristicas},
 
         success: function (output_string) {
-            $('.paso_2').attr({
-                    'data-toggle': 'collapse',
-                });  
-
+           
             $("#contenido").html(output_string);
         }
     });
@@ -471,9 +464,6 @@ function guardar_2_1(caracteristica) {
                     $("#ok" + sub).attr({'style': 'display:block;'});
                 }
             });
-            $('.paso_3').attr({
-                    'data-toggle': 'collapse',
-                });  
             $("#contenido").html(output_string);
             $("#subcaracteristicas").fadeOut(800, function () {
                 $("#subcaracteristicas").fadeIn().delay(10); 
@@ -492,9 +482,6 @@ function guardar_3_1() {
         url: base_url + 'evaluacion/guardado/3/1',
         data: {actividades: actividades},
         success: function (output_string) {
-            $('.paso_4').attr({
-                    'data-toggle': 'collapse',
-                }); 
             $("#contenido").html(output_string);
         }
     });
